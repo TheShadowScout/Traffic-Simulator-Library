@@ -7,7 +7,7 @@ Kacper Chrzanowski
 Weronika Drożdż  
 Gabor Łukjaniuk  
 Filip Stodolny  
-Dominik Dzięigelewski  
+Dominik Dzięgielewski  
 Andrey Kmet  
 
 ## Spis treści
