@@ -9,7 +9,7 @@ class Generator : public FuncCell
 		Generator() {
 			name = "Generator";
 		}
-		void Func() {
+		void DTGFunc() {
 			std::cout << "Generated car object" << std::endl;
 		}
 };

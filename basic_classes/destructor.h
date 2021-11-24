@@ -9,7 +9,7 @@ class Destructor : public FuncCell
 		Destructor() {
 			name = "Destructor";
 		}
-		void Func() {
+		void DTGFunc() {
 			std::cout << "Deleted car object" << std::endl;
 		}
 };

@@ -3,7 +3,7 @@
 class FuncCell
 {
 	public:
-		virtual void Func() { return; }
+		virtual void DTGFunc() { return; }
 	protected:
 		std::string name;
 };

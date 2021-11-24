@@ -9,7 +9,7 @@ class Teleporter : public FuncCell
 		Teleporter() {
 			name = "Teleporter";
 		}
-		void Func() {
+		void DTGFunc() {
 			std::cout << "Moved car object from tail to head" << std::endl;
 		}
 };
