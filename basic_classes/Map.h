@@ -1,8 +1,9 @@
+#pragma once
+
 #include<iostream>
-#include "generator.h"
-#include "destructor.h"
-#include "teleporter.h"
-#include "funccell.h"
+#include "Generator.h"
+#include "Destructor.h"
+#include "Teleporter.h"
 #include "Road.h"
 #include "Cell.h"
 #include <map>

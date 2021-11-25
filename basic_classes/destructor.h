@@ -1,15 +1,16 @@
 #pragma once
 
-#include "funccell.h"
+#include "Cell.h"
 #include <iostream>
 
-class Destructor : public FuncCell
+class Destructor : public Cell
 {
 	public:
 		Destructor() {
 			name = "Destructor";
 		}
-		void DTGFunc() {
+		void DeleteVehicle() {
+			delete this.vehicle;
 			std::cout << "Deleted car object" << std::endl;
 		}
 };
