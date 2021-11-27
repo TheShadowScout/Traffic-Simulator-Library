@@ -4,14 +4,14 @@
 class Vehicle {
 	protected:
 	std::string name;
-	int id;
+	int ID;
 	int speed;
 
 	public:	
 	// name - nazwa pojazdu, speed - prêdkoœæ pojazdu
 	Vehicle(std::string name, int speed) {
 		this->name = name;
-		this->id = 1;
+		this->ID = 1;
 		this->speed = speed;
 	}
 
@@ -20,7 +20,7 @@ class Vehicle {
 	}
 
 	int getID() {
-		return this->id;
+		return this->ID;
 	}
 
 	int getSpeed() {

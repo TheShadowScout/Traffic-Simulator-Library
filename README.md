@@ -24,55 +24,128 @@ Student project of a library in C ++ used to create a road traffic simulator.
 # Introduction
 # Basic classes
 ## Cell
-Filename with class: **Cell.h**
-Class name: **Cell**
+Filename with class: **Cell.h**  
+Class name: **Cell**  
 
-| Variable name|                               Description                                |
+| Variable name	| Description														|
 | ------------- | ----------------------------------------------------------------- |
-| vehicle       | variable that holds a pointer to an object of type [Vehicle](#vehicle)|
-| right_cell    | variable that holds a pointer to right object of type [Cell](#cell)       |
-| left_cell     | variable that holds a pointer to left object of type [Cell](#cell)       |
-| next_cell     | variable that holds a pointer to next object of type [Cell](#cell)       |
-| previous_cell | variable that holds a pointer to previous object of type [Cell](#cell)       |
+| vehicle       | variable that holds a pointer to [Vehicle](#vehicle)				|
+| rightCell		| variable that holds a pointer to [Cell](#cell) adjacent to right	|
+| leftCell		| variable that holds a pointer to [Cell](#cell) adjacent to left	|
+| nextCell		| variable that holds a pointer to [Cell](#cell) adjacent to bottom |
+| previousCell	| variable that holds a pointer to [Cell](#cell) adjacent to top	|
 
-|   Function name   |   Arguments   |   Description  |
-|   -------------   |   ---------   |   ----- |
-|   void Cell       |   -           |   Class constructor |
-|   void set_vehicle | [Vehicle*](#vehicle) vehicle| Function sets in current [cell](#cell) new pointer to [vehicle](#vehicle)
-|   void set_right_cell | [Cell*](#cell) new_right_cell| Function sets in current [cell](#cell) new pointer to [cell](#cell) adjacent to the right
-|   void set_left_cell | [Cell*](#cell) new_left_cell| Function sets in current [cell](#cell) new pointer to [cell](#cell) adjacent to the left
-|   void set_previous_cell | [Cell*](#cell) new_previous_cell| Function sets in current [cell](#cell) new pointer to  [cell](#cell) adjacent to bottom
-|   void set_next_cell | [Cell*](#cell) new_next_cell| Function sets in current [cell](#cell) new pointer to [cell](#cell) adjacent to top
-|   [Vehicle*](#vehicle)  get_vehicle    |-| Function returns pointer to [vehicle](#vehicle) in current cell
-|   [Cell*](#cell)  get_right_cell    |-| Function returns pointer to [cell](#cell) adjacent to right
-|   [Cell*](#cell)  get_left_cell    |-| Function returns pointer to [cell](#cell) adjacent to left
-|   [Cell*](#cell)  get_previous_cell    |-| Function returns pointer to [cell](#cell) adjacent to bottom
-|   [Cell*](#cell)  get_next_cell    |-| Function returns pointer to [cell](#cell) adjacent to top
+| Function type and name			| Arguments							| Description																				|
+| --------------------------------- | ---------------------------------	| ----------------------------------------------------------------------------------------- |
+| void Cell							| ---------------------------------	| Class constructor																			|
+| void setVehicle					| [Vehicle*](#vehicle) vehicle		| Function sets in current [Cell](#cell) new pointer to [Vehicle](#vehicle)					|
+| void setRightCell					| [Cell*](#cell) newRightCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the right	|
+| void setLeftCell					| [Cell*](#cell) newLeftCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the left	|
+| void setPreviousCell				| [Cell*](#cell) newPreviousCell	| Function sets in current [Cell](#cell) new pointer to  [Cell](#cell) adjacent to bottom	|
+| void setNextCell					| [Cell*](#cell) newNextCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to top		|
+| [Vehicle*](#vehicle)  getVehicle	| ---------------------------------	| Function returns pointer to [Vehicle](#vehicle) in current cell							|
+| [Cell*](#cell)  getRightCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to right								|
+| [Cell*](#cell)  getLeftCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to left								|
+| [Cell*](#cell)  getPreviousCell	| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to bottom								|
+| [Cell*](#cell)  getNextCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to top									|
 
-### Road
-Filename with class: **Road.h**
-Class name: **Road**
+## Road
+Filename with class: **Road.h**  
+Class name: **Road**  
 
-| Variable name|Variable type|                               Description                                |
-| ------------- | ------------| ----------------------------------------------------------------- |
-| IDRoad       |int| variable that holds a [road](#road) ID|
-| maxSpeed    |int| variable that holds max vehicle speed       |
-| name     |string| variable that holds a [road](#road) name       |
-| road     |list<[Cell](#cell)>| variable that holds a list of [Cells](#cell) creating up the road      |
-| head |list<[Cell](#cell)>| variable that holds a list of [Cells](#cell) creating up the head of road       |
-| tail |list<[Cell](#cell)>| variable that holds a list of [Cells](#cell) creating up the tail of road    |
+| Variable name | Variable type			| Description																|
+| ------------- | --------------------- | ------------------------------------------------------------------------- |
+| IDRoad		| int					| variable that holds a [Road](#road) ID									|
+| maxSpeed		| int					| variable that holds max vehicle speed										|
+| name			| string				| variable that holds a [Road](#road) name									|
+| road			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the road			|
+| head			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the head of road |
+| tail			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the tail of road |
 
-|   Function name   |   Arguments   |   Description  |
-|   -------------   |   ---------   |   ----- |
-|   void Road       |   int maxSpeed, string name           |   Class constructor |
-|   void setMaxSpeed | int maxSpeed| Function sets new max speed in current [road](#road)
-|   void setName | string name| Function sets name in current [road](#road) |
-|   int getMaxSpeed | -| Function returns max speed of current [road](#road) | 
-|   string getName | -| Function returns name of current [road](#road) |
-|   void createXML| - | Function creates new XML file of current [road](#road) |
-### Map
-### Vehicle
-### Special cells
-#### Generator
-#### Destructor
-#### Teleporter
+| Function type and name	| Arguments					| Description												|
+| ------------------------- | ------------------------- | --------------------------------------------------------- |
+| void Road					| int maxSpeed, string name | Class constructor											|
+| void setMaxSpeed			| int maxSpeed				| Function sets new max speed in current [Road](#road)		|
+| void setName				| string name				| Function sets name in current [Road](#road)				|
+| int getMaxSpeed			| ------------------------- | Function returns max speed of current [Road](#road)		| 
+| string getName			| ------------------------- | Function returns name of current [Road](#road)			|
+| void createXML			| ------------------------- | Function creates new XML file of current [Road](#road)	|
+
+## Map
+Filename with class: **Map.h**  
+Class name: **Map**  
+
+| Variable name | Variable type							| Description																|
+| ------------- | ------------------------------------- | ------------------------------------------------------------------------- |
+| name			| string								| variable that holds a [Map](#map) name									|
+| roads			| map<[Road](#road), int>				| variable that holds a map of [Roads](#road)								|
+| generators	| map<[Generator](#generator), int>		| variable that holds a map of [Generators](#generator)						|
+| destructors	| map<[Destructor](#destructor), int>	| variable that holds a map of [Destructors](#destructor)					|
+| teleporters	| map<[Teleporter](#teleporter), int>	| variable that holds a map of [Teleporters](#teleporter)					|
+| cellsWithCars	| list<[Cell](#cell)>					| variable that holds a list of [Cells](#cell) with [Vehicles](#vehicle)	|
+
+| Function type and name	| Arguments		| Description												|
+| ------------------------- | ------------- | --------------------------------------------------------- |
+| void Map					| string name	| Class constructor											|
+| void createXML			| -------------	| Function creates new XML file of current [Map](#map)		|
+
+## Vehicle
+Filename with class: **Vehicle.h**  
+Class name: **Vehicle**  
+
+| Variable name | Variable type	| Description										|
+| ------------- | ------------- | ------------------------------------------------- |
+| name			| string		| variable that holds a [Vehicle](#vehicle) name	|
+| ID			| int			| variable that holds a [Vehicle](#vehicle) ID		|
+| speed			| int			| variable that holds a [Vehicle](#vehicle) speed	|
+
+| Function type and name	| Arguments					| Description												|
+| ------------------------- | ------------------------- | --------------------------------------------------------- |
+| void Vehicle				| string name, int speed	| Class constructor											|
+| string getName			| ------------------------- | Function returns name of current [Vehicle](#vehicle)		|
+| int getID					| ------------------------- | Function returns ID of current [Vehicle](#vehicle)		|
+| int getSpeed				| ------------------------- | Function returns speed of current [Vehicle](#vehicle)		|
+| void setSpeed				| int speed					| Function sets new speed of current [Vehicle](#vehicle)	|
+
+## Special cells
+## Generator
+Filename with class: **Generator.h**  
+Class name: **Generator**  
+Inherits from: [Cell](#cell)
+
+| Variable name | Variable type	| Description											|
+| ------------- | ------------- | ----------------------------------------------------- |
+| name			| string		| variable that holds a [Generator](#generator) name	|
+
+| Function type and name	| Arguments	| Description																		|
+| ------------------------- | --------- | --------------------------------------------------------------------------------- |
+| void Generator			| --------- | Class constructor																	|
+| void create				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|
+
+## Destructor
+Filename with class: **Destructor.h**  
+Class name: **Destructor**  
+Inherits from: [Cell](#cell)
+
+| Variable name | Variable type	| Description											|
+| ------------- | ------------- | ----------------------------------------------------- |
+| name			| string		| variable that holds a [Destructor](#destructor) name	|
+
+| Function type and name	| Arguments	| Description																	|
+| ------------------------- | --------- | ----------------------------------------------------------------------------- |
+| void Destructor			| --------- | Class constructor																|
+| void remove				| --------- | Function removes a [Vehicle](#vehicle) from current [Destructor](#destructor)	|
+
+## Teleporter
+Filename with class: **Teleporter.h**  
+Class name: **Teleporter**  
+Inherits from: [Cell](#cell)
+
+| Variable name | Variable type	| Description											|
+| ------------- | ------------- | ----------------------------------------------------- |
+| name			| string		| variable that holds a [Teleporter](#teleporter) name	|
+
+| Function type and name	| Arguments										| Description																										|
+| ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| void Teleporter			| --------------------------------------------- | Class constructor																									|
+| void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
