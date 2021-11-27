@@ -2,13 +2,16 @@
 #include <iostream>
 
 class Vehicle {
+	protected:
 	std::string name;
 	int id;
 	int speed;
-public:	
-	Vehicle(std::string name, int id, int speed) {
+
+	public:	
+	// name - nazwa pojazdu, speed - prêdkoœæ pojazdu
+	Vehicle(std::string name, int speed) {
 		this->name = name;
-		this->id = id;
+		this->id = 1;
 		this->speed = speed;
 	}
 
@@ -24,6 +27,7 @@ public:
 		return this->speed;
 	}
 
+	// newSpeed - nowa prêdkoœæ pojazdu
 	void setSpeed(int newSpeed) {
 		speed = newSpeed;
 	}

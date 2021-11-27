@@ -1,6 +1,5 @@
 #pragma once
-
-#include<iostream>
+#include <iostream>
 #include "Generator.h"
 #include "Destructor.h"
 #include "Teleporter.h"
@@ -8,27 +7,26 @@
 #include "Cell.h"
 #include <map>
 #include <list>
+
 using namespace std;
 
-
-class  Map: public FuncCell 
+class Map
 {
-public:
-	Map() {
-		name = "Mapa";
-	}
-
-	void Func() {
-		cout << "Generated map object" << endl;
-	}
-
-	void CreateXML();
-
+	protected:
+	string name;
 	map<Road, int> roads;
 	map<Generator, int> generators;
 	map<Destructor, int> destruktors;
 	map<Teleporter, int> teleporters;
-
 	list<Cell> cellsWithCars;
 
+	public:
+	//name - nazwa nowej mapy
+	Map(string name) {
+		this->name = name;
+	}
+
+	void createXml() {
+		return;
+	}
 };
