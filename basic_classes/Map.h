@@ -16,7 +16,7 @@ class Map
 	string name;
 	map<Road, int> roads;
 	map<Generator, int> generators;
-	map<Destructor, int> destruktors;
+	map<Destructor, int> destructors;
 	map<Teleporter, int> teleporters;
 	list<Cell> cellsWithCars;
 
@@ -26,7 +26,7 @@ class Map
 		this->name = name;
 	}
 
-	void createXml() {
+	void createXML() {
 		return;
 	}
 };
