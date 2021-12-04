@@ -23,6 +23,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 5.5.1 [Generator](#generator)  
 5.5.2 [Destructor](#destructor)  
 5.5.3 [Teleporter](#teleporter)  
+6. [Used libraries](#used-libraries)
 
 # Introduction
 # Installation without preinstalled libraries
@@ -291,3 +292,7 @@ Inherits from: [Cell](#cell)
 | ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | void Teleporter			| --------------------------------------------- | Class constructor																									|
 | void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
+
+# Used libraries
+- [SFML](https://www.sfml-dev.org)
+- [Gnuplot-iostream](https://github.com/dstahlke/gnuplot-iostream) by dstahlke
