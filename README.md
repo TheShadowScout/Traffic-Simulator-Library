@@ -50,7 +50,7 @@ VS Community:
 .\vcpkg.exe integrate install
 ```
 
-# Installation without preinstalled libraries
+# Installation with preinstalled libraries
 SFML  
 VS Community:
 1. Project -> RMB -> Properties  
