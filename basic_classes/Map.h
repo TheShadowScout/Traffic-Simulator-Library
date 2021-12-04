@@ -8,21 +8,19 @@
 #include <map>
 #include <list>
 
-using namespace std;
-
 class Map
 {
 	protected:
-	string name;
-	map<Road, int> roads;
-	map<Generator, int> generators;
-	map<Destructor, int> destructors;
-	map<Teleporter, int> teleporters;
-	list<Cell> cellsWithCars;
+	std::string name;
+	std::map<Road, int> roads;
+	std::map<Generator, int> generators;
+	std::map<Destructor, int> destructors;
+	std::map<Teleporter, int> teleporters;
+	std::list<Cell> cellsWithCars;
 
 	public:
 	//name - nazwa nowej mapy
-	Map(string name) {
+	Map(std::string name) {
 		this->name = name;
 	}
 

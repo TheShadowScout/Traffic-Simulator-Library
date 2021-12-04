@@ -2,20 +2,18 @@
 #include <string>
 #include <list>
 
-using namespace std;
-
 class Road{
     protected:
     int IDRoad;
     int maxSpeed;
-    string name;
-    list<Cell> road;
-    list<Cell> head;
-    list<Cell> tail;
+    std::string name;
+    std::list<Cell> road;
+    std::list<Cell> head;
+    std::list<Cell> tail;
 
     public:
     // maxSpeed - maksymalna prêdkoœæ, name - nazwa drogi
-    Road(int maxSpeed, string name){
+    Road(int maxSpeed, std::string name){
         IDRoad=1;  
         this->maxSpeed = maxSpeed;
         this->name = name;
@@ -28,7 +26,7 @@ class Road{
     }
     
     // name - nazwa drogi
-    void setName(string name){
+    void setName(std::string name){
         this->name=name;
     }
     int getMaxSpeed(){
@@ -37,7 +35,7 @@ class Road{
     int getIDRoad(){
         return IDRoad;
     }
-    string getName(){
+    std::string getName(){
         return name;
     }
     void createXml(){
