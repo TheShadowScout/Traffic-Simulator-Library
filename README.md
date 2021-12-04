@@ -11,17 +11,159 @@ Student project of a library in C ++ used to create a road traffic simulator.
 
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Basic classes](#basic-classes)  
-2.1. [Cell](#cell)  
-2.2. [Road](#road)  
-2.3. [Map](#map)  
-2.4. [Vehicle](#vehicle)  
-2.5. [Special cells](#special-cells)  
-2.5.1 [Generator](#generator)  
-2.5.2 [Destructor](#destructor)  
-2.5.3 [Teleporter](#teleporter)  
+2. [Installation without preinstalled libraries](#installation_without_preinstalled_libraries)
+3. [Installation with preinstalled libraries](#installation_with_preinstalled_libraries)
+4. [Test codes for libraries](#test_codes_for_libraries)
+4. [Basic classes](#basic-classes)  
+4.1. [Cell](#cell)  
+4.2. [Road](#road)  
+4.3. [Map](#map)  
+4.4. [Vehicle](#vehicle)  
+4.5. [Special cells](#special-cells)  
+4.5.1 [Generator](#generator)  
+4.5.2 [Destructor](#destructor)  
+4.5.3 [Teleporter](#teleporter)  
 
 # Introduction
+# Installation without preinstalled libraries
+SFML  
+VS Community:
+1. Download SFML and add it to project folder
+2. Project -> RMB -> Properties
+3. Configuration Properties
+4. Configuration **All configurations**
+4.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]
+4.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]
+4.3 Linker  ->  Input    ->  Additional Dependencies: [IMPORTANT: ADD THESE LIBRARIES BEFORE KERNEL ETC.]
+4.3.1 Configuration **Debug**: sfml-graphics-d.lib, sfml-window-d.lib, sfml-system-d.lib
+4.3.2 Configuration **Release**: sfml-graphics.lib, sfml-window.lib, sfml-system.lib
+4.4 Put **ALL** files from SFML/bin in your project folder
+
+Gnuplot
+VS Community:
+1. Install Gnuplot
+1.1 Add Gnuplot to PATH
+2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)
+3. Using vcpkg, install boost
+```
+.\vcpkg.exe install boost:x64-windows boost:x86-windows
+.\vcpkg.exe integrate install
+```
+
+# Installation without preinstalled libraries
+SFML
+VS Community:
+1. Project -> RMB -> Properties
+2. Configuration Properties
+3. Configuration **All configurations**
+3.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]
+3.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]
+
+Gnuplot
+VS Community:
+1. Install Gnuplot
+1.1 Add Gnuplot to PATH
+2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)
+3. Using vcpkg, install boost
+```
+.\vcpkg.exe install boost:x64-windows boost:x86-windows
+.\vcpkg.exe integrate install
+
+# Test codes for libraries
+SFML
+```
+#include <SFML/Graphics.hpp>
+
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
+
+    return 0;
+}
+```
+
+Gnuplot
+
+```
+#include <vector>
+#include <cmath>
+#include <boost/tuple/tuple.hpp>
+
+#include "gnuplot-iostream.h"
+
+int main() {
+	Gnuplot gp;
+	// Create a script which can be manually fed into gnuplot later:
+	//    Gnuplot gp(">script.gp");
+	// Create script and also feed to gnuplot:
+	//    Gnuplot gp("tee plot.gp | gnuplot -persist");
+	// Or choose any of those options at runtime by setting the GNUPLOT_IOSTREAM_CMD
+	// environment variable.
+
+	// Gnuplot vectors (i.e. arrows) require four columns: (x,y,dx,dy)
+	std::vector<boost::tuple<double, double, double, double> > pts_A;
+
+	// You can also use a separate container for each column, like so:
+	std::vector<double> pts_B_x;
+	std::vector<double> pts_B_y;
+	std::vector<double> pts_B_dx;
+	std::vector<double> pts_B_dy;
+
+	// You could also use:
+	//   std::vector<std::vector<double> >
+	//   boost::tuple of four std::vector's
+	//   std::vector of std::tuple (if you have C++11)
+	//   arma::mat (with the Armadillo library)
+	//   blitz::Array<blitz::TinyVector<double, 4>, 1> (with the Blitz++ library)
+	// ... or anything of that sort
+
+	for (double alpha = 0; alpha < 1; alpha += 1.0 / 24.0) {
+		double theta = alpha * 2.0 * 3.14159;
+		pts_A.push_back(boost::make_tuple(
+			cos(theta),
+			sin(theta),
+			-cos(theta) * 0.1,
+			-sin(theta) * 0.1
+		));
+
+		pts_B_x.push_back(cos(theta) * 0.8);
+		pts_B_y.push_back(sin(theta) * 0.8);
+		pts_B_dx.push_back(sin(theta) * 0.1);
+		pts_B_dy.push_back(-cos(theta) * 0.1);
+	}
+
+	// Don't forget to put "\n" at the end of each line!
+	gp << "set xrange [-2:2]\nset yrange [-2:2]\n";
+	// '-' means read from stdin.  The send1d() function sends data to gnuplot's stdin.
+	gp << "plot '-' with vectors title 'pts_A', '-' with vectors title 'pts_B'\n";
+	gp.send1d(pts_A);
+	gp.send1d(boost::make_tuple(pts_B_x, pts_B_y, pts_B_dx, pts_B_dy));
+
+#ifdef _WIN32
+	// For Windows, prompt for a keystroke before the Gnuplot object goes out of scope so that
+	// the gnuplot window doesn't get closed.
+	std::cout << "Press enter to exit." << std::endl;
+	std::cin.get();
+#endif
+}
+```
+
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  
