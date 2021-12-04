@@ -11,9 +11,9 @@ Student project of a library in C ++ used to create a road traffic simulator.
 
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Installation without preinstalled libraries](#installation_without_preinstalled_libraries)
-3. [Installation with preinstalled libraries](#installation_with_preinstalled_libraries)
-4. [Test codes for libraries](#test_codes_for_libraries)
+2. [Installation without preinstalled libraries](#installation-without-preinstalled-libraries)
+3. [Installation with preinstalled libraries](#installation-with-preinstalled-libraries)
+4. [Test codes for libraries](#test-codes-for-libraries)
 4. [Basic classes](#basic-classes)  
 4.1. [Cell](#cell)  
 4.2. [Road](#road)  
@@ -28,47 +28,47 @@ Student project of a library in C ++ used to create a road traffic simulator.
 # Installation without preinstalled libraries
 SFML  
 VS Community:
-1. Download SFML and add it to project folder
-2. Project -> RMB -> Properties
-3. Configuration Properties
-4. Configuration **All configurations**
-4.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]
-4.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]
-4.3 Linker  ->  Input    ->  Additional Dependencies: [IMPORTANT: ADD THESE LIBRARIES BEFORE KERNEL ETC.]
-4.3.1 Configuration **Debug**: sfml-graphics-d.lib, sfml-window-d.lib, sfml-system-d.lib
-4.3.2 Configuration **Release**: sfml-graphics.lib, sfml-window.lib, sfml-system.lib
-4.4 Put **ALL** files from SFML/bin in your project folder
+1. Download SFML and add it to project folder  
+2. Project -> RMB -> Properties  
+3. Configuration Properties  
+4. Configuration **All configurations**  
+4.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]  
+4.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]  
+4.3 Linker  ->  Input    ->  Additional Dependencies: [IMPORTANT: ADD THESE LIBRARIES BEFORE KERNEL ETC.]  
+4.3.1 Configuration **Debug**: sfml-graphics-d.lib, sfml-window-d.lib, sfml-system-d.lib  
+4.3.2 Configuration **Release**: sfml-graphics.lib, sfml-window.lib, sfml-system.lib  
+4.4 Put **ALL** files from SFML/bin in your project folder  
 
-Gnuplot
+Gnuplot  
 VS Community:
-1. Install Gnuplot
-1.1 Add Gnuplot to PATH
-2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)
-3. Using vcpkg, install boost
+1. Install Gnuplot  
+1.1 Add Gnuplot to PATH  
+2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)  
+3. Using vcpkg, install boost  
 ```
 .\vcpkg.exe install boost:x64-windows boost:x86-windows
 .\vcpkg.exe integrate install
 ```
 
 # Installation without preinstalled libraries
-SFML
+SFML  
 VS Community:
-1. Project -> RMB -> Properties
-2. Configuration Properties
-3. Configuration **All configurations**
-3.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]
-3.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]
+1. Project -> RMB -> Properties  
+2. Configuration Properties  
+3. Configuration **All configurations**  
+3.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]  
+3.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]  
 
-Gnuplot
+Gnuplot  
 VS Community:
-1. Install Gnuplot
-1.1 Add Gnuplot to PATH
-2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)
-3. Using vcpkg, install boost
+1. Install Gnuplot  
+1.1 Add Gnuplot to PATH  
+2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)  
+3. Using vcpkg, install boost  
 ```
 .\vcpkg.exe install boost:x64-windows boost:x86-windows
 .\vcpkg.exe integrate install
-
+```
 # Test codes for libraries
 SFML
 ```
