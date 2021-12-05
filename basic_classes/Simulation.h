@@ -1,7 +1,5 @@
 #pragma once
 
-#include <list>
-#include <limits>
 #include <cstdlib>
 
 #include "Map.h"
@@ -11,108 +9,109 @@ class Simulation {
 protected:
 	int distToSearch[7] = { 1, 3, 6, 10, 15, 21, 28 };
 	int ariSeqSum[8] = { 0, 0, 1, 3, 6, 10, 15, 21 };
-	Map* simulationMap = nullptr;
+	Map* simMap = nullptr;
 
-	Simulation(Map* simulationMap) : simulationMap(simulationMap) {}
+public:
+	Simulation(Map* simulationMap) : simMap(simulationMap) {}
 
 	void transitionFunc() {
-		vector<Cell*> cellsWithCars = simulationMap->getCellsWithCars();
-		vector<int> newCarSpeeds;
-		for (Cell* carCell : cellsWithCars) {
-			newCarSpeeds.push_back(evalNewCarSpeed(carCell));
+		vector<Cell*> cellsWithVehs = simMap->getCellsWithVehs();
+		vector<int> newVehsSpeeds;
+		for (Cell* vehCell : cellsWithVehs) {
+			newVehsSpeeds.push_back(evalNewVehSpeed(vehCell));
 		}
-		simulationMap->setCellsWithCars(moveCars(cellsWithCars, newCarSpeeds));
+		simMap->setCellsWithVehs(moveVehs(cellsWithVehs, newVehsSpeeds));
 	}
 
 private:
-	int evalNewCarSpeed(Cell* carCell) {
-		int curCarSpeed = carCell->getVehicle()->getSpeed();
+	int evalNewVehSpeed(Cell* vehCell) {
+		int curVehSpeed = vehCell->getVehicle()->getSpeed();
 		bool canSpeedUp = true;
 		int speedLimit = std::numeric_limits<int>::max();
-		Cell* tempCell = carCell;
+		Cell* tempCell = vehCell;
 		int randEvent = 0;
 		if (std::rand() % 100 + 1 <= 20) {
 			randEvent = -1;
 		}
-		for (int i = 1; i <= distToSearch[curCarSpeed]; i++) {
+		for (int i = 1; i <= distToSearch[curVehSpeed]; i++) {
 			tempCell = tempCell->getNextCell();
 			if (tempCell == nullptr) {
 				break;
 			}
-			if (i <= curCarSpeed && canSpeedUp == true && curCarSpeed >= tempCell->getMaxSpeed()) {
+			if (i <= curVehSpeed && canSpeedUp == true && curVehSpeed >= tempCell->getMaxSpeed()) {
 				canSpeedUp = false;
 			}
 			if (tempCell->getMaxSpeed() < speedLimit) {
 				speedLimit = tempCell->getMaxSpeed();
-				if ((int)(1.0 * (speedLimit + curCarSpeed + 1) / 2 * (curCarSpeed - speedLimit) + 0.5) > i - 1) {
-					return curCarSpeed - 1;
+				if ((int)(1.0 * (speedLimit + curVehSpeed + 1) / 2 * (curVehSpeed - speedLimit) + 0.5) > i - 1) {
+					return curVehSpeed - 1;
 				}
-				if (canSpeedUp == true && (int)(1.0 * (speedLimit + curCarSpeed + 2) / 2 * (curCarSpeed - speedLimit + 1) + 0.5) > i - 1) {
+				if (canSpeedUp == true && (int)(1.0 * (speedLimit + curVehSpeed + 2) / 2 * (curVehSpeed - speedLimit + 1) + 0.5) > i - 1) {
 					canSpeedUp = false;
 				}
 			}
 			if (tempCell->getVehicle() != nullptr) {
-				int nextCarSpeed = tempCell->getVehicle()->getSpeed();
-				if (ariSeqSum[curCarSpeed + 1] - ariSeqSum[nextCarSpeed] > i - 1) {
-					return curCarSpeed - 1;
+				int nextVehSpeed = tempCell->getVehicle()->getSpeed();
+				if (ariSeqSum[curVehSpeed + 1] - ariSeqSum[nextVehSpeed] > i - 1) {
+					return curVehSpeed - 1;
 				}
-				if (canSpeedUp == true && ariSeqSum[curCarSpeed + 2] - ariSeqSum[nextCarSpeed] <= i - 1) {
-					return curCarSpeed + 1 + randEvent;
+				if (canSpeedUp == true && ariSeqSum[curVehSpeed + 2] - ariSeqSum[nextVehSpeed] <= i - 1) {
+					return curVehSpeed + 1 + randEvent;
 				}
-				if (curCarSpeed > 0) {
-					return curCarSpeed + randEvent;
+				if (curVehSpeed > 0) {
+					return curVehSpeed + randEvent;
 				}
 				else {
-					return curCarSpeed;
+					return curVehSpeed;
 				}		
 			}
 		}
 		if (canSpeedUp == true) {
-			return curCarSpeed + 1 + randEvent;
+			return curVehSpeed + 1 + randEvent;
 		}
 		else {
-			if (curCarSpeed > 0) {
-				return curCarSpeed + randEvent;
+			if (curVehSpeed > 0) {
+				return curVehSpeed + randEvent;
 			}
 			else {
-				return curCarSpeed;
+				return curVehSpeed;
 			}
 		}
 	}
 
-	vector<Cell*> moveCars(vector<Cell*> cellsWithCars, vector<int> newCarSpeeds) {
-		vector<Cell*> newCellsWithCars;
-		vector<Vehicle*> cars;
-		vector<Cell*> carsDestCells;
-		for (unsigned int i = 0; i < cellsWithCars.size(); i++) {
-			if (newCarSpeeds[i] == 0) {
-				newCellsWithCars.push_back(cellsWithCars[i]);
-				cellsWithCars[i]->getVehicle()->setSpeed(0);
+	vector<Cell*> moveVehs(vector<Cell*> cellsWithVehs, vector<int> newVehsSpeeds) {
+		vector<Cell*> newCellsWithVehs;
+		vector<Vehicle*> vehs;
+		vector<Cell*> vehsDestCells;
+		for (unsigned int i = 0; i < cellsWithVehs.size(); i++) {
+			if (newVehsSpeeds[i] == 0) {
+				newCellsWithVehs.push_back(cellsWithVehs[i]);
+				cellsWithVehs[i]->getVehicle()->setSpeed(0);
 				continue;
 			}
-			bool carDeleted = false;
-			Cell* tempCell = cellsWithCars[i];
-			for (int j = 0; j < newCarSpeeds[i]; j++) {
+			bool isVehDeleted = false;
+			Cell* tempCell = cellsWithVehs[i];
+			for (int j = 0; j < newVehsSpeeds[i]; j++) {
 				tempCell = tempCell->getNextCell();
 				if (tempCell == nullptr) {
-					cellsWithCars[i]->getVehicle()->~Vehicle();
-					cellsWithCars[i]->setVehicle(nullptr);
-					carDeleted = true;
+					cellsWithVehs[i]->getVehicle()->~Vehicle();
+					cellsWithVehs[i]->setVehicle(nullptr);
+					isVehDeleted = true;
 					break;
 				}
 			}
-			if (carDeleted == true) {
+			if (isVehDeleted == true) {
 				continue;
 			}
-			cellsWithCars[i]->getVehicle()->setSpeed(newCarSpeeds[i]);
-			cars.push_back(cellsWithCars[i]->getVehicle());
-			cellsWithCars[i]->setVehicle(nullptr);
-			carsDestCells.push_back(tempCell);
-			newCellsWithCars.push_back(tempCell);
+			cellsWithVehs[i]->getVehicle()->setSpeed(newVehsSpeeds[i]);
+			vehs.push_back(cellsWithVehs[i]->getVehicle());
+			cellsWithVehs[i]->setVehicle(nullptr);
+			vehsDestCells.push_back(tempCell);
+			newCellsWithVehs.push_back(tempCell);
 		}
-		for (unsigned int i = 0; i < cars.size(); i++) {
-			carsDestCells[i]->setVehicle(cars[i]);
+		for (unsigned int i = 0; i < vehs.size(); i++) {
+			vehsDestCells[i]->setVehicle(vehs[i]);
 		}
-		return newCellsWithCars;
+		return newCellsWithVehs;
 	}
 };
