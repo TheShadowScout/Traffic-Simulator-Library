@@ -11,63 +11,49 @@ Student project of a library in C ++ used to create a road traffic simulator.
 
 # Table of Contents
 1. [Introduction](#introduction)
-2. [Installation without preinstalled libraries](#installation-without-preinstalled-libraries)
-3. [Installation with preinstalled libraries](#installation-with-preinstalled-libraries)
-4. [Test codes for libraries](#test-codes-for-libraries)
-5. [Basic classes](#basic-classes)  
-5.1. [Cell](#cell)  
-5.2. [Road](#road)  
-5.3. [Map](#map)  
-5.4. [Vehicle](#vehicle)  
-5.5. [Special cells](#special-cells)  
-5.5.1 [Generator](#generator)  
-5.5.2 [Destructor](#destructor)  
-5.5.3 [Teleporter](#teleporter)  
-6. [Used libraries](#used-libraries)
+<<<<<<< HEAD:README.md
+2. [Basic classes](#basic-classes)  
+2.1. [Cell](#cell)  
+2.2. [Road](#road)  
+2.3. [Map](#map)  
+2.4. [Vehicle](#vehicle)  
+2.5. [Special cells](#special-cells)  
+2.5.1 [Generator](#generator)  
+2.5.2 [Destructor](#destructor)  
+2.5.3 [Teleporter](#teleporter)  
 
 # Introduction
-# Installation without preinstalled libraries
-SFML  
-VS Community:
-1. Download SFML and add it to project folder  
-2. Project -> RMB -> Properties  
-3. Configuration Properties  
-4. Configuration **All configurations**  
-4.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]  
-4.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]  
-4.3 Linker  ->  Input    ->  Additional Dependencies: [IMPORTANT: ADD THESE LIBRARIES BEFORE KERNEL ETC.]  
-4.3.1 Configuration **Debug**: sfml-graphics-d.lib, sfml-window-d.lib, sfml-system-d.lib  
-4.3.2 Configuration **Release**: sfml-graphics.lib, sfml-window.lib, sfml-system.lib  
-4.4 Put **ALL** files from SFML/bin in your project folder  
+=======
+2. [Installation](#installation)
+3. [Test codes for libraries](#test_codes_for_libraries)
+4. [Basic classes](#basic-classes)  
+4.1. [Cell](#cell)  
+4.2. [Road](#road)  
+4.3. [Map](#map)  
+4.4. [Vehicle](#vehicle)  
+4.5. [Special cells](#special-cells)  
+4.5.1 [Generator](#generator)  
+4.5.2 [Destructor](#destructor)  
+4.5.3 [Teleporter](#teleporter)  
 
-Gnuplot  
-VS Community:
-1. Install Gnuplot  
-1.1 Add Gnuplot to PATH  
-2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)  
-3. Using vcpkg, install boost  
+# Introduction
+# Installation
+1. Download to selected folder [vcpkg](https://vcpkg.io/en/getting-started.html)  
+2. Using Developer Command Prompt, go to vcpkg folder and install vcpkg.exe
+```
+.\bootstrap-vcpkg.bat
+```
+2. Install SFML 
+```
+.\vcpkg install sfml
+```
+3. Install Boost 
 ```
 .\vcpkg.exe install boost:x64-windows boost:x86-windows
-.\vcpkg.exe integrate install
 ```
-
-# Installation with preinstalled libraries
-SFML  
-VS Community:
-1. Project -> RMB -> Properties  
-2. Configuration Properties  
-3. Configuration **All configurations**  
-3.1 C/C++   ->  General  ->  Additional Include Directories: [Path to SFML library/include]  
-3.2 Linker  ->  General  ->  Additional Library Directories: [Path to SFML library/lib]  
-
-Gnuplot  
-VS Community:
-1. Install Gnuplot  
-1.1 Add Gnuplot to PATH  
-2. Install vcpkg (if you'll have troubles, go to https://www.youtube.com/watch?v=gsLIUtmTs8Q)  
-3. Using vcpkg, install boost  
+4. Install [Gnuplot](http://www.gnuplot.info/download.html) and add it to environment variables / PATH
+5. Use command
 ```
-.\vcpkg.exe install boost:x64-windows boost:x86-windows
 .\vcpkg.exe integrate install
 ```
 # Test codes for libraries
@@ -165,6 +151,7 @@ int main() {
 }
 ```
 
+>>>>>>> 9be679a (Change installation of libraries):IPZ/README.md
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  
@@ -292,7 +279,3 @@ Inherits from: [Cell](#cell)
 | ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | void Teleporter			| --------------------------------------------- | Class constructor																									|
 | void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
-
-# Used libraries
-- [SFML](https://www.sfml-dev.org)
-- [Gnuplot-iostream](https://github.com/dstahlke/gnuplot-iostream) by dstahlke
