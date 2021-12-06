@@ -6,7 +6,7 @@
 #include "Road.h"
 #include "Cell.h"
 #include <map>
-#include <list>
+#include <vector>
 
 class Map
 {
@@ -16,7 +16,7 @@ class Map
 	std::map<Generator, int> generators;
 	std::map<Destructor, int> destructors;
 	std::map<Teleporter, int> teleporters;
-	std::list<Cell> cellsWithCars;
+	std::vector<Cell> cellsWithCars;
 
 	public:
 	//name - nazwa nowej mapy
