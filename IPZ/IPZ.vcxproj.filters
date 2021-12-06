@@ -16,31 +16,34 @@
     <Filter Include="Project Files">
       <UniqueIdentifier>{06982260-1816-445a-9024-6fd6deb71e40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Basic classes">
+      <UniqueIdentifier>{a587244a-4fcd-4ada-803e-5893b1f23a3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic_classes\Cell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Destructor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Generator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Road.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Teleporter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Vehicle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gnuplot-iostream.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Cell.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Destructor.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Generator.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Map.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Road.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Teleporter.h">
+      <Filter>Header Files\Basic classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Vehicle.h">
+      <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
