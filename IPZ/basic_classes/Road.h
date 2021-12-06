@@ -1,25 +1,25 @@
 #pragma once
 #include <string>
-#include <list>
+#include <vector>
 
 class Road{
     protected:
     int IDRoad;
     int maxSpeed;
     std::string name;
-    std::list<Cell> road;
-    std::list<Cell> head;
-    std::list<Cell> tail;
+    std::vector<Cell> road;
+    std::vector<Cell> head;
+    std::vector<Cell> tail;
 
     public:
-    // maxSpeed - maksymalna prêdkoœæ, name - nazwa drogi
+    // maxSpeed - maksymalna prï¿½dkoï¿½ï¿½, name - nazwa drogi
     Road(int maxSpeed, std::string name){
         IDRoad=1;  
         this->maxSpeed = maxSpeed;
         this->name = name;
     }
 
-    // maxSpeed - maksymalna prêdkoœæ
+    // maxSpeed - maksymalna prï¿½dkoï¿½ï¿½
     void setMaxSpeed(int maxSpeed)
     {
         this->maxSpeed=maxSpeed;
