@@ -11,19 +11,6 @@ Student project of a library in C ++ used to create a road traffic simulator.
 
 # Table of Contents
 1. [Introduction](#introduction)
-<<<<<<< HEAD:README.md
-2. [Basic classes](#basic-classes)  
-2.1. [Cell](#cell)  
-2.2. [Road](#road)  
-2.3. [Map](#map)  
-2.4. [Vehicle](#vehicle)  
-2.5. [Special cells](#special-cells)  
-2.5.1 [Generator](#generator)  
-2.5.2 [Destructor](#destructor)  
-2.5.3 [Teleporter](#teleporter)  
-
-# Introduction
-=======
 2. [Installation](#installation)
 3. [Test codes for libraries](#test_codes_for_libraries)
 4. [Basic classes](#basic-classes)  
@@ -56,6 +43,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 ```
 .\vcpkg.exe integrate install
 ```
+6. Change C++ version to C++ 17
 # Test codes for libraries
 SFML
 ```
@@ -150,8 +138,6 @@ int main() {
 #endif
 }
 ```
-
->>>>>>> 9be679a (Change installation of libraries):IPZ/README.md
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  

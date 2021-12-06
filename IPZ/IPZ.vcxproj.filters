@@ -44,13 +44,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md">
-      <Filter>Project Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Project Files</Filter>
+    </None>
+    <None Include="..\.gitignore">
+      <Filter>Project Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
