@@ -169,23 +169,26 @@ Class name: **Cell**
 Filename with class: **Road.h**  
 Class name: **Road**  
 
-| Variable name | Variable type			| Description																|
-| ------------- | --------------------- | ------------------------------------------------------------------------- |
-| IDRoad		| int					| variable that holds a [Road](#road) ID									|
-| maxSpeed		| int					| variable that holds max vehicle speed										|
-| name			| string				| variable that holds a [Road](#road) name									|
-| road			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the road			|
-| head			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the head of road |
-| tail			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the tail of road |
+| Variable name | Variable type			        | Description																|
+| ------------- | ----------------------------- | ------------------------------------------------------------------------- |
+| IDRoad		| int					        | variable that holds a [Road](#road) ID									|
+| maxSpeed		| int					        | variable that holds max vehicle speed										|
+| length        | int                           | variable that holds road length                                           |
+| height        | int                           | variable that holds road height                                           |
+| name			| string				        | variable that holds a [Road](#road) name									|
+| road			| vector<vector<[Cell](#cell)>>	| variable that holds vector of [Cells](#cell) creating up the road			|
+| head			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the head of road |
+| tail			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the tail of road |
 
-| Function type and name	| Arguments					| Description												|
-| ------------------------- | ------------------------- | --------------------------------------------------------- |
-| void Road					| int maxSpeed, string name | Class constructor											|
-| void setMaxSpeed			| int maxSpeed				| Function sets new max speed in current [Road](#road)		|
-| void setName				| string name				| Function sets name in current [Road](#road)				|
-| int getMaxSpeed			| ------------------------- | Function returns max speed of current [Road](#road)		| 
-| string getName			| ------------------------- | Function returns name of current [Road](#road)			|
-| void createXML			| ------------------------- | Function creates new XML file of current [Road](#road)	|
+| Function type and name	| Arguments					                         | Description												              |
+| ------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------- | 
+| [Road](#Road)				| int maxSpeed, string name, int length, int height  | Class constructor									 	              |
+| void CreateRoad           | -------------------------------------------------- | Function creates empty [Road](#Road) from length and height parametrs  |
+| void setMaxSpeed			| int maxSpeed				                         | Function sets new max speed in current [Road](#Road)		              |
+| void setName				| string name				                         | Function sets name in current [Road](#Road)				              |
+| int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
+| string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
+| void createXML			| -------------------------------------------------- | Function creates new XML file of current [Road](#Road)	              |
 
 ## Map
 Filename with class: **Map.h**  
