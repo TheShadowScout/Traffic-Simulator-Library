@@ -1,9 +1,10 @@
 #pragma once
 
 #include <cstdlib>
+#include <vector>
 
-#include "Map.h"
-#include "Cell.h"
+#include "Basic_classes/Map.h"
+#include "Basic_classes/Cell.h"
 
 class Simulation {
 protected:
@@ -15,8 +16,8 @@ public:
 	Simulation(Map* simulationMap) : simMap(simulationMap) {}
 
 	void transitionFunc() {
-		vector<Cell*> cellsWithVehs = simMap->getCellsWithVehs();
-		vector<int> newVehsSpeeds;
+		std::vector<Cell*> cellsWithVehs = simMap->getCellsWithVehs();
+		std::vector<int> newVehsSpeeds;
 		for (Cell* vehCell : cellsWithVehs) {
 			newVehsSpeeds.push_back(evalNewVehSpeed(vehCell));
 		}
@@ -79,10 +80,10 @@ private:
 		}
 	}
 
-	vector<Cell*> moveVehs(vector<Cell*> cellsWithVehs, vector<int> newVehsSpeeds) {
-		vector<Cell*> newCellsWithVehs;
-		vector<Vehicle*> vehs;
-		vector<Cell*> vehsDestCells;
+	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<int> newVehsSpeeds) {
+		std::vector<Cell*> newCellsWithVehs;
+		std::vector<Vehicle*> vehs;
+		std::vector<Cell*> vehsDestCells;
 		for (unsigned int i = 0; i < cellsWithVehs.size(); i++) {
 			if (newVehsSpeeds[i] == 0) {
 				newCellsWithVehs.push_back(cellsWithVehs[i]);

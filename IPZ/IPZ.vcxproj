@@ -27,6 +27,7 @@
     <ClInclude Include="basic_classes\Teleporter.h" />
     <ClInclude Include="basic_classes\Vehicle.h" />
     <ClInclude Include="gnuplot-iostream.h" />
+    <ClInclude Include="Simulation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

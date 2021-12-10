@@ -50,7 +50,7 @@ class Cell {
         return previousCell;
     }
 
-    Cell* getNextCell(Cell* newNextCell) {
+    Cell* getNextCell() {
         return nextCell;
     }
 

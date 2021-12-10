@@ -1,8 +1,6 @@
 #pragma once
 #include <iostream>
 #include "Generator.h"
-#include "Destructor.h"
-#include "Teleporter.h"
 #include "Road.h"
 #include "Cell.h"
 #include <map>
@@ -14,14 +12,20 @@ class Map
 	std::string name;
 	std::map<Road, int> roads;
 	std::map<Generator, int> generators;
-	std::map<Destructor, int> destructors;
-	std::map<Teleporter, int> teleporters;
-	std::vector<Cell> cellsWithCars;
+	std::vector<Cell*> cellsWithVehs;
 
 	public:
 	//name - nazwa nowej mapy
 	Map(std::string name) {
 		this->name = name;
+	}
+
+	void setCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
+		this->cellsWithVehs = newCellsWithVehs;
+	}
+
+	std::vector<Cell*> getCellsWithVehs() {
+		return this->cellsWithVehs;
 	}
 
 	void createXML() {
