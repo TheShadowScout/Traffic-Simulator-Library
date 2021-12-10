@@ -45,6 +45,9 @@
     <ClInclude Include="basic_classes\Vehicle.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
+    <ClInclude Include="Simulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
