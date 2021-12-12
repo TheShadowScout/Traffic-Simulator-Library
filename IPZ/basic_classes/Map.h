@@ -44,6 +44,14 @@ public:
 		return cellsWithVehs;
 	}
 
+	void setCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
+		this->cellsWithVehs = newCellsWithVehs;
+	}
+
+	std::vector<Cell*> getCellsWithVehs() {
+		return this->cellsWithVehs;
+	}
+
 	void createXML() {
 	}
 };
