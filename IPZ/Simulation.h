@@ -2,26 +2,46 @@
 
 #include <cstdlib>
 #include <vector>
+#include <string>
 
-#include "Basic_classes/Map.h"
-#include "Basic_classes/Cell.h"
+#include "basic_classes/Map.h"
+#include "basic_classes/Cell.h"
 
 class Simulation {
 protected:
 	int distToSearch[7] = { 1, 3, 6, 10, 15, 21, 28 };
 	int ariSeqSum[8] = { 0, 0, 1, 3, 6, 10, 15, 21 };
-	Map* simMap = nullptr;
+	double randEventProb;
+	Map* simMap;
 
 public:
-	Simulation(Map* simulationMap) : simMap(simulationMap) {}
+	Simulation(Map* simMap, double randEventProb) : simMap(simMap), randEventProb(randEventProb) {}
 
 	void transitionFunc() {
-		std::vector<Cell*> cellsWithVehs = simMap->getCellsWithVehs();
+		std::vector<Cell*> cellsWithVehs = simMap->getcellsWithVehs();
 		std::vector<int> newVehsSpeeds;
 		for (Cell* vehCell : cellsWithVehs) {
 			newVehsSpeeds.push_back(evalNewVehSpeed(vehCell));
 		}
-		simMap->setCellsWithVehs(moveVehs(cellsWithVehs, newVehsSpeeds));
+		std::vector<Cell*> newCellsWithVehs = moveVehs(cellsWithVehs, newVehsSpeeds);
+		std::vector<Generator*> generators = simMap->getGenerators();
+		for (Generator* generator : generators) {
+			if (generator->createVeh() == true) {
+				newCellsWithVehs.push_back(generator);
+			}
+		}
+		simMap->setcellsWithVehs(newCellsWithVehs);
+	}
+
+	std::string tempToString() {
+		std::string simStr = "";
+		for (Generator* generator : simMap->getGenerators()) {
+			simStr += generator->tempToString();
+		}
+		for (Road* road : simMap->getRoads()) {
+			simStr += road->tempToString();
+		}
+		return simStr += "\n";
 	}
 
 private:
@@ -31,7 +51,7 @@ private:
 		int speedLimit = std::numeric_limits<int>::max();
 		Cell* tempCell = vehCell;
 		int randEvent = 0;
-		if (std::rand() % 100 + 1 <= 20) {
+		if (1.0 * std::rand() / RAND_MAX <= randEventProb) {
 			randEvent = -1;
 		}
 		for (int i = 1; i <= distToSearch[curVehSpeed]; i++) {

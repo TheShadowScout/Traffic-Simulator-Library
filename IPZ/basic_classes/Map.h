@@ -1,23 +1,47 @@
 #pragma once
+
 #include <iostream>
+#include <vector>
+#include <map>
+
 #include "Generator.h"
 #include "Road.h"
 #include "Cell.h"
-#include <map>
-#include <vector>
 
 class Map
 {
-	protected:
+protected:
 	std::string name;
-	std::map<Road, int> roads;
-	std::map<Generator, int> generators;
+	std::vector<Road*> roads;
+	std::vector<Generator*> generators;
 	std::vector<Cell*> cellsWithVehs;
 
-	public:
+public:
 	//name - nazwa nowej mapy
-	Map(std::string name) {
-		this->name = name;
+	Map(std::string name) : name(name) {}
+
+	void addRoad(Road* road) {
+		roads.push_back(road);
+	}
+
+	void addGenerator(Generator* generator) {
+		generators.push_back(generator);
+	}
+
+	void setcellsWithVehs(std::vector<Cell*> cellsWithVehs) {
+		this->cellsWithVehs = cellsWithVehs;
+	}
+
+	std::vector<Road*> getRoads() {
+		return roads;
+	}
+
+	std::vector<Generator*> getGenerators() {
+		return generators;
+	}
+
+	std::vector<Cell*> getcellsWithVehs() {
+		return cellsWithVehs;
 	}
 
 	void setCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
@@ -29,6 +53,16 @@ class Map
 	}
 
 	void createXML() {
-		return;
 	}
 };
+
+void linkCells(Cell* previousCell, Cell* nextCell) {
+	previousCell->setNextCell(nextCell);
+	nextCell->setPreviousCell(previousCell);
+}
+
+void linkCells(Generator* previousCell, Cell* nextCell) {
+	previousCell->setNextCell(nextCell);
+	nextCell->setPreviousCell(previousCell);
+	previousCell->setMaxSpeed(nextCell->getMaxSpeed());
+}
