@@ -59,7 +59,7 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StatisticsGenerator.cpp">
+    <ClCompile Include="Functionality\StatisticsGenerator.cpp">
       <Filter>Header Files\Functionality</Filter>
     </ClCompile>
   </ItemGroup>

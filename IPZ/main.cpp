@@ -1,4 +1,4 @@
-#include "StatisticsGenerator.cpp"
+#include "Functionality/StatisticsGenerator.cpp"
 
 int main()
 {

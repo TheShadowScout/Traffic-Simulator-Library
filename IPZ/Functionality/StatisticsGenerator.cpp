@@ -24,10 +24,6 @@ private:
 			"light",
 			"dark"
 	};
-	const char* statistics[10] = {
-		"Œrednia prêdkoœæ pojazdu",
-		"Œrdnia masa pojazdu",
-		"Œrednia liczba pojazdów na sekundê" };
 	int plotCounter = 0;
 	std::string path = "Statistics/page.html";
 	LPCWSTR filename = L"page.html";
@@ -42,14 +38,14 @@ private:
 			"<meta name = 'viewport' content = 'width=device-width, initial-scale=1'>\n"
 			"<link href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel = 'stylesheet' integrity = 'sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin = 'anonymous'>\n"
 			"<link rel = 'stylesheet' href = 'page.css'>\n"
-			"<link href = '/fontawesome/css/all.css'>\n"
-			"<script defer src = '/fontawesome/js/all.js'></script>\n"
-			"<title>Statystyki</title>\n"
+			"<link href = 'fontawesome/css/all.css'>\n"
+			"<script defer src = 'fontawesome/js/all.js'></script>\n"
+			"<title>Statistics</title>\n"
 			"</head>\n"
 			"<body>\n"
 			"<div class = 'container-fluid'>\n"
 			"<div class = 'bg-primary bg-gradient text-center'>\n"
-			"<div class = 'text-white card-header statistics-title'>Statystyki</div>\n"
+			"<div class = 'text-white card-header statistics-title'>Statistics</div>\n"
 			"</div>\n"
 			"<div class = 'row'>\n"
 			"<div class = 'col-4'>\n";
@@ -63,9 +59,9 @@ private:
 		}
 		std::string stringHolder =
 			"<div class = 'text-center text-white bg-" + color + " rounded-2 mt-2'>\n"
-			"<i class = 'fas fa-car'></i>"
+			"<i class = 'fas fa-car'></i> "
 			+ statisticName +
-			"<i class = 'fas fa-car'></i>\n"
+			" <i class = 'fas fa-car'></i>\n"
 			"<div class = 'statistic-info text-center'>"
 			+ statisticValue +
 			"</div>\n"
@@ -87,7 +83,7 @@ private:
 			stringHolder =
 				"<div class = 'row'>\n"
 				"<div class = 'col-6'>\n"
-				"<div class = 'row'><img src = 'https://www.w3schools.com/images/w3schools_green.jpg' alt = 'W3Schools.com'></div>\n"
+				"<div class = 'row'><img src='"+plotPath+"'></div>\n"
 				"</div>\n";
 			plotCounter++;
 		}
@@ -95,7 +91,7 @@ private:
 		{
 			stringHolder =
 				"<div class = 'col-6'>\n"
-				"<div class = 'row'><img src = 'https://www.w3schools.com/images/w3schools_green.jpg' alt = 'W3Schools.com'></div>\n"
+				"<div class = 'row'><img src='" +plotPath+ "'></div>\n"
 				"</div>\n"
 				"</div>\n";
 			plotCounter--;
@@ -118,13 +114,17 @@ public:
 		srand(time(NULL));
 		std::ofstream MyFile(path);
 		MyFile << initializeStatistics();
-		MyFile << addStatistic("statystyka1", "4", true);
-		MyFile << addStatistic("statystyka2", "6", true);
-		MyFile << addStatistic("statystyka3", "8", true);
-		MyFile << addStatistic("statystyka4", "10", true);
+		MyFile << addStatistic("Average speed", "4", true);
+		MyFile << addStatistic("Average size", "0.23", true);
+		MyFile << addStatistic("Average vehicles count per second", "3.14", true);
+		MyFile << addStatistic("Most common vehicle color", "Red", true);
 		MyFile << initializePlots();
-		MyFile << addPlot("tekst");
-		MyFile << addPlot("tekst");
+		MyFile << addPlot("Plots/plot1.png");
+		MyFile << addPlot("Plots/plot2.png");
+		MyFile << addPlot("Plots/plot3.png");
+		MyFile << addPlot("Plots/plot4.png");
+		MyFile << addPlot("Plots/plot5.png");
+		MyFile << addPlot("Plots/plot6.png");
 		MyFile << endStatistics();
 		MyFile.close();
 		return 0;
