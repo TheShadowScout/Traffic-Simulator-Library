@@ -1,18 +1,20 @@
 #pragma once
+
 #include "Vehicle.h"
 
 class Cell {
-    protected:
-    Vehicle* vehicle;
-
+protected:
     Cell* rightCell;
     Cell* leftCell;
     Cell* previousCell;
     Cell* nextCell;
+    Vehicle* vehicle;
+    int maxSpeed;
 
 
-    public:
-    Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr) {}
+public:
+    Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0) {}
+    Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed) {}
 
     void setVehicle(Vehicle* newVehicle) {
         this->vehicle = newVehicle;
@@ -34,6 +36,10 @@ class Cell {
         this->nextCell = newNextCell;
     }
 
+    void setMaxSpeed(int maxSpeed) {
+        this->maxSpeed = maxSpeed;
+    }
+
     Vehicle* getVehicle() {
         return vehicle;
     }
@@ -50,8 +56,11 @@ class Cell {
         return previousCell;
     }
 
-    Cell* getNextCell(Cell* newNextCell) {
+    Cell* getNextCell() {
         return nextCell;
     }
 
+    int getMaxSpeed() {
+        return maxSpeed;
+    }
 };

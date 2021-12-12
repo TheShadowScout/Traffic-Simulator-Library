@@ -1,49 +1,59 @@
 #pragma once
+
+#include <iostream>
 #include <string>
 #include <vector>
+
 #include "Cell.h"
-using namespace std;
 
 class Road {
+public:
+    int static IDcnt;
+
 protected:
-    int IDRoad = 1;
+    int ID;
     int maxSpeed;
     int length;
     int height;
 
-    string name;
-    vector<vector<Cell*> > road;
-    vector<Cell*> head;
-    vector<Cell*> tail;
+    std::string name;
+    std::vector<std::vector<Cell*>> road;
+
+public:
+    std::vector<Cell*> head;
+    std::vector<Cell*> tail;
 
 public:
     // maxSpeed - maksymalna pr�dko��, name - nazwa drogi
-    Road(int maxSpeed, string name, int length, int height) {
-        IDRoad += 1;
-        this->maxSpeed = maxSpeed;
-        this->name = name;
-        this->length = length;
-        this->height = height;
+    Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
+        ID = IDcnt++;
+        createRoad();
+    }
+
+    Road(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+        ID = IDcnt++;
+        name = std::to_string(ID);
+        createRoad();
     }
 
     void createRoad() {
         for (int i = 0; i < height; i++) {
-            vector<Cell*> newRoad;
+            std::vector<Cell*> newRoadLane;
             for (int j = 0; j < length; j++) {
-                Cell* newCell = new Cell();
+                Cell* newCell = new Cell(maxSpeed);
                 if (j == 0) {
                     head.push_back(newCell);
-                    newRoad.push_back(newCell);
+                    newRoadLane.push_back(newCell);
                 }
                 else {
-                    newCell->setPreviousCell(newRoad[j - 1]);
-                    newRoad[j - 1]->setNextCell(newCell);
-                    newRoad.push_back(newCell);
+                    newCell->setPreviousCell(newRoadLane[j - 1]);
+                    newRoadLane[j - 1]->setNextCell(newCell);
+                    newRoadLane.push_back(newCell);
                     if (j == length - 1)
                         tail.push_back(newCell);
                 }
             }
-            road.push_back(newRoad);
+            road.push_back(newRoadLane);
             if (i > 0) {
                 for (int j = 0; j < length; j++) {
                     road[i][j]->setLeftCell(road[i - 1][j]);
@@ -54,24 +64,43 @@ public:
     }
 
     // maxSpeed - maksymalna pr�dko��
-    void setMaxSpeed(int maxSpeed)
-    {
+    void setMaxSpeed(int maxSpeed) {
         this->maxSpeed = maxSpeed;
     }
 
     // name - nazwa drogi
-    void setName(string name) {
+    void setName(std::string name) {
         this->name = name;
     }
+
     int getMaxSpeed() {
         return maxSpeed;
     }
-    int getIDRoad() {
-        return IDRoad;
+
+    int getID() {
+        return ID;
     }
-    string getName() {
+
+    std::string getName() {
         return name;
     }
-    void createXml;
+
+    void createXml() {
+    }
+
+    std::string tempToString() {
+        std::string roadStr = "";
+        for (std::vector<Cell*> roadLane : road) {
+            for (Cell* laneCell : roadLane) {
+                if (laneCell->getVehicle() == nullptr) {
+                    roadStr += ".";
+                }
+                else {
+                    roadStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                }
+            }
+            roadStr += "\n";
+        }
+        return roadStr;
     }
 };
