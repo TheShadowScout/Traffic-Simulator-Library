@@ -19,21 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic_classes\Cell.h" />
-    <ClInclude Include="basic_classes\Generator.h" />
-    <ClInclude Include="basic_classes\Map.h" />
-    <ClInclude Include="basic_classes\Road.h" />
-    <ClInclude Include="basic_classes\Vehicle.h" />
+    <ClInclude Include="Basic_Classes\artifacts\destructor.h" />
+    <ClInclude Include="Basic_Classes\artifacts\teleporter.h" />
+    <ClInclude Include="Basic_Classes\Cell.h" />
+    <ClInclude Include="Basic_Classes\Generator.h" />
+    <ClInclude Include="Basic_Classes\Map.h" />
+    <ClInclude Include="Basic_Classes\Road.h" />
+    <ClInclude Include="Basic_Classes\Vehicle.h" />
     <ClInclude Include="gnuplot-iostream.h" />
-    <ClInclude Include="Simulation.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
   </ItemGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -45,7 +50,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -58,7 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

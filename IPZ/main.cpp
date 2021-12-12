@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+#include "Functionality/StatisticsGenerator.cpp"
 
 int main()
 {

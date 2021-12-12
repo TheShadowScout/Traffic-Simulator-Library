@@ -16,15 +16,27 @@
     <Filter Include="Project Files">
       <UniqueIdentifier>{06982260-1816-445a-9024-6fd6deb71e40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Basic classes">
-      <UniqueIdentifier>{a587244a-4fcd-4ada-803e-5893b1f23a3b}</UniqueIdentifier>
+    <Filter Include="Header Files\Basic Classes">
+      <UniqueIdentifier>{f8c96fa9-e29c-4c6b-8fd3-4cdff1408b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Artifacts">
+      <UniqueIdentifier>{f0143dc1-00e0-425c-9a7a-9d225820ae31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Libraries">
+      <UniqueIdentifier>{2df8bda9-955f-47a6-966c-c8da46fa5deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Functionality">
+      <UniqueIdentifier>{ee378953-56b6-4507-b8f2-b2a25d099262}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gnuplot-iostream.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Basic_Classes\Vehicle.h">
+      <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="basic_classes\Cell.h">
+    <ClInclude Include="Basic_Classes\Road.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Destructor.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
     <ClInclude Include="basic_classes\Generator.h">
@@ -33,19 +45,25 @@
     <ClInclude Include="basic_classes\Map.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
-    <ClInclude Include="basic_classes\Road.h">
+    <ClInclude Include="Basic_Classes\Cell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="basic_classes\Teleporter.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
     <ClInclude Include="basic_classes\Vehicle.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
-    <ClInclude Include="Simulation.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="gnuplot-iostream.h">
+      <Filter>Header Files\Libraries</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Functionality\StatisticsGenerator.cpp">
+      <Filter>Header Files\Functionality</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
