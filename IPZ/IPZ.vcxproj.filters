@@ -27,9 +27,6 @@
     <ClInclude Include="basic_classes\Cell.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
-    <ClInclude Include="basic_classes\Destructor.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
     <ClInclude Include="basic_classes\Generator.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
@@ -37,9 +34,6 @@
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
     <ClInclude Include="basic_classes\Road.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Teleporter.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
     <ClInclude Include="basic_classes\Vehicle.h">

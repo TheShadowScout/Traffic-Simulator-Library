@@ -20,11 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_classes\Cell.h" />
-    <ClInclude Include="basic_classes\Destructor.h" />
     <ClInclude Include="basic_classes\Generator.h" />
     <ClInclude Include="basic_classes\Map.h" />
     <ClInclude Include="basic_classes\Road.h" />
-    <ClInclude Include="basic_classes\Teleporter.h" />
     <ClInclude Include="basic_classes\Vehicle.h" />
     <ClInclude Include="gnuplot-iostream.h" />
     <ClInclude Include="Simulation.h" />
