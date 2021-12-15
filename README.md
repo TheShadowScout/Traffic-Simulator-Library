@@ -12,7 +12,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Installation](#installation)
-3. [Test codes for libraries](#test_codes_for_libraries)
+3. [Test codes for libraries](#test-codes-for-libraries)
 4. [Basic classes](#basic-classes)  
 4.1. [Cell](#cell)  
 4.2. [Road](#road)  
@@ -22,7 +22,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 4.5.1 [Generator](#generator)  
 4.5.2 [Destructor](#destructor)  
 4.5.3 [Teleporter](#teleporter)  
-5. [Simulation](#Simulation)
+5. [Simulation](#simulation)
 
 # Introduction
 # Installation
