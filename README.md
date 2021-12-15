@@ -22,6 +22,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 4.5.1 [Generator](#generator)  
 4.5.2 [Destructor](#destructor)  
 4.5.3 [Teleporter](#teleporter)  
+5. [Simulation](#Simulation)
 
 # Introduction
 # Installation
@@ -189,6 +190,7 @@ Class name: **Road**
 | int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
 | string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
 | void createXML			| -------------------------------------------------- | Function creates new XML file of current [Road](#Road)	              |
+| string tempToString			| ------------------------- | Function return road as string|
 
 ## Map
 Filename with class: **Map.h**  
@@ -268,3 +270,22 @@ Inherits from: [Cell](#cell)
 | ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | void Teleporter			| --------------------------------------------- | Class constructor																									|
 | void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
+
+## Simulation
+Filename with class: **Simulation.h**  
+Class name: **Simulation**  
+
+| Variable name | Variable type			| Description																|
+| ------------- | --------------------- | ------------------------------------------------------------------------- |
+| distToSearch		| int					| array that holds a distance to search									|
+| ariSeqSum| int    				| array that holds a ...									|
+| randEventProb			| double				| variable that holds random event|
+| simMap			| Map*	| object that holds simulation of map|
+
+| Function type and name	| Arguments					| Description												|
+| ------------------------- | ------------------------- | --------------------------------------------------------- |
+| void Simulation					| Map* simMap, double randEventProb | Class constructor											|
+| void transitionFunc			| ------------------------- | Function return new position to vehicle in next tick|
+| string tempToString			| ------------------------- | Function return simulation move vehicle as string|
+| int evalNewVehSpeed			| Cell* vehCell | Function return new speed for vehicle in next tick| 
+| vector<Cell*> moveVehs|vector<Cell*> cellsWithVehs, vector<int> newVehsSpeeds | Function move vehicle in cells|
