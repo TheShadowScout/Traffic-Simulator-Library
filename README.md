@@ -312,17 +312,17 @@ Inherits from: [Cell](#cell)
 Filename with class: **Simulation.h**  
 Class name: **Simulation**  
 
-| Variable name | Variable type			| Description																|
-| ------------- | --------------------- | ------------------------------------------------------------------------- |
-| distToSearch		| int					| array that holds a distance to search									|
-| ariSeqSum| int    				| array that holds a ...									|
-| randEventProb			| double				| variable that holds random event|
-| simMap			| Map*	| object that holds simulation of map|
+| Variable name | Variable type	| Description														|
+| ------------- | ------------- | ----------------------------------------------------------------- |
+| distToSearch	| int			| array that holds a distance to search								|
+| ariSeqSum		| int    		| array that holds a distance needed to stop [vehicle](#vehicle) 	|
+| randEventProb	| double		| variable that holds random event									|
+| simMap		| [Map*](#map)	| object that holds simulation of [map](#map)								|
 
-| Function type and name	| Arguments					| Description												|
-| ------------------------- | ------------------------- | --------------------------------------------------------- |
-| void Simulation					| Map* simMap, double randEventProb | Class constructor											|
-| void transitionFunc			| ------------------------- | Function return new position to vehicle in next tick|
-| string tempToString			| ------------------------- | Function return simulation move vehicle as string|
-| int evalNewVehSpeed			| Cell* vehCell | Function return new speed for vehicle in next tick| 
-| vector<Cell*> moveVehs|vector<Cell*> cellsWithVehs, vector<int> newVehsSpeeds | Function move vehicle in cells|
+| Function type and name			| Arguments							| Description												|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| void Simulation					| [Map*](#map) simMap, double randEventProb | Class constructor											|
+| void transitionFunc				| --------------------------------- | Function return new position to [vehicle](#vehicle) in next tick|
+| string tempToString				| --------------------------------- | Function return simulation move [vehicle](#vehicle) as string|
+| int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
+| Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
