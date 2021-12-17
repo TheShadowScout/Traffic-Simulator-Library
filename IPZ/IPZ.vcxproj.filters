@@ -36,9 +36,6 @@
     <ClInclude Include="Basic_Classes\Road.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="basic_classes\Destructor.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
     <ClInclude Include="basic_classes\Generator.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
@@ -48,14 +45,17 @@
     <ClInclude Include="Basic_Classes\Cell.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="basic_classes\Teleporter.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
     <ClInclude Include="basic_classes\Vehicle.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
     <ClInclude Include="gnuplot-iostream.h">
       <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Classes\artifacts\destructor.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Classes\artifacts\teleporter.h">
+      <Filter>Header Files\Artifacts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
