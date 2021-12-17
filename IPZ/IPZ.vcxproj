@@ -19,22 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic_classes\Cell.h" />
-    <ClInclude Include="basic_classes\Destructor.h" />
-    <ClInclude Include="basic_classes\Generator.h" />
-    <ClInclude Include="basic_classes\Map.h" />
-    <ClInclude Include="basic_classes\Road.h" />
-    <ClInclude Include="basic_classes\Teleporter.h" />
-    <ClInclude Include="basic_classes\Vehicle.h" />
+    <ClInclude Include="Basic_Classes\artifacts\destructor.h" />
+    <ClInclude Include="Basic_Classes\artifacts\teleporter.h" />
+    <ClInclude Include="Basic_Classes\Cell.h" />
+    <ClInclude Include="Basic_Classes\Generator.h" />
+    <ClInclude Include="Basic_Classes\Map.h" />
+    <ClInclude Include="Basic_Classes\Road.h" />
+    <ClInclude Include="Basic_Classes\Vehicle.h" />
     <ClInclude Include="gnuplot-iostream.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
   </ItemGroup>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

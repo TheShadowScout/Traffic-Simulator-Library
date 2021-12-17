@@ -1,18 +1,25 @@
 #pragma once
-#include <iostream>
+
+#include <string>
 
 class Vehicle {
-	protected:
-	std::string name;
-	int ID;
-	int speed;
+public:
+	int static IDcnt;
 
-	public:	
+protected:
+	std::string name;
+	int speed;
+	int ID;
+
+public:	
 	// name - nazwa pojazdu, speed - prêdkoœæ pojazdu
-	Vehicle(std::string name, int speed) {
-		this->name = name;
-		this->ID = 1;
-		this->speed = speed;
+	Vehicle(std::string name, int speed) : name(name), speed(speed) {
+		ID = IDcnt++;
+	}
+
+	Vehicle(int speed) : speed(speed) {
+		ID = IDcnt++;
+		name = std::to_string(ID);
 	}
 
 	std::string getName() {
@@ -29,6 +36,6 @@ class Vehicle {
 
 	// newSpeed - nowa prêdkoœæ pojazdu
 	void setSpeed(int newSpeed) {
-		speed = newSpeed;
+		this->speed = newSpeed;
 	}
 };

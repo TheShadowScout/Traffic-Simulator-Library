@@ -1,61 +1,53 @@
-#include <vector>
-#include <cmath>
-#include <boost/tuple/tuple.hpp>
+#include "Functionality/StatisticsGenerator.cpp"
 
-#include "gnuplot-iostream.h"
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
+
+#include "basic_classes/Cell.h"
+#include "basic_classes/Road.h"
+#include "basic_classes/Map.h"
+#include "basic_classes/Vehicle.h"
+#include "basic_classes/Generator.h"
+#include "Simulation.h"
+
+int Road::IDcnt = 0;
+int Vehicle::IDcnt = 0;
+int Generator::IDcnt = 0;
 
 int main() {
-	Gnuplot gp;
-	// Create a script which can be manually fed into gnuplot later:
-	//    Gnuplot gp(">script.gp");
-	// Create script and also feed to gnuplot:
-	//    Gnuplot gp("tee plot.gp | gnuplot -persist");
-	// Or choose any of those options at runtime by setting the GNUPLOT_IOSTREAM_CMD
-	// environment variable.
-
-	// Gnuplot vectors (i.e. arrows) require four columns: (x,y,dx,dy)
-	std::vector<boost::tuple<double, double, double, double> > pts_A;
-
-	// You can also use a separate container for each column, like so:
-	std::vector<double> pts_B_x;
-	std::vector<double> pts_B_y;
-	std::vector<double> pts_B_dx;
-	std::vector<double> pts_B_dy;
-
-	// You could also use:
-	//   std::vector<std::vector<double> >
-	//   boost::tuple of four std::vector's
-	//   std::vector of std::tuple (if you have C++11)
-	//   arma::mat (with the Armadillo library)
-	//   blitz::Array<blitz::TinyVector<double, 4>, 1> (with the Blitz++ library)
-	// ... or anything of that sort
-
-	for (double alpha = 0; alpha < 1; alpha += 1.0 / 24.0) {
-		double theta = alpha * 2.0 * 3.14159;
-		pts_A.push_back(boost::make_tuple(
-			cos(theta),
-			sin(theta),
-			-cos(theta) * 0.1,
-			-sin(theta) * 0.1
-		));
-
-		pts_B_x.push_back(cos(theta) * 0.8);
-		pts_B_y.push_back(sin(theta) * 0.8);
-		pts_B_dx.push_back(sin(theta) * 0.1);
-		pts_B_dy.push_back(-cos(theta) * 0.1);
+	Road* road1 = new Road(100, 1, 5);
+	Road* road2 = new Road(50, 3, 3);
+	Generator* generator1 = new Generator(0.9);
+	Generator* generator2 = new Generator(0.5);
+	Map* map = new Map("test");
+	map->addRoad(road1);
+	map->addRoad(road2);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+	linkCells(generator1, road1->head[0]);
+	linkCells(generator2, road2->head[0]);
+	linkCells(road2->tail[0], road2->head[1]);
+	linkCells(road2->tail[1], road2->head[2]);
+	Simulation simulation(map, 0.1);
+	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
+		std::cout << simulation.tempToString() << std::endl;
 	}
-
-	// Don't forget to put "\n" at the end of each line!
-	gp << "set xrange [-2:2]\nset yrange [-2:2]\n";
-	// '-' means read from stdin.  The send1d() function sends data to gnuplot's stdin.
-	gp << "plot '-' with vectors title 'pts_A', '-' with vectors title 'pts_B'\n";
-	gp.send1d(pts_A);
-	gp.send1d(boost::make_tuple(pts_B_x, pts_B_y, pts_B_dx, pts_B_dy));
-
-#ifdef _WIN32
-	// For Windows, prompt for a keystroke before the Gnuplot object goes out of scope so that
-	// the gnuplot window doesn't get closed.
-	std::cout << "Press enter to exit." << std::endl;
-	std::cin.get();
-#endif
 }
