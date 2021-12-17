@@ -141,7 +141,7 @@ int main() {
 }
 ```
 
-# Test code for program
+# Test codes for program
 Simulation
 ```
 #include "basic_classes/Cell.h"
