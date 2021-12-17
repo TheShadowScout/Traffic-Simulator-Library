@@ -9,16 +9,15 @@
 #include <SFML/Graphics.hpp>
 
 // TO DO
-// zapobiegaæ wielokrotnemu wywo³aniu raz naciœniêtego przycisku
+// zapobiegaæ wielokrotnemu wywo³aniu raz naciœniêtego przycisku – na póŸniej
 // uniwersalnoœæ wymiarów okienka
-// polskie znaki
 
 struct Button
 {
     sf::Text buttonText;
     sf::FloatRect bounds;
     sf::Font font;
-    sf::RectangleShape background; // w konstruktorze ustawiam size
+    sf::RectangleShape background;
 
     Button(std::string txt, std::string fontFile, int size, float whichButton)
     {
@@ -31,31 +30,21 @@ struct Button
         buttonText.setPosition(775, int(70*whichButton));
         buttonText.setFillColor(sf::Color::Black);
         bounds.left = buttonText.getPosition().x;
-        bounds.top = buttonText.getPosition().y + 10; // TO DO: wymyœliæ coœ lepszego ni¿ +10
+        bounds.top = buttonText.getPosition().y + 10;
         bounds.width = 200;
         bounds.height += 20;
 
         background.setSize(sf::Vector2f(bounds.width, bounds.height));
         background.setPosition(bounds.left, bounds.top);
 
-        // buttonText.setPosition(int(bounds.width/2),int(bounds.height/2));
-
         buttonText.setPosition((bounds.left + bounds.width/12), (bounds.top + bounds.height/50));
-        //buttonText.setOrigin((bounds.left + bounds.width / 2), (bounds.top + bounds.height / 2));
-        //buttonText.setPosition(sf::Vector2f(0,0));
-
-
     }
-
-    // TO DO
-    // funkcja drawButton()
 };
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Simulation");
 
-    // napis MENU
     sf::Text menuText;
     sf::Font font;
 
@@ -70,12 +59,12 @@ int main()
 
     Button start("Start", "calibri.ttf", 30, 1);
     Button stop("Stop", "calibri.ttf", 30, 2);
-    Button stats("Statystyki", "calibri.ttf", 30, 3);
-    Button saveMap("Zapisz map\234", "calibri.ttf", 30, 4);
-    Button loadMap("Wczytaj mapê", "calibri.ttf", 30, 5);
-    Button saveSimulation("Zapisz stan\nsymulacji", "calibri.ttf", 30, 6);
-    Button loadSimulation("Wczytaj stan\nsymulacji", "calibri.ttf", 30, 7.5);
-    Button exitSimulation("Wyjœcie", "calibri.ttf", 30, 9);
+    Button stats("Statistics", "calibri.ttf", 30, 3);
+    Button saveMap("Save map", "calibri.ttf", 30, 4);
+    Button loadMap("Load map", "calibri.ttf", 30, 5);
+    Button saveSimulation("Save\nsimulation", "calibri.ttf", 30, 6);
+    Button loadSimulation("Load\nsimulation", "calibri.ttf", 30, 7.5);
+    Button exitSimulation("Quit", "calibri.ttf", 30, 9);
 
     sf::RectangleShape menuRect(sf::Vector2f(250, 1000));
     menuRect.setFillColor(sf::Color(159, 193, 211));
@@ -132,7 +121,7 @@ int main()
             window.close();
         }
 
-        window.clear(sf::Color(255, 255, 255)); // odœwie¿a
+        window.clear(sf::Color(255, 255, 255));
 
         window.draw(menuRect);
         window.draw(menuText);
