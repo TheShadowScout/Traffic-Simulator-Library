@@ -78,12 +78,12 @@ int main()
 Gnuplot
 
 ```
-#include "basic_classes/Cell.h"
-#include "basic_classes/Road.h"
-#include "basic_classes/Map.h"
-#include "basic_classes/Vehicle.h"
-#include "basic_classes/Generator.h"
-#include "basic_classes/Simulation.h"
+#include "Basic_classes/Cell.h"
+#include "Basic_classes/Road.h"
+#include "Basic_classes/Map.h"
+#include "Basic_classes/Vehicle.h"
+#include "Basic_classes/Generator.h"
+#include "Basic_classes/Simulation.h"
 
 int Road::IDcnt = 0;
 int Vehicle::IDcnt = 0;
@@ -114,12 +114,12 @@ int main() {
 # Test codes for program
 Simulation
 ```
-#include "basic_classes/Cell.h"
-#include "basic_classes/Road.h"
-#include "basic_classes/Map.h"
-#include "basic_classes/Vehicle.h"
-#include "basic_classes/Generator.h"
-#include "Simulation.h"
+#include "Basic_classes/Cell.h"
+#include "Basic_classes/Road.h"
+#include "Basic_classes/Map.h"
+#include "Basic_classes/Vehicle.h"
+#include "Basic_classes/Generator.h"
+#include "Libraries/Simulation.h"
 
 int Road::IDcnt = 0;
 int Vehicle::IDcnt = 0;
