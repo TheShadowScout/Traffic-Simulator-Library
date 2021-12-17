@@ -84,7 +84,7 @@ private:
 				}
 				else {
 					return curVehSpeed;
-				}		
+				}
 			}
 		}
 		if (canSpeedUp == true) {

@@ -25,7 +25,7 @@
     <Filter Include="Header Files\Libraries">
       <UniqueIdentifier>{2df8bda9-955f-47a6-966c-c8da46fa5deb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Functionality">
+    <Filter Include="Resource Files\Functionality">
       <UniqueIdentifier>{ee378953-56b6-4507-b8f2-b2a25d099262}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -48,14 +48,17 @@
     <ClInclude Include="basic_classes\Vehicle.h">
       <Filter>Header Files\Basic classes</Filter>
     </ClInclude>
-    <ClInclude Include="gnuplot-iostream.h">
+    <ClInclude Include="Basic_Classes\Simulation.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\gnuplot-iostream.h">
       <Filter>Header Files\Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\artifacts\destructor.h">
-      <Filter>Header Files\Artifacts</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\artifacts\teleporter.h">
-      <Filter>Header Files\Artifacts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +66,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Functionality\StatisticsGenerator.cpp">
-      <Filter>Header Files\Functionality</Filter>
+      <Filter>Resource Files\Functionality</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
