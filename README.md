@@ -13,16 +13,17 @@ Student project of a library in C ++ used to create a road traffic simulator.
 1. [Introduction](#introduction)
 2. [Installation](#installation)
 3. [Test codes for libraries](#test-codes-for-libraries)
-4. [Basic classes](#basic-classes)  
-4.1. [Cell](#cell)  
-4.2. [Road](#road)  
-4.3. [Map](#map)  
-4.4. [Vehicle](#vehicle)  
-4.5. [Special cells](#special-cells)  
-4.5.1 [Generator](#generator)  
-4.5.2 [Destructor](#destructor)  
-4.5.3 [Teleporter](#teleporter)  
-5. [Simulation](#simulation)
+4. [Test codes for program](#test-codes-for-program)
+5. [Basic classes](#basic-classes)  
+5.1. [Cell](#cell)  
+5.2. [Road](#road)  
+5.3. [Map](#map)  
+5.4. [Vehicle](#vehicle)  
+5.5. [Special cells](#special-cells)  
+5.5.1 [Generator](#generator)  
+5.5.2 [Destructor](#destructor)  
+5.5.3 [Teleporter](#teleporter)  
+6. [Simulation](#simulation)
 
 # Introduction
 # Installation
@@ -137,6 +138,42 @@ int main() {
 	std::cout << "Press enter to exit." << std::endl;
 	std::cin.get();
 #endif
+}
+```
+
+# Test code for program
+Simulation
+```
+#include "basic_classes/Cell.h"
+#include "basic_classes/Road.h"
+#include "basic_classes/Map.h"
+#include "basic_classes/Vehicle.h"
+#include "basic_classes/Generator.h"
+#include "Simulation.h"
+
+int Road::IDcnt = 0;
+int Vehicle::IDcnt = 0;
+int Generator::IDcnt = 0;
+
+int main() {
+	Road* road1 = new Road(100, 1, 5);
+	Road* road2 = new Road(50, 3, 3);
+	Generator* generator1 = new Generator(0.9);
+	Generator* generator2 = new Generator(0.5);
+	Map* map = new Map("test");
+	map->addRoad(road1);
+	map->addRoad(road2);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+	linkCells(generator1, road1->head[0]);
+	linkCells(generator2, road2->head[0]);
+	linkCells(road2->tail[0], road2->head[1]);
+	linkCells(road2->tail[1], road2->head[2]);
+	Simulation simulation(map, 0.1);
+	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
+		std::cout << simulation.tempToString() << std::endl;
+	}
 }
 ```
 # Basic classes
