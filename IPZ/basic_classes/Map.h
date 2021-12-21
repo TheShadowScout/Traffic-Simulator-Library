@@ -8,6 +8,11 @@
 #include "Road.h"
 #include "Cell.h"
 
+#include <sstream>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+using boost::property_tree::ptree;
+
 class Map
 {
 protected:
@@ -51,8 +56,25 @@ public:
 	std::vector<Cell*> getCellsWithVehs() {
 		return this->cellsWithVehs;
 	}
+	std::string getName() {
+		return name;
+	}
 
-	void createXML() {
+	void createJSON() {
+		ptree mapTree;
+		mapTree.put("Map.Name", getName());
+		
+		for (int i = 0; i < roads.capacity(); i++) {
+			//mapTree.put("Map.Road", roads[i]->createJSON());
+			std::string nameTree = "Map.Road" + std::to_string(roads[i]->getID());
+			mapTree.put(nameTree + ".Name", roads[i]->getName());
+			mapTree.put(nameTree + ".ID", roads[i]->getID());
+			mapTree.put(nameTree + ".Length", roads[i]->getLength());
+			mapTree.put(nameTree + ".Height", roads[i]->getHeight());
+		}
+		std::ostringstream oss;
+		boost::property_tree::write_json(oss, mapTree);
+		std::cout << oss.str();
 	}
 };
 

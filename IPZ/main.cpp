@@ -1,30 +1,8 @@
-#include "Functionality/StatisticsGenerator.cpp"
-
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-#include "basic_classes/Cell.h"
-#include "basic_classes/Road.h"
-#include "basic_classes/Map.h"
-#include "basic_classes/Vehicle.h"
-#include "basic_classes/Generator.h"
+#include "basic_Classes/Cell.h"
+#include "basic_Classes/Road.h"
+#include "basic_Classes/Map.h"
+#include "basic_Classes/Vehicle.h"
+#include "basic_Classes/Generator.h"
 #include "Simulation.h"
 
 int Road::IDcnt = 0;
@@ -50,4 +28,5 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.tempToString() << std::endl;
 	}
+	map->createJSON();
 }
