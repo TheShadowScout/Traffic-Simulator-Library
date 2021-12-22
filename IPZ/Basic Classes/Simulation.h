@@ -6,8 +6,8 @@
 #include <vector>
 #include <string>
 
-#include "Map.h"
-#include "Cell.h"
+#include "Basic Classes/Map.h"
+#include "Basic Classes/Cell.h"
 
 class Simulation {
 protected:

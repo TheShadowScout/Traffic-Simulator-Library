@@ -33,4 +33,5 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.tempToString() << std::endl;
 	}
+	map->createJSON();
 }

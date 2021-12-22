@@ -4,6 +4,11 @@
 #include <string>
 #include <vector>
 
+#include <sstream>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+using boost::property_tree::ptree;
+
 #include "Cell.h"
 
 class Road {
@@ -81,8 +86,11 @@ public:
     std::string getName() {
         return name;
     }
-
-    void createXml() {
+    int getLength() {
+        return length;
+    }
+    int getHeight() {
+        return height;
     }
 
     std::string tempToString() {
@@ -104,5 +112,17 @@ public:
             roadStr += "\n";
         }
         return roadStr;
+    }
+
+    void createJSON() {
+        ptree roadTree;
+        std::string nameTree = "Road" + std::to_string(getID());
+        roadTree.put(nameTree+".Name", getName());
+        roadTree.put(nameTree + ".ID", getID());
+        roadTree.put(nameTree + ".Length", getLength());
+        roadTree.put(nameTree + ".Height", getHeight());
+        std::ostringstream oss;
+        boost::property_tree::write_json(oss, roadTree);
+        std::cout << oss.str();
     }
 };
