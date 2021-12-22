@@ -4,8 +4,8 @@
 #include <vector>
 #include <string>
 
-#include "basic_classes/Map.h"
-#include "basic_classes/Cell.h"
+#include "Basic Classes/Map.h"
+#include "Basic Classes/Cell.h"
 
 class Simulation {
 protected:
