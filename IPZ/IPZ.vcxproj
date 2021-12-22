@@ -19,14 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basic_Classes\artifacts\destructor.h" />
-    <ClInclude Include="Basic_Classes\artifacts\teleporter.h" />
+    <ClInclude Include="Basic_Classes\Artifacts\Destructor.h" />
+    <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h" />
     <ClInclude Include="Basic_Classes\Cell.h" />
     <ClInclude Include="Basic_Classes\Generator.h" />
     <ClInclude Include="Basic_Classes\Map.h" />
     <ClInclude Include="Basic_Classes\Road.h" />
+    <ClInclude Include="Basic_Classes\Simulation.h" />
     <ClInclude Include="Basic_Classes\Vehicle.h" />
-    <ClInclude Include="gnuplot-iostream.h" />
+    <ClInclude Include="Libraries\gnuplot-iostream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
@@ -50,13 +51,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>

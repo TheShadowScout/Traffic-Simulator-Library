@@ -12,16 +12,18 @@ Student project of a library in C ++ used to create a road traffic simulator.
 # Table of Contents
 1. [Introduction](#introduction)
 2. [Installation](#installation)
-3. [Test codes for libraries](#test_codes_for_libraries)
-4. [Basic classes](#basic-classes)  
-4.1. [Cell](#cell)  
-4.2. [Road](#road)  
-4.3. [Map](#map)  
-4.4. [Vehicle](#vehicle)  
-4.5. [Special cells](#special-cells)  
-4.5.1 [Generator](#generator)  
-4.5.2 [Destructor](#destructor)  
-4.5.3 [Teleporter](#teleporter)  
+3. [Test codes for libraries](#test-codes-for-libraries)
+4. [Test codes for program](#test-codes-for-program)
+5. [Basic classes](#basic-classes)  
+5.1. [Cell](#cell)  
+5.2. [Road](#road)  
+5.3. [Map](#map)  
+5.4. [Vehicle](#vehicle)  
+5.5. [Special cells](#special-cells)  
+5.5.1 [Generator](#generator)  
+5.5.2 [Destructor](#destructor)  
+5.5.3 [Teleporter](#teleporter)  
+5.6 [Simulation](#simulation)
 
 # Introduction
 # Installation
@@ -138,6 +140,42 @@ int main() {
 #endif
 }
 ```
+
+# Test codes for program
+Simulation
+```
+#include "Basic Classes/Cell.h"
+#include "Basic Classes/Road.h"
+#include "Basic Classes/Map.h"
+#include "Basic Classes/Vehicle.h"
+#include "Basic Classes/Generator.h"
+#include "Libraries/Simulation.h"
+
+int Road::IDcnt = 0;
+int Vehicle::IDcnt = 0;
+int Generator::IDcnt = 0;
+
+int main() {
+	Road* road1 = new Road(100, 1, 5);
+	Road* road2 = new Road(50, 3, 3);
+	Generator* generator1 = new Generator(0.9);
+	Generator* generator2 = new Generator(0.5);
+	Map* map = new Map("test");
+	map->addRoad(road1);
+	map->addRoad(road2);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+	linkCells(generator1, road1->head[0]);
+	linkCells(generator2, road2->head[0]);
+	linkCells(road2->tail[0], road2->head[1]);
+	linkCells(road2->tail[1], road2->head[2]);
+	Simulation simulation(map, 0.1);
+	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
+		std::cout << simulation.tempToString() << std::endl;
+	}
+}
+```
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  
@@ -169,23 +207,27 @@ Class name: **Cell**
 Filename with class: **Road.h**  
 Class name: **Road**  
 
-| Variable name | Variable type			| Description																|
-| ------------- | --------------------- | ------------------------------------------------------------------------- |
-| IDRoad		| int					| variable that holds a [Road](#road) ID									|
-| maxSpeed		| int					| variable that holds max vehicle speed										|
-| name			| string				| variable that holds a [Road](#road) name									|
-| road			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the road			|
-| head			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the head of road |
-| tail			| list<[Cell](#cell)>	| variable that holds a list of [Cells](#cell) creating up the tail of road |
+| Variable name | Variable type			        | Description																|
+| ------------- | ----------------------------- | ------------------------------------------------------------------------- |
+| IDRoad		| int					        | variable that holds a [Road](#road) ID									|
+| maxSpeed		| int					        | variable that holds max vehicle speed										|
+| length        | int                           | variable that holds road length                                           |
+| height        | int                           | variable that holds road height                                           |
+| name			| string				        | variable that holds a [Road](#road) name									|
+| road			| vector<vector<[Cell](#cell)>>	| variable that holds vector of [Cells](#cell) creating up the road			|
+| head			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the head of road |
+| tail			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the tail of road |
 
-| Function type and name	| Arguments					| Description												|
-| ------------------------- | ------------------------- | --------------------------------------------------------- |
-| void Road					| int maxSpeed, string name | Class constructor											|
-| void setMaxSpeed			| int maxSpeed				| Function sets new max speed in current [Road](#road)		|
-| void setName				| string name				| Function sets name in current [Road](#road)				|
-| int getMaxSpeed			| ------------------------- | Function returns max speed of current [Road](#road)		| 
-| string getName			| ------------------------- | Function returns name of current [Road](#road)			|
-| void createXML			| ------------------------- | Function creates new XML file of current [Road](#road)	|
+| Function type and name	| Arguments					                         | Description												              |
+| ------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------- | 
+| [Road](#Road)				| int maxSpeed, string name, int length, int height  | Class constructor									 	              |
+| void CreateRoad           | -------------------------------------------------- | Function creates empty [Road](#Road) from length and height parametrs  |
+| void setMaxSpeed			| int maxSpeed				                         | Function sets new max speed in current [Road](#Road)		              |
+| void setName				| string name				                         | Function sets name in current [Road](#Road)				              |
+| int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
+| string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
+| void createXML			| -------------------------------------------------- | Function creates new XML file of current [Road](#Road)	              |
+| string tempToString			| ------------------------- | Function return road as string|
 
 ## Map
 Filename with class: **Map.h**  
@@ -265,3 +307,22 @@ Inherits from: [Cell](#cell)
 | ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | void Teleporter			| --------------------------------------------- | Class constructor																									|
 | void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
+
+## Simulation
+Filename with class: **Simulation.h**  
+Class name: **Simulation**  
+
+| Variable name | Variable type	| Description														|
+| ------------- | ------------- | ----------------------------------------------------------------- |
+| distToSearch	| int			| array that holds a distance to search								|
+| ariSeqSum		| int    		| array that holds a distance needed to stop [vehicle](#vehicle) 	|
+| randEventProb	| double		| variable that holds random event									|
+| simMap		| [Map*](#map)	| object that holds simulation of [map](#map)								|
+
+| Function type and name			| Arguments							| Description												|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| void Simulation					| [Map*](#map) simMap, double randEventProb | Class constructor											|
+| void transitionFunc				| --------------------------------- | Function return new position to [vehicle](#vehicle) in next tick|
+| string tempToString				| --------------------------------- | Function return simulation move [vehicle](#vehicle) as string|
+| int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
+| Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
