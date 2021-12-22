@@ -30,26 +30,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basic_Classes\Vehicle.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\Road.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Generator.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
-    <ClInclude Include="basic_classes\Map.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\Cell.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
     <ClInclude Include="basic_classes\Vehicle.h">
       <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\Simulation.h">
-      <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
     <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
       <Filter>Header Files\Artifacts</Filter>
@@ -59,6 +41,24 @@
     </ClInclude>
     <ClInclude Include="Libraries\gnuplot-iostream.h">
       <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Cell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Generator.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Map.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Road.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Simulation.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Vehicle.h">
+      <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
