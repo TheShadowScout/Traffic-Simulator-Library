@@ -209,7 +209,7 @@ Class name: **Road**
 
 | Variable name | Variable type			        | Description																|
 | ------------- | ----------------------------- | ------------------------------------------------------------------------- |
-| IDRoad		| int					        | variable that holds a [Road](#road) ID									|
+| ID		| int					        | variable that holds a [Road](#road) ID									|
 | maxSpeed		| int					        | variable that holds max vehicle speed										|
 | length        | int                           | variable that holds road length                                           |
 | height        | int                           | variable that holds road height                                           |
@@ -225,8 +225,11 @@ Class name: **Road**
 | void setMaxSpeed			| int maxSpeed				                         | Function sets new max speed in current [Road](#Road)		              |
 | void setName				| string name				                         | Function sets name in current [Road](#Road)				              |
 | int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
+| int getID			| -------------------------------------------------- | Function returns ID of current [Road](#Road)	
 | string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
-| void createXML			| -------------------------------------------------- | Function creates new XML file of current [Road](#Road)	              |
+| int getLength			| -------------------------------------------------- | Function returns length of current [Road](#Road)			              |
+| int getHeight		| -------------------------------------------------- | Function returns height of current [Road](#Road)			              |
+| void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Road](#Road)	              |
 | string tempToString			| ------------------------- | Function return road as string|
 
 ## Map
@@ -244,8 +247,16 @@ Class name: **Map**
 
 | Function type and name	| Arguments		| Description												|
 | ------------------------- | ------------- | --------------------------------------------------------- |
-| void Map					| string name	| Class constructor											|
-| void createXML			| -------------	| Function creates new XML file of current [Map](#map)		|
+| void Map					| string name	| Class constructor	|
+| void addRoad					| Road* road	| Function add road to [Map](#map)	|
+| void addGenerator					| Generator* generator	| Function add generator to [Map](#map)	|
+| void setcellsWithVehs					| vector<Cell*> cellsWithVehs	| Function set cell with vechicles 	|
+| vector<Road*> getRoads				|  -------------------------------------------------- 	| Function returns vector roads	|
+| vector<Generator*> getGenerators				|  -------------------------------------------------- 	| Function returns vector generators	|
+| vector<Cell*> getcellsWithVehs			|  -------------------------------------------------- 	| Function returns cell with vechicles	|
+| vector<Cell*> setCellsWithVehs			|  -------------------------------------------------- 	| Function set new cell with vechicles	|
+| string getName			|  -------------------------------------------------- 	| Function returns name of [Map](#map)	|
+| void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Map](#map)		|
 
 ## Vehicle
 Filename with class: **Vehicle.h**  
