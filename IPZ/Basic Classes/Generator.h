@@ -13,7 +13,7 @@ public:
 
 protected:
 	int distToSearch[7] = { 1, 3, 6, 10, 15, 21, 28 };
-	int ariSeqSum[8] = { 0, 0, 1, 3, 6, 10, 15, 21 };
+	int breakingDist[7] = { 0, 1, 3, 6, 10, 15, 21 };
 	std::string name;
 	int ID;
 	double createVehProb;
@@ -41,7 +41,7 @@ public:
 				if (tempCell->getVehicle() != nullptr) {
 					int nextVehSpeed = tempCell->getVehicle()->getSpeed();
 					for (int j = maxSpeed; j >= 0; j--) {
-						if (ariSeqSum[j + 1] - ariSeqSum[nextVehSpeed] > i - 1) {
+						if (breakingDist[j] - breakingDist[std::max(nextVehSpeed - 1, 0)] > i - 1) {
 							continue;
 						}
 						vehicle = new Vehicle(j);

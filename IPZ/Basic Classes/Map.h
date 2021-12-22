@@ -22,7 +22,6 @@ protected:
 	std::vector<Cell*> cellsWithVehs;
 
 public:
-	//name - nazwa nowej mapy
 	Map(std::string name) : name(name) {}
 
 	void addRoad(Road* road) {
@@ -45,14 +44,13 @@ public:
 		return generators;
 	}
 
-	std::vector<Cell*> getcellsWithVehs() {
+	std::vector<Cell*> getCellsWithVehs() {
 		return cellsWithVehs;
 	}
 
 	void setCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
 		this->cellsWithVehs = newCellsWithVehs;
 	}
-
 	std::vector<Cell*> getCellsWithVehs() {
 		return this->cellsWithVehs;
 	}

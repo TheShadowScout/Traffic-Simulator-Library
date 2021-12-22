@@ -10,32 +10,35 @@ protected:
 	std::string name;
 	int speed;
 	int ID;
+	bool isObstacle;
 
-public:	
-	// name - nazwa pojazdu, speed - prêdkoœæ pojazdu
-	Vehicle(std::string name, int speed) : name(name), speed(speed) {
+public:
+	Vehicle(std::string name, int speed, bool isObstacle = false) : name(name), speed(speed), isObstacle(isObstacle) {
 		ID = IDcnt++;
 	}
 
-	Vehicle(int speed) : speed(speed) {
+	Vehicle(int speed, bool isObstacle = false) : speed(speed), isObstacle(isObstacle) {
 		ID = IDcnt++;
 		name = std::to_string(ID);
 	}
 
 	std::string getName() {
-		return this->name;
+		return name;
 	}
 
 	int getID() {
-		return this->ID;
+		return ID;
 	}
 
 	int getSpeed() {
-		return this->speed;
+		return speed;
 	}
 
-	// newSpeed - nowa prêdkoœæ pojazdu
 	void setSpeed(int newSpeed) {
 		this->speed = newSpeed;
+	}
+
+	bool checkIsObstacle() {
+		return isObstacle;
 	}
 };

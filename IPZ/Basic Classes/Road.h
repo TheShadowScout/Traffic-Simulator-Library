@@ -29,7 +29,6 @@ public:
     std::vector<Cell*> tail;
 
 public:
-    // maxSpeed - maksymalna pr�dko��, name - nazwa drogi
     Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
         ID = IDcnt++;
         createRoad();
@@ -68,12 +67,10 @@ public:
         }
     }
 
-    // maxSpeed - maksymalna pr�dko��
     void setMaxSpeed(int maxSpeed) {
         this->maxSpeed = maxSpeed;
     }
 
-    // name - nazwa drogi
     void setName(std::string name) {
         this->name = name;
     }
@@ -104,7 +101,12 @@ public:
                     roadStr += ".";
                 }
                 else {
-                    roadStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                    if (laneCell->getVehicle()->checkIsObstacle() == true) {
+                        roadStr += "!";
+                    }
+                    else {
+                        roadStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                    }           
                 }
             }
             roadStr += "\n";
