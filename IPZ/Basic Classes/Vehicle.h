@@ -2,6 +2,12 @@
 
 #include <string>
 
+#include <sstream>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+using boost::property_tree::ptree;
+
+
 class Vehicle {
 public:
 	int static IDcnt;
@@ -41,4 +47,18 @@ public:
 	bool checkIsObstacle() {
 		return isObstacle;
 	}
+
+	void createJSON() {
+		ptree VehicleTree;
+		std::string nameTree = "Vehicle" + std::to_string(getID());
+		VehicleTree.put(nameTree + ".Name", getName());
+		VehicleTree.put(nameTree + ".ID", getID());
+		VehicleTree.put(nameTree + ".Speed", getSpeed());
+		VehicleTree.put(nameTree + ".IsObstacle", checkIsObstacle());   // Tutaj nie jestem pewien czy nie należy przekonwertować bool na string?
+		std::ostringstream oss;
+		boost::property_tree::write_json(oss, VehicleTree);
+		std::cout << oss.str();
+	}
+
+
 };

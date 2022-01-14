@@ -2,6 +2,12 @@
 
 #include "Vehicle.h"
 
+#include <sstream>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+using boost::property_tree::ptree;
+
+
 class Cell {
 protected:
     Cell* rightCell;
@@ -63,4 +69,17 @@ public:
     int getMaxSpeed() {
         return maxSpeed;
     }
+
+    // Czy w statystykach pojedynczej komórki jest konieczność zapisanie informacji o najbliższych do niej komórek, czy też nie?
+    // Zauważyłem również, że komórki nie posiadają swojego ID czy też to nie jest potrzebne.
+    void createJSON() {
+        ptree CellTree;                  
+        std::string nameTree = "Cell";
+        roadTree.put(nameTree + ".MaxSpeed", getMaxSpeed());
+
+        std::ostringstream oss;
+        boost::property_tree::write_json(oss, CellTree);
+        std::cout << oss.str();
+    }
+
 };
