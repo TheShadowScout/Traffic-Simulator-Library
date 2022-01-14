@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic_classes\Vehicle.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
       <Filter>Header Files\Artifacts</Filter>
     </ClInclude>
@@ -58,6 +55,15 @@
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\Vehicle.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Observer.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Statistics.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\MovePrediction.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
   </ItemGroup>

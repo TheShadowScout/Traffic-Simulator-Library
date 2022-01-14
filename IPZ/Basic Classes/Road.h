@@ -7,9 +7,10 @@
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-using boost::property_tree::ptree;
 
 #include "Cell.h"
+
+using boost::property_tree::ptree;
 
 class Road {
 public:
@@ -29,7 +30,8 @@ public:
     std::vector<Cell*> tail;
 
 public:
-    Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
+    Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+        this->name = filterName(name);
         ID = IDcnt++;
         createRoad();
     }
@@ -38,6 +40,14 @@ public:
         ID = IDcnt++;
         name = std::to_string(ID);
         createRoad();
+    }
+
+    ~Road() {
+        for (std::vector<Cell*> roadLane : road) {
+            for (Cell* laneCell : roadLane) {
+                delete laneCell;
+            }
+        }
     }
 
     void createRoad() {
@@ -67,14 +77,6 @@ public:
         }
     }
 
-    void setMaxSpeed(int maxSpeed) {
-        this->maxSpeed = maxSpeed;
-    }
-
-    void setName(std::string name) {
-        this->name = name;
-    }
-
     int getMaxSpeed() {
         return maxSpeed;
     }
@@ -86,14 +88,38 @@ public:
     std::string getName() {
         return name;
     }
+
     int getLength() {
         return length;
     }
+
     int getHeight() {
         return height;
     }
 
-    std::string tempToString() {
+    std::vector<std::vector<Cell*>> getRoad() {
+        return road;
+    }
+
+    void setMaxSpeed(int maxSpeed) {
+        this->maxSpeed = maxSpeed;
+    }
+
+    void setName(std::string name) {
+        this->name = name;
+    }
+
+    std::string filterName(std::string rawName) {
+        std::string tempName = "";
+        for (char character : rawName) {
+            if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
+                tempName += character;
+            }
+        }
+        return tempName;
+    }
+
+    std::string toString() {
         std::string roadStr = "";
         for (std::vector<Cell*> roadLane : road) {
             for (Cell* laneCell : roadLane) {
@@ -101,7 +127,7 @@ public:
                     roadStr += ".";
                 }
                 else {
-                    if (laneCell->getVehicle()->checkIsObstacle() == true) {
+                    if (laneCell->getVehicle()->getIsObstacle() == true) {
                         roadStr += "!";
                     }
                     else {

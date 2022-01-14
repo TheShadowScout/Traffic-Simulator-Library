@@ -11,13 +11,14 @@ protected:
 	int speed;
 	int ID;
 	bool isObstacle;
+	int originLane;
 
 public:
-	Vehicle(std::string name, int speed, bool isObstacle = false) : name(name), speed(speed), isObstacle(isObstacle) {
+	Vehicle(std::string name, int speed, bool isObstacle = false, int originLane = 0) : name(name), speed(speed), isObstacle(isObstacle), originLane(originLane) {
 		ID = IDcnt++;
 	}
 
-	Vehicle(int speed, bool isObstacle = false) : speed(speed), isObstacle(isObstacle) {
+	Vehicle(int speed, bool isObstacle = false, int originLane = 0) : speed(speed), isObstacle(isObstacle), originLane(originLane) {
 		ID = IDcnt++;
 		name = std::to_string(ID);
 	}
@@ -34,11 +35,19 @@ public:
 		return speed;
 	}
 
+	bool getIsObstacle() {
+		return isObstacle;
+	}
+
+	int getOriginLane() {
+		return originLane;
+	}
+
 	void setSpeed(int newSpeed) {
 		this->speed = newSpeed;
 	}
 
-	bool checkIsObstacle() {
-		return isObstacle;
+	void setOriginLane(int originLane) {
+		this->originLane = originLane;
 	}
 };
