@@ -22,8 +22,11 @@
     <ClInclude Include="Basic Classes\Cell.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
     <ClInclude Include="Basic Classes\Map.h" />
+    <ClInclude Include="Basic Classes\MovePrediction.h" />
+    <ClInclude Include="Basic Classes\Observer.h" />
     <ClInclude Include="Basic Classes\Road.h" />
     <ClInclude Include="Basic Classes\Simulation.h" />
+    <ClInclude Include="Basic Classes\Statistics.h" />
     <ClInclude Include="Basic Classes\Vehicle.h" />
     <ClInclude Include="Basic_Classes\Artifacts\Destructor.h" />
     <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h" />

@@ -19,15 +19,28 @@ protected:
 	double createVehProb;
 	
 public:
-	Generator(std::string name, double createVehProb) : name(name), createVehProb(createVehProb) {
-		Cell(0);
+	Generator(std::string name, double createVehProb) : Cell(), createVehProb(createVehProb) {
 		ID = IDcnt++;
+		this->name = filterName(name);
 	}
 
-	Generator(double createVehProb) : createVehProb(createVehProb) {
-		Cell(0);
+	Generator(double createVehProb) : Cell(), createVehProb(createVehProb) {
 		ID = IDcnt++;
 		name = std::to_string(ID);
+	}
+
+	~Generator() {
+		delete vehicle;
+	}
+
+	std::string filterName(std::string rawName) {
+		std::string tempName = "";
+		for (char character : rawName) {
+			if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
+				tempName += character;
+			}
+		}
+		return tempName;
 	}
 
 	bool createVeh() {
@@ -55,7 +68,7 @@ public:
 		return false;
 	}
 
-	std::string tempToString() {
+	std::string toString() {
 		if (vehicle == nullptr) {
 			return ".\n";
 		}
