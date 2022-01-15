@@ -2,6 +2,7 @@
 
 #include "Vehicle.h"
 
+#include <iostream>
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -75,7 +76,7 @@ public:
     void createJSON() {
         ptree CellTree;                  
         std::string nameTree = "Cell";
-        roadTree.put(nameTree + ".MaxSpeed", getMaxSpeed());
+        CellTree.put(nameTree + ".MaxSpeed", getMaxSpeed());
 
         std::ostringstream oss;
         boost::property_tree::write_json(oss, CellTree);

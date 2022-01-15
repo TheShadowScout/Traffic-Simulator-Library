@@ -30,9 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic_classes\Vehicle.h">
-      <Filter>Header Files\Basic classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
       <Filter>Header Files\Artifacts</Filter>
     </ClInclude>

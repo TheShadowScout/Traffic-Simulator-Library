@@ -51,9 +51,11 @@ public:
 	void setCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
 		this->cellsWithVehs = newCellsWithVehs;
 	}
+	/*
 	std::vector<Cell*> getCellsWithVehs() {
 		return this->cellsWithVehs;
 	}
+	*/
 	std::string getName() {
 		return name;
 	}
@@ -70,9 +72,20 @@ public:
 			mapTree.put(nameTree + ".Length", roads[i]->getLength());
 			mapTree.put(nameTree + ".Height", roads[i]->getHeight());
 		}
+		for (int i = 0; i < cellsWithVehs.size(); i++) {
+			std::string nameTree = "Map.Cell";
+			mapTree.put(nameTree + ".MaxSpeed", cellsWithVehs[i]->getMaxSpeed());
+			nameTree = "Map.Cell.Vechicle" + std::to_string(cellsWithVehs[i]->getVehicle()->getID());
+			mapTree.put(nameTree + ".Name", cellsWithVehs[i]->getVehicle()->getName());
+			mapTree.put(nameTree + ".Speed", std::to_string(cellsWithVehs[i]->getVehicle()->getSpeed()));
+		}
+
 		std::ostringstream oss;
 		boost::property_tree::write_json(oss, mapTree);
-		std::cout << oss.str();
+		//std::cout << oss.str();
+		std::ofstream jsonFile("JSON.txt");
+		jsonFile << oss.str();
+		jsonFile.close();
 	}
 };
 
