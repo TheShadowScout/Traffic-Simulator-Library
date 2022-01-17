@@ -16,28 +16,43 @@
     <Filter Include="Project Files">
       <UniqueIdentifier>{06982260-1816-445a-9024-6fd6deb71e40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Basic Classes">
-      <UniqueIdentifier>{f8c96fa9-e29c-4c6b-8fd3-4cdff1408b9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Artifacts">
-      <UniqueIdentifier>{f0143dc1-00e0-425c-9a7a-9d225820ae31}</UniqueIdentifier>
+      <UniqueIdentifier>{72a6ee14-2255-40d5-8099-496b6af8b7c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Libraries">
       <UniqueIdentifier>{2df8bda9-955f-47a6-966c-c8da46fa5deb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Functionality">
+    <Filter Include="Header Files\Basic Classes">
+      <UniqueIdentifier>{1620c3fa-8ced-4483-9acf-bed5e915549a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Functionality">
+      <UniqueIdentifier>{8cc33f3c-a50f-441d-bd7d-359d7294efa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functionality">
       <UniqueIdentifier>{ee378953-56b6-4507-b8f2-b2a25d099262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Basic Classes">
+      <UniqueIdentifier>{5acf31b4-8afe-4c0f-b559-c802b6f5856a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Non-classified Files">
+      <UniqueIdentifier>{45598abc-8dff-4aa6-8c6d-21cd2cb54b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Non-classified Files\Functionality">
+      <UniqueIdentifier>{bbf380da-020b-42e1-9ccf-1643bfc30f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gui">
+      <UniqueIdentifier>{c7ad9dfc-d7ef-4df2-a877-943e5d604222}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
-      <Filter>Header Files\Artifacts</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h">
-      <Filter>Header Files\Artifacts</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\gnuplot-iostream.h">
       <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Artifacts\Destructor.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Artifacts\Teleporter.h">
+      <Filter>Header Files\Artifacts</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\Cell.h">
       <Filter>Header Files\Basic Classes</Filter>
@@ -48,23 +63,29 @@
     <ClInclude Include="Basic Classes\Map.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Basic Classes\MovePrediction.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Observer.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
     <ClInclude Include="Basic Classes\Road.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\Simulation.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\Vehicle.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\Observer.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic Classes\Statistics.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\MovePrediction.h">
+    <ClInclude Include="Basic Classes\Vehicle.h">
       <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Functionality\DensityPlotGenerator.h">
+      <Filter>Header Files\Functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="Functionality\StatisticsGenerator.h">
+      <Filter>Header Files\Functionality</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +93,40 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Functionality\StatisticsGenerator.cpp">
-      <Filter>Resource Files\Functionality</Filter>
+      <Filter>Source Files\Functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Cell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Functionality\DensityPlotGenerator.cpp">
+      <Filter>Source Files\Functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Generator.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Map.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\MovePrediction.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Observer.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Road.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Simulation.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Statistics.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Vehicle.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\main.cpp">
+      <Filter>Source Files\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +135,9 @@
     </None>
     <None Include="..\.gitignore">
       <Filter>Project Files</Filter>
+    </None>
+    <None Include="Functionality\DensityPlot.gnuplot">
+      <Filter>Non-classified Files\Functionality</Filter>
     </None>
   </ItemGroup>
 </Project>

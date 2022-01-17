@@ -1,7 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <windows.h>
+#pragma once
+#include "StatisticsGenerator.h"
+
+namespace fs = std::filesystem;
 
 //	W razie koniecznoœci dostosowania generatora, nale¿y edytowaæ WY£¥CZNIE funkcjê generateStatistics()
 //	Na statystyki sk³ada siê:
@@ -27,7 +27,6 @@ private:
 	int plotCounter = 0;
 	std::string path = "Statistics/page.html";
 	LPCWSTR filename = L"page.html";
-
 	std::string initializeStatistics()
 	{
 		std::string stringHolder =
@@ -109,9 +108,60 @@ private:
 			"</html\n>";
 		return stringHolder;
 	}
+	std::vector<std::vector<std::string>>loadCSV(std::string path) {
+
+		std::ifstream in(path);
+
+		std::string line, field;
+
+		std::vector<std::vector<std::string> > array;  // the 2D array
+		std::vector<std::string> v;                // array of values for one line only
+
+		while (getline(in, line))    // get next line in file
+		{
+			v.clear();
+			std::stringstream ss(line);
+
+			while (getline(ss, field, ';'))  // break line into comma delimitted fields
+			{
+				v.push_back(field);  // add each field to the 1D array
+			}
+
+			array.push_back(v);  // add the 1D array to the 2D array
+		}
+
+		return array;
+	}
 public:
 	int generateStatistics() {
 		srand(time(NULL));
+		std::string path = "StatisticsHistory/";
+		std::vector<std::vector<std::string>> observer;
+		std::vector<std::vector<std::string>> simulation_statistic;
+		int fileNumber = 0;
+		for (const auto& entry : fs::directory_iterator(path))
+		{
+			if(entry.path().u8string().find(".gitignore") == std::string::npos)
+			{
+				if (fileNumber == 0)
+				{
+					observer = loadCSV(entry.path().string());
+					fileNumber++;
+				}
+				else if (fileNumber == 1)
+				{
+					simulation_statistic = loadCSV(entry.path().string());
+					
+				}
+				// potrzebuje kolumny pojazdów co przejecha³y z obserwatora
+				// meanmapfilling z symulacji
+			}
+		}
+
+
+
+
+
 		std::ofstream MyFile(path);
 		MyFile << initializeStatistics();
 		MyFile << addStatistic("Average speed", "4", true);

@@ -1,16 +1,15 @@
+
 // Include
-#include "basic_classes/Cell.h"
-#include "basic_classes/Destructor.h"
-#include "basic_classes/Generator.h"
-#include "basic_classes/Map.h"
-#include "basic_classes/Road.h"
-#include "basic_classes/Teleporter.h"
-#include "basic_classes/Vehicle.h"
+#include "../Basic Classes/Cell.h"
+#include "../Basic Classes/Generator.h"
+#include "../Basic Classes/Map.h"
+#include "../Basic Classes/Road.h"
+#include "../Basic Classes/Vehicle.h"
 #include <SFML/Graphics.hpp>
 
 // TO DO
-// zapobiegaæ wielokrotnemu wywo³aniu raz naciœniêtego przycisku – na póŸniej
-// uniwersalnoœæ wymiarów okienka
+// zapobiegaï¿½ wielokrotnemu wywoï¿½aniu raz naciï¿½niï¿½tego przycisku ï¿½ na pï¿½niej
+// uniwersalnoï¿½ï¿½ wymiarï¿½w okienka
 
 struct Button
 {
@@ -48,7 +47,7 @@ int main()
     sf::Text menuText;
     sf::Font font;
 
-    font.loadFromFile("calibri.ttf"); // TODO: zabezpieczyæ na wypadek b³êdu
+    font.loadFromFile("calibri.ttf"); // TODO: zabezpieczyï¿½ na wypadek bï¿½ï¿½du
 
     menuText.setFont(font);
     menuText.setString("Menu");
@@ -116,8 +115,8 @@ int main()
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            // ostrze¿enie  w wypadku wyjœcia w trakcie symulacji
-            // jakiœ zapis symulacji czy coœ
+            // ostrzeï¿½enie  w wypadku wyjï¿½cia w trakcie symulacji
+            // jakiï¿½ zapis symulacji czy coï¿½
             window.close();
         }
 
