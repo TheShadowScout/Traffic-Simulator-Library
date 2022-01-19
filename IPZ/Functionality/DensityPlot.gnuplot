@@ -20,5 +20,6 @@ set xtics rotate
 set key outside right bottom
 
 set term png
-set output "StatisticsHistory/DensityPlot.png"
-plot 'data.csv' using 1:2 with lines ls 101, '' using 1:3 with lines ls 102, '' using 1:4 with lines ls 103, '' using 1:5 with lines ls 104, '' using 1:6 with lines ls 105, '' using 1:7 with lines ls 106
+set output "./StatisticsHistory/DensityPlot.png"
+plot './StatisticsHistory/data.csv' using 1:2 with lines ls 101, '' using 1:3 with lines ls 102, '' using 1:4 with lines ls 103, '' using 1:5 with lines ls 104, '' using 1:6 with lines ls 105, '' using 1:7 with lines ls 106
+
