@@ -41,7 +41,10 @@
       <UniqueIdentifier>{bbf380da-020b-42e1-9ccf-1643bfc30f3a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Gui">
-      <UniqueIdentifier>{c7ad9dfc-d7ef-4df2-a877-943e5d604222}</UniqueIdentifier>
+      <UniqueIdentifier>{7609d8f0-e6b1-451c-a404-c713bc9b31bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gui">
+      <UniqueIdentifier>{23410382-9fe4-44a5-939d-d4790d1dc984}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +90,9 @@
     <ClInclude Include="Functionality\StatisticsGenerator.h">
       <Filter>Header Files\Functionality</Filter>
     </ClInclude>
+    <ClInclude Include="Gui\gui.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -124,9 +130,6 @@
     </ClCompile>
     <ClCompile Include="Basic Classes\Vehicle.cpp">
       <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\main.cpp">
-      <Filter>Source Files\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

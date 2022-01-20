@@ -32,6 +32,7 @@
     <ClInclude Include="Basic Classes\Vehicle.h" />
     <ClInclude Include="Functionality\DensityPlotGenerator.h" />
     <ClInclude Include="Functionality\StatisticsGenerator.h" />
+    <ClInclude Include="Gui\gui.h" />
     <ClInclude Include="Libraries\gnuplot-iostream.h" />
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +47,6 @@
     <ClCompile Include="Basic Classes\Vehicle.cpp" />
     <ClCompile Include="Functionality\DensityPlotGenerator.cpp" />
     <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
-    <ClCompile Include="gui\main.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -68,13 +68,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>

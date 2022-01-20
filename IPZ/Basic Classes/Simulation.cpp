@@ -84,6 +84,11 @@ Observer* Simulation::getSimulationObserver()
 	return observers[0];
 }
 
+Map* Simulation::getMap()
+{
+	return simMap;
+}
+
 MovePrediction Simulation::evalVehMove(Cell* vehCell, int curVehSpeed, bool canCallItself) {
 	bool canSpeedUp = true;
 	int speedLimit = std::numeric_limits<int>::max();

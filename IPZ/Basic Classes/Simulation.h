@@ -31,6 +31,7 @@ public:
 	std::string toString();
 	Statistics* getSimulationStatistics();
 	Observer* getSimulationObserver();
+	Map* getMap();
 private:
 	MovePrediction evalVehMove(Cell* vehCell, int curVehSpeed, bool canCallItself);
 	MovePrediction evalChangeLane(Cell* vehCellAdjacentCell, int curVehSpeed);
