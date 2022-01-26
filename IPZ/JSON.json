@@ -1,0 +1,244 @@
+{
+    "Map": {
+        "Name": "test",
+        "Road0": {
+            "Name": "0",
+            "ID": "0",
+            "Length": "50",
+            "Height": "3"
+        },
+        "Road1": {
+            "Name": "1",
+            "ID": "1",
+            "Length": "50",
+            "Height": "3"
+        },
+        "Cell": {
+            "MaxSpeed": "2",
+            "Vechicle40": {
+                "Name": "40",
+                "Speed": "2"
+            },
+            "Vechicle41": {
+                "Name": "41",
+                "Speed": "2"
+            },
+            "Vechicle42": {
+                "Name": "42",
+                "Speed": "2"
+            },
+            "Vechicle43": {
+                "Name": "43",
+                "Speed": "2"
+            },
+            "Vechicle44": {
+                "Name": "44",
+                "Speed": "2"
+            },
+            "Vechicle45": {
+                "Name": "45",
+                "Speed": "1"
+            },
+            "Vechicle46": {
+                "Name": "46",
+                "Speed": "1"
+            },
+            "Vechicle47": {
+                "Name": "47",
+                "Speed": "1"
+            },
+            "Vechicle48": {
+                "Name": "48",
+                "Speed": "2"
+            },
+            "Vechicle49": {
+                "Name": "49",
+                "Speed": "2"
+            },
+            "Vechicle50": {
+                "Name": "50",
+                "Speed": "1"
+            },
+            "Vechicle51": {
+                "Name": "51",
+                "Speed": "1"
+            },
+            "Vechicle52": {
+                "Name": "52",
+                "Speed": "2"
+            },
+            "Vechicle53": {
+                "Name": "53",
+                "Speed": "1"
+            },
+            "Vechicle54": {
+                "Name": "54",
+                "Speed": "2"
+            },
+            "Vechicle55": {
+                "Name": "55",
+                "Speed": "2"
+            },
+            "Vechicle56": {
+                "Name": "56",
+                "Speed": "2"
+            },
+            "Vechicle57": {
+                "Name": "57",
+                "Speed": "1"
+            },
+            "Vechicle58": {
+                "Name": "58",
+                "Speed": "1"
+            },
+            "Vechicle59": {
+                "Name": "59",
+                "Speed": "2"
+            },
+            "Vechicle60": {
+                "Name": "60",
+                "Speed": "1"
+            },
+            "Vechicle61": {
+                "Name": "61",
+                "Speed": "1"
+            },
+            "Vechicle62": {
+                "Name": "62",
+                "Speed": "2"
+            },
+            "Vechicle63": {
+                "Name": "63",
+                "Speed": "2"
+            },
+            "Vechicle64": {
+                "Name": "64",
+                "Speed": "1"
+            },
+            "Vechicle65": {
+                "Name": "65",
+                "Speed": "2"
+            },
+            "Vechicle66": {
+                "Name": "66",
+                "Speed": "1"
+            },
+            "Vechicle67": {
+                "Name": "67",
+                "Speed": "1"
+            },
+            "Vechicle68": {
+                "Name": "68",
+                "Speed": "1"
+            },
+            "Vechicle69": {
+                "Name": "69",
+                "Speed": "2"
+            },
+            "Vechicle70": {
+                "Name": "70",
+                "Speed": "2"
+            },
+            "Vechicle71": {
+                "Name": "71",
+                "Speed": "2"
+            },
+            "Vechicle72": {
+                "Name": "72",
+                "Speed": "1"
+            },
+            "Vechicle73": {
+                "Name": "73",
+                "Speed": "2"
+            },
+            "Vechicle74": {
+                "Name": "74",
+                "Speed": "1"
+            },
+            "Vechicle75": {
+                "Name": "75",
+                "Speed": "2"
+            },
+            "Vechicle76": {
+                "Name": "76",
+                "Speed": "2"
+            },
+            "Vechicle77": {
+                "Name": "77",
+                "Speed": "2"
+            },
+            "Vechicle78": {
+                "Name": "78",
+                "Speed": "2"
+            },
+            "Vechicle79": {
+                "Name": "79",
+                "Speed": "2"
+            },
+            "Vechicle80": {
+                "Name": "80",
+                "Speed": "2"
+            },
+            "Vechicle81": {
+                "Name": "81",
+                "Speed": "2"
+            },
+            "Vechicle82": {
+                "Name": "82",
+                "Speed": "2"
+            },
+            "Vechicle83": {
+                "Name": "83",
+                "Speed": "2"
+            },
+            "Vechicle84": {
+                "Name": "84",
+                "Speed": "1"
+            },
+            "Vechicle85": {
+                "Name": "85",
+                "Speed": "1"
+            },
+            "Vechicle86": {
+                "Name": "86",
+                "Speed": "2"
+            },
+            "Vechicle87": {
+                "Name": "87",
+                "Speed": "2"
+            },
+            "Vechicle88": {
+                "Name": "88",
+                "Speed": "1"
+            },
+            "Vechicle89": {
+                "Name": "89",
+                "Speed": "2"
+            },
+            "Vechicle90": {
+                "Name": "90",
+                "Speed": "1"
+            },
+            "Vechicle91": {
+                "Name": "91",
+                "Speed": "0"
+            },
+            "Vechicle92": {
+                "Name": "92",
+                "Speed": "2"
+            },
+            "Vechicle93": {
+                "Name": "93",
+                "Speed": "0"
+            },
+            "Vechicle94": {
+                "Name": "94",
+                "Speed": "0"
+            },
+            "Vechicle95": {
+                "Name": "95",
+                "Speed": "0"
+            }
+        }
+    }
+}

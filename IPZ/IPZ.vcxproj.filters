@@ -45,6 +45,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Basic_Classes\Artifacts\Destructor.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
     <ClInclude Include="Libraries\gnuplot-iostream.h">
       <Filter>Header Files\Libraries</Filter>
     </ClInclude>
