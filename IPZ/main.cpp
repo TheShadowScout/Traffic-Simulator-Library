@@ -37,6 +37,4 @@ int main() {
 	//map->createJSON();
 	DataSaving JSON(map);
 	JSON.saveData();
-
-
 }

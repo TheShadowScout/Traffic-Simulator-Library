@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Vehicle.h"
 
 #include <iostream>
@@ -17,7 +16,6 @@ protected:
     Cell* nextCell;
     Vehicle* vehicle;
     int maxSpeed;
-
 
 public:
     Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0) {}
@@ -83,4 +81,20 @@ public:
         std::cout << oss.str();
     }
 
+    Cell();
+    Cell(int maxSpeed);
+    ~Cell();
+    Vehicle* getVehicle();
+    Cell* getRightCell();
+    Cell* getLeftCell();
+    Cell* getPreviousCell();
+    Cell* getNextCell();
+    int getMaxSpeed();
+    void setVehicle(Vehicle* Vehicle);
+    void setRightCell(Cell* RightCell);
+    void setLeftCell(Cell* LeftCell);
+    void setPreviousCell(Cell* PreviousCell);
+    void setNextCell(Cell* NextCell);
+    void setMaxSpeed(int maxSpeed);
+	void createJSON();
 };

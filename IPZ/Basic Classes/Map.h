@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <map>
 
 #include "Generator.h"
@@ -11,6 +13,7 @@
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+
 using boost::property_tree::ptree;
 
 class Map
@@ -87,15 +90,19 @@ public:
 		jsonFile << oss.str();
 		jsonFile.close();
 	}
+	Map(std::string name);
+	~Map();
+	std::string getName();
+	std::vector<Road*> getRoads();
+	std::vector<Generator*> getGenerators();
+	std::vector<Cell*> getCellsWithVehs();
+	int getMapPassableCellsCnt();
+	void setCellsWithVehs(std::vector<Cell*> CellsWithVehs);
+	void addRoad(Road* road);
+	void addGenerator(Generator* generator);
+	void fillWithVehs(double fillingDegree);
+	void createJSON();
 };
 
-void linkCells(Cell* previousCell, Cell* nextCell) {
-	previousCell->setNextCell(nextCell);
-	nextCell->setPreviousCell(previousCell);
-}
-
-void linkCells(Generator* previousCell, Cell* nextCell) {
-	previousCell->setNextCell(nextCell);
-	nextCell->setPreviousCell(previousCell);
-	previousCell->setMaxSpeed(nextCell->getMaxSpeed());
-}
+void linkCells(Cell* previousCell, Cell* nextCell);
+void linkCells(Generator* previousCell, Cell* nextCell);

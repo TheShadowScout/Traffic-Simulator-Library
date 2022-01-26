@@ -181,13 +181,14 @@ int main() {
 Filename with class: **Cell.h**  
 Class name: **Cell**  
 
-| Variable name	| Description														|
-| ------------- | ----------------------------------------------------------------- |
-| vehicle       | variable that holds a pointer to [Vehicle](#vehicle)				|
-| rightCell		| variable that holds a pointer to [Cell](#cell) adjacent to right	|
-| leftCell		| variable that holds a pointer to [Cell](#cell) adjacent to left	|
-| nextCell		| variable that holds a pointer to [Cell](#cell) adjacent to bottom |
-| previousCell	| variable that holds a pointer to [Cell](#cell) adjacent to top	|
+| Variable name	| Variable type			        | Description											|
+| ------------- |-| ----------------------------------------------------------------- |
+| vehicle       |Vehicle*| variable that holds a pointer to [Vehicle](#vehicle)				|
+| rightCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to right	|
+| leftCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to left	|
+| nextCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to bottom |
+| previousCell	|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to top	|
+| maxSpeed	|int|variable that holds a max speed in [Cell](#cell)	|
 
 | Function type and name			| Arguments							| Description																				|
 | --------------------------------- | ---------------------------------	| ----------------------------------------------------------------------------------------- |
@@ -202,6 +203,9 @@ Class name: **Cell**
 | [Cell*](#cell)  getLeftCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to left								|
 | [Cell*](#cell)  getPreviousCell	| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to bottom								|
 | [Cell*](#cell)  getNextCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to top									|
+| void setMaxSpeed	| int maxSpeed	| Function sets max speed in [Cell](#cell)							|
+| void getMaxSpeed	| ---------------------------------	| Function returns max speed in [Cell](#cell)			|
+| void createJSON	| ---------------------------------	|Function creates JSON data tree of current [Cell](#cell)|
 
 ## Road
 Filename with class: **Road.h**  
@@ -209,7 +213,7 @@ Class name: **Road**
 
 | Variable name | Variable type			        | Description																|
 | ------------- | ----------------------------- | ------------------------------------------------------------------------- |
-| IDRoad		| int					        | variable that holds a [Road](#road) ID									|
+| ID		| int					        | variable that holds a [Road](#road) ID									|
 | maxSpeed		| int					        | variable that holds max vehicle speed										|
 | length        | int                           | variable that holds road length                                           |
 | height        | int                           | variable that holds road height                                           |
@@ -225,8 +229,11 @@ Class name: **Road**
 | void setMaxSpeed			| int maxSpeed				                         | Function sets new max speed in current [Road](#Road)		              |
 | void setName				| string name				                         | Function sets name in current [Road](#Road)				              |
 | int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
+| int getID			| -------------------------------------------------- | Function returns ID of current [Road](#Road)	
 | string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
-| void createXML			| -------------------------------------------------- | Function creates new XML file of current [Road](#Road)	              |
+| int getLength			| -------------------------------------------------- | Function returns length of current [Road](#Road)			              |
+| int getHeight		| -------------------------------------------------- | Function returns height of current [Road](#Road)			              |
+| void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Road](#Road)	              |
 | string tempToString			| ------------------------- | Function return road as string|
 
 ## Map
@@ -244,8 +251,16 @@ Class name: **Map**
 
 | Function type and name	| Arguments		| Description												|
 | ------------------------- | ------------- | --------------------------------------------------------- |
-| void Map					| string name	| Class constructor											|
-| void createXML			| -------------	| Function creates new XML file of current [Map](#map)		|
+| void Map					| string name	| Class constructor	|
+| void addRoad					| Road* road	| Function add road to [Map](#map)	|
+| void addGenerator					| Generator* generator	| Function add generator to [Map](#map)	|
+| void setcellsWithVehs					| vector<Cell*> cellsWithVehs	| Function set cell with vechicles 	|
+| vector<Road*> getRoads				|  -------------------------------------------------- 	| Function returns vector roads	|
+| vector<Generator*> getGenerators				|  -------------------------------------------------- 	| Function returns vector generators	|
+| vector<Cell*> getcellsWithVehs			|  -------------------------------------------------- 	| Function returns cell with vechicles	|
+| vector<Cell*> setCellsWithVehs			|  -------------------------------------------------- 	| Function set new cell with vechicles	|
+| string getName			|  -------------------------------------------------- 	| Function returns name of [Map](#map)	|
+| void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Map](#map)		|
 
 ## Vehicle
 Filename with class: **Vehicle.h**  
@@ -256,14 +271,19 @@ Class name: **Vehicle**
 | name			| string		| variable that holds a [Vehicle](#vehicle) name	|
 | ID			| int			| variable that holds a [Vehicle](#vehicle) ID		|
 | speed			| int			| variable that holds a [Vehicle](#vehicle) speed	|
+| IDcnt			| int static			| variable that holds a [Vehicle](#vehicle) ID for a new create vehicle	|
+| isObstacle			| bool			| variable that holds if [Vehicle](#vehicle) is movement vehicle or obstacle	|
 
 | Function type and name	| Arguments					| Description												|
 | ------------------------- | ------------------------- | --------------------------------------------------------- |
-| void Vehicle				| string name, int speed	| Class constructor											|
+| void Vehicle				| string name, int speed, bool isObstacle	| Class constructor											|
+| void Vehicle				| int speed, bool isObstacle	| Class constructor											|
 | string getName			| ------------------------- | Function returns name of current [Vehicle](#vehicle)		|
 | int getID					| ------------------------- | Function returns ID of current [Vehicle](#vehicle)		|
 | int getSpeed				| ------------------------- | Function returns speed of current [Vehicle](#vehicle)		|
 | void setSpeed				| int speed					| Function sets new speed of current [Vehicle](#vehicle)	|
+| bool checkIsObstacle				| -------------------------	| Function returns if [Vehicle](#vehicle) is obstacle	|
+| void createJSON		| -------------------------	| Function creates JSON data tree of current [Vehicle](#vehicle)	|
 
 ## Special cells
 ## Generator

@@ -1,0 +1,11 @@
+#pragma once
+#include <filesystem>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <windows.h>
+#include <sstream>
+#include <vector>
+#include <cmath>
+#include <boost/tuple/tuple.hpp>
+#include "../Libraries/gnuplot-iostream.h"

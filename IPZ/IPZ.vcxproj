@@ -19,23 +19,40 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Basic Classes\Artifacts\Destructor.h" />
+    <ClInclude Include="Basic Classes\Artifacts\Teleporter.h" />
     <ClInclude Include="Basic Classes\Cell.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
     <ClInclude Include="Basic Classes\Map.h" />
+    <ClInclude Include="Basic Classes\MovePrediction.h" />
+    <ClInclude Include="Basic Classes\Observer.h" />
     <ClInclude Include="Basic Classes\Road.h" />
     <ClInclude Include="Basic Classes\Simulation.h" />
+    <ClInclude Include="Basic Classes\Statistics.h" />
     <ClInclude Include="Basic Classes\Vehicle.h" />
-    <ClInclude Include="Basic_Classes\Artifacts\Destructor.h" />
-    <ClInclude Include="Basic_Classes\Artifacts\Teleporter.h" />
+    <ClInclude Include="Functionality\DensityPlotGenerator.h" />
+    <ClInclude Include="Functionality\StatisticsGenerator.h" />
     <ClInclude Include="Libraries\gnuplot-iostream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basic Classes\Cell.cpp" />
+    <ClCompile Include="Basic Classes\Generator.cpp" />
+    <ClCompile Include="Basic Classes\Map.cpp" />
+    <ClCompile Include="Basic Classes\MovePrediction.cpp" />
+    <ClCompile Include="Basic Classes\Observer.cpp" />
+    <ClCompile Include="Basic Classes\Road.cpp" />
+    <ClCompile Include="Basic Classes\Simulation.cpp" />
+    <ClCompile Include="Basic Classes\Statistics.cpp" />
+    <ClCompile Include="Basic Classes\Vehicle.cpp" />
+    <ClCompile Include="Functionality\DensityPlotGenerator.cpp" />
     <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
+    <ClCompile Include="gui\main.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitignore" />
     <None Include="..\README.md" />
+    <None Include="Functionality\DensityPlot.gnuplot" />
   </ItemGroup>
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
@@ -57,7 +74,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -125,7 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

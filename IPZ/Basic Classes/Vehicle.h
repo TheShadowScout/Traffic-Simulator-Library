@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 
 #include <iostream>
@@ -18,6 +17,7 @@ protected:
 	int speed;
 	int ID;
 	bool isObstacle;
+	int originLane;
 
 public:
 	Vehicle(std::string name, int speed, bool isObstacle = false) : name(name), speed(speed), isObstacle(isObstacle) {
@@ -61,5 +61,14 @@ public:
 		std::cout << oss.str();
 	}
 
-
+	Vehicle(std::string name, int speed, bool isObstacle = false, int originLane = 0);
+	Vehicle(int speed, bool isObstacle = false, int originLane = 0);
+	std::string getName();
+	int getID();
+	int getSpeed();
+	bool getIsObstacle();
+	int getOriginLane();
+	void setSpeed(int newSpeed);
+	void setOriginLane(int originLane);
+	void createJSON();
 };
