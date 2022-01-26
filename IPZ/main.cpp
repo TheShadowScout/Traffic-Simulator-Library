@@ -4,6 +4,7 @@
 #include "Basic Classes/Vehicle.h"
 #include "Basic Classes/Generator.h"
 #include "Basic Classes/Simulation.h"
+#include "Basic Classes/DataSaving.h"
 #include "boost/json.hpp"
 
 int Road::IDcnt = 0;
@@ -33,6 +34,9 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.tempToString() << std::endl;
 	}
-	map->createJSON();
+	//map->createJSON();
+	DataSaving JSON(map);
+	JSON.saveData();
+
 
 }

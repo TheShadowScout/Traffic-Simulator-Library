@@ -83,7 +83,7 @@ public:
 		std::ostringstream oss;
 		boost::property_tree::write_json(oss, mapTree);
 		//std::cout << oss.str();
-		std::ofstream jsonFile("JSON.txt");
+		std::ofstream jsonFile("JSON.json");
 		jsonFile << oss.str();
 		jsonFile.close();
 	}
