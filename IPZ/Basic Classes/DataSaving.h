@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Basic Classes\Map.h"
+#include "../Basic Classes/Map.h"
 #include <iostream>
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
@@ -13,10 +13,6 @@ class DataSaving {
 	Map* mapa;
 
 public:
-	DataSaving(Map* mapa) {
-		this->mapa = mapa;
-	}
-	void saveData() {
-		mapa->createJSON();
-	}
+	DataSaving(Map* mapa);
+	void saveData();
 };

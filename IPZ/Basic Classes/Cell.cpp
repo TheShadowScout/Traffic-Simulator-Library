@@ -56,3 +56,15 @@ void Cell::setNextCell(Cell* NextCell) {
 void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
 }
+
+// Czy w statystykach pojedynczej komórki jest koniecznoœæ zapisanie informacji o najbli¿szych do niej komórek, czy te¿ nie?
+   // Zauwa¿y³em równie¿, ¿e komórki nie posiadaj¹ swojego ID czy te¿ to nie jest potrzebne.
+void Cell::createJSON() {
+    ptree CellTree;
+    std::string nameTree = "Cell";
+    CellTree.put(nameTree + ".MaxSpeed", getMaxSpeed());
+
+    std::ostringstream oss;
+    boost::property_tree::write_json(oss, CellTree);
+    std::cout << oss.str();
+}

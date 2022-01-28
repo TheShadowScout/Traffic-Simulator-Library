@@ -1,6 +1,10 @@
 #pragma once
 #include "DataSaving.h"
 
-void saveData() {
-	mapa.createJSON();
+DataSaving::DataSaving(Map* mapa) {
+	this->mapa = mapa;
+}
+
+void DataSaving::saveData() {
+	mapa->createJSON();
 }

@@ -99,11 +99,28 @@ void Map::fillWithVehs(double fillingDegree) {
 	}
 }
 
+//void Map::createJSON() {
+//	ptree mapTree;
+//	mapTree.put("Map.Name", getName());
+//
+//	for (int i = 0; i < roads.size(); i++) {
+//		//mapTree.put("Map.Road", roads[i]->createJSON());
+//		std::string nameTree = "Map.Road" + std::to_string(roads[i]->getID());
+//		mapTree.put(nameTree + ".Name", roads[i]->getName());
+//		mapTree.put(nameTree + ".ID", roads[i]->getID());
+//		mapTree.put(nameTree + ".Length", roads[i]->getLength());
+//		mapTree.put(nameTree + ".Height", roads[i]->getHeight());
+//	}
+//	std::ostringstream oss;
+//	boost::property_tree::write_json(oss, mapTree);
+//	std::cout << oss.str();
+//}
+
 void Map::createJSON() {
 	ptree mapTree;
 	mapTree.put("Map.Name", getName());
 
-	for (int i = 0; i < roads.size(); i++) {
+	for (int i = 0; i < roads.capacity(); i++) {
 		//mapTree.put("Map.Road", roads[i]->createJSON());
 		std::string nameTree = "Map.Road" + std::to_string(roads[i]->getID());
 		mapTree.put(nameTree + ".Name", roads[i]->getName());
@@ -111,10 +128,23 @@ void Map::createJSON() {
 		mapTree.put(nameTree + ".Length", roads[i]->getLength());
 		mapTree.put(nameTree + ".Height", roads[i]->getHeight());
 	}
+	for (int i = 0; i < cellsWithVehs.size(); i++) {
+		std::string nameTree = "Map.Cell";
+		mapTree.put(nameTree + ".MaxSpeed", cellsWithVehs[i]->getMaxSpeed());
+		nameTree = "Map.Cell.Vechicle" + std::to_string(cellsWithVehs[i]->getVehicle()->getID());
+		mapTree.put(nameTree + ".Name", cellsWithVehs[i]->getVehicle()->getName());
+		mapTree.put(nameTree + ".Speed", std::to_string(cellsWithVehs[i]->getVehicle()->getSpeed()));
+	}
+
 	std::ostringstream oss;
 	boost::property_tree::write_json(oss, mapTree);
-	std::cout << oss.str();
+	//std::cout << oss.str();
+	std::ofstream jsonFile("Map.json");
+	jsonFile << oss.str();
+	jsonFile.close();
 }
+
+
 
 void linkCells(Cell* previousCell, Cell* nextCell) {
 	previousCell->setNextCell(nextCell);
