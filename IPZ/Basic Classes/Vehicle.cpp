@@ -37,3 +37,19 @@ void Vehicle::setSpeed(int newSpeed) {
 void Vehicle::setOriginLane(int originLane) {
 	this->originLane = originLane;
 }
+
+bool Vehicle::checkIsObstacle() {
+	return isObstacle;
+}
+
+void Vehicle::createJSON() {
+	ptree VehicleTree;
+	std::string nameTree = "Vehicle" + std::to_string(getID());
+	VehicleTree.put(nameTree + ".Name", getName());
+	VehicleTree.put(nameTree + ".ID", getID());
+	VehicleTree.put(nameTree + ".Speed", getSpeed());
+	VehicleTree.put(nameTree + ".IsObstacle", checkIsObstacle());   // Tutaj nie jestem pewien czy nie nale¿y przekonwertowaæ bool na string?
+	std::ostringstream oss;
+	boost::property_tree::write_json(oss, VehicleTree);
+	std::cout << oss.str();
+}

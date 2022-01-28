@@ -1,6 +1,5 @@
 #pragma once
 #include "Gui/gui.h"
-#include "Functionality/DensityPlotGenerator.h"
 #include "Functionality/StatisticsGenerator.h"
 
 int main() {

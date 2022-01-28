@@ -22,6 +22,7 @@
     <ClInclude Include="Basic Classes\Artifacts\Destructor.h" />
     <ClInclude Include="Basic Classes\Artifacts\Teleporter.h" />
     <ClInclude Include="Basic Classes\Cell.h" />
+    <ClInclude Include="Basic Classes\DataSaving.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
     <ClInclude Include="Basic Classes\Map.h" />
     <ClInclude Include="Basic Classes\MovePrediction.h" />
@@ -37,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Basic Classes\Cell.cpp" />
+    <ClCompile Include="Basic Classes\DataSaving.cpp" />
     <ClCompile Include="Basic Classes\Generator.cpp" />
     <ClCompile Include="Basic Classes\Map.cpp" />
     <ClCompile Include="Basic Classes\MovePrediction.cpp" />

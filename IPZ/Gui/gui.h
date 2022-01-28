@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Functionality/DensityPlotGenerator.h"
 #include "../Basic Classes/Simulation.h"
+#include "../Basic Classes/DataSaving.h"
 
 struct Button
 {
@@ -143,7 +144,8 @@ void createSimulation(Simulation s)
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            
+            DataSaving JSON(s.getMap());
+            JSON.saveData();
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
