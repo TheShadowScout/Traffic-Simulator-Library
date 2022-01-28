@@ -143,7 +143,7 @@ void createSimulation(Simulation s)
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            s.getMap()->createJSON();
+            
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
