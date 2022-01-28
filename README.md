@@ -24,6 +24,7 @@ Student project of a library in C ++ used to create a road traffic simulator.
 5.5.2 [Destructor](#destructor)  
 5.5.3 [Teleporter](#teleporter)  
 5.6 [Simulation](#simulation)
+6. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)
 
 # Introduction
 # Installation
@@ -346,3 +347,123 @@ Class name: **Simulation**
 | string tempToString				| --------------------------------- | Function return simulation move [vehicle](#vehicle) as string|
 | int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
 | Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
+
+# Percentage of participation in tasks 
+
+<table>
+    <thead>
+        <tr>
+            <th>Task category</th>
+            <th>Author name</th>
+            <th>Percentage particiption</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=2>Project management</td>
+            <td>Kacper Chrzanowski</td>
+            <td>90%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Git and libraries support</td>
+          <td>Kacper Chrzanowski</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+            <td rowspan=3>GUI</td>
+            <td>Weronika Drożdż</td>
+            <td>47.5%</td>
+        </tr>
+        <tr>
+            <td>Filip Stodolny</td>
+            <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td rowspan=4>Transition function </td>
+          <td>Gabor Łukjaniuk</td>
+          <td>95%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>2%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>1.5%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>1.5%</td>
+        </tr>
+        <tr>
+          <td rowspan=6>Basic Classes</td>
+          <td>Kacper Chrzanowski</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>16.6%</td>
+        </tr><tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td rowspan=3>JSON support</td>
+          <td>Dominik Dzięgielewski</td>
+          <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td rowspan=6>Documentation</td>
+          <td>Kacper Chrzanowski</td>
+          <td>25%</td>
+        </tr>
+        <tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>11,6%</td>
+        </tr>
+        <tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>11,6%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>11,6%</td>
+        </tr>
+    </tbody>
+</table>
