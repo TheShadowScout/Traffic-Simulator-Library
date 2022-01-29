@@ -465,5 +465,14 @@ Class name: **Simulation**
           <td>Filip Stodolny</td>
           <td>11,6%</td>
         </tr>
+        <tr>
+          <td rowspan=2>Density plot</td>
+          <td>Kacper Chrzanowski</td>
+          <td>50%</td>
+        </tr>
+        <tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>50%</td>
+        </tr>
     </tbody>
 </table>
