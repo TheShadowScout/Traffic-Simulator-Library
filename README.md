@@ -374,7 +374,7 @@ Class name: **Simulation**
           <td>100%</td>
         </tr>
         <tr>
-            <td rowspan=3>GUI</td>
+            <td rowspan=3>GUI and connecting modules</td>
             <td>Weronika Drożdż</td>
             <td>47.5%</td>
         </tr>
