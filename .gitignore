@@ -389,3 +389,4 @@ FodyWeavers.xsd
 
 # Custom filters
 *.csv
+IPZ/Map.json

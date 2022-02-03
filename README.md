@@ -1,5 +1,5 @@
 # Library for creating a traffic simulator 
-Student project of a library in C ++ used to create a road traffic simulator. 
+Student project of a library in C++ used to create a road traffic simulator. 
 
 # Authors
 *Kacper Chrzanowski*  
@@ -8,6 +8,126 @@ Student project of a library in C ++ used to create a road traffic simulator.
 *Filip Stodolny*  
 *Dominik Dzięgielewski*  
 *Andrey Kmet*  
+
+# Percentage of participation in tasks 
+
+<table>
+    <thead>
+        <tr>
+            <th>Task category</th>
+            <th>Author name</th>
+            <th>Percentage particiption</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan=2>Project management</td>
+            <td>Kacper Chrzanowski</td>
+            <td>90%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Git and libraries support</td>
+          <td>Kacper Chrzanowski</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+            <td rowspan=3>GUI</td>
+            <td>Weronika Drożdż</td>
+            <td>47.5%</td>
+        </tr>
+        <tr>
+            <td>Filip Stodolny</td>
+            <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td rowspan=4>Transition function </td>
+          <td>Gabor Łukjaniuk</td>
+          <td>95%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>2%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>1.5%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>1.5%</td>
+        </tr>
+        <tr>
+          <td rowspan=6>Basic Classes</td>
+          <td>Kacper Chrzanowski</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>16.6%</td>
+        </tr><tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>16.6%</td>
+        </tr>
+        <tr>
+          <td rowspan=3>JSON support</td>
+          <td>Dominik Dzięgielewski</td>
+          <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>47.5%</td>
+        </tr>
+        <tr>
+          <td>Kacper Chrzanowski</td>
+          <td>5%</td>
+        </tr>
+        <tr>
+          <td rowspan=6>Documentation</td>
+          <td>Kacper Chrzanowski</td>
+          <td>25%</td>
+        </tr>
+        <tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>11,6%</td>
+        </tr>
+        <tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>11,6%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>11,6%</td>
+        </tr>
+    </tbody>
+</table>
 
 # Table of Contents
 1. [Introduction](#introduction)
