@@ -1,34 +1,36 @@
-#include "gui.h"
+#include "SimulationWindow.h"
+#include "../Functionality/DensityPlotGenerator.h"
+#include "../Basic Classes/DataSaving.h"
 
-Gui::Button(std::string txt, std::string fontFile, int size, float whichButton)
-        {
-            font.loadFromFile(fontFile);
-            buttonText.setFont(font);
-            buttonText.setString(txt);
-            buttonText.setCharacterSize(size);
-            bounds = buttonText.getLocalBounds();
+SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size, float whichButton)
+{
+    font.loadFromFile(fontFile);
+    buttonText.setFont(font);
+    buttonText.setString(txt);
+    buttonText.setCharacterSize(size);
+    bounds = buttonText.getLocalBounds();
 
-            buttonText.setPosition(775, int(70*whichButton));
-            buttonText.setFillColor(sf::Color::Black);
-            bounds.left = buttonText.getPosition().x;
-            bounds.top = buttonText.getPosition().y + 10;
-            bounds.width = 200;
-            bounds.height += 20;
+    buttonText.setPosition(775, int(70 * whichButton));
+    buttonText.setFillColor(sf::Color::Black);
+    bounds.left = buttonText.getPosition().x;
+    bounds.top = buttonText.getPosition().y + 10;
+    bounds.width = 200;
+    bounds.height += 20;
 
-            background.setSize(sf::Vector2f(bounds.width, bounds.height));
-            background.setPosition(bounds.left, bounds.top);
+    background.setSize(sf::Vector2f(bounds.width, bounds.height));
+    background.setPosition(bounds.left, bounds.top);
 
-            buttonText.setPosition((bounds.left + bounds.width/12), (bounds.top + bounds.height/50));
-        }
+    buttonText.setPosition((bounds.left + bounds.width / 12), (bounds.top + bounds.height / 50));
+}
 
-void Gui::createSimulation(Simulation s)
+void SimulationWindow::createSimulationWindow(Simulation s)
 {
     sf::RenderWindow window(sf::VideoMode(1000, 1000), "Simulation");
 
     sf::Text menuText;
     sf::Font font;
 
-    font.loadFromFile("gui/calibri.ttf"); // TODO: zabezpieczy� na wypadek b��du
+    font.loadFromFile("gui/calibri.ttf");
 
     menuText.setFont(font);
     menuText.setString("Menu");
@@ -52,9 +54,9 @@ void Gui::createSimulation(Simulation s)
 
     auto r = s.getMap()->getRoads();
     std::vector<sf::RectangleShape> roadRects;
-    int offset = 1000 / (2*r.size());
-    double refreshRate = 0.1; // w sekundach
-    int pixelSize = 5; // szeroko�� kom�rki
+    int offset = 1000 / (2 * r.size());
+    double refreshRate = 0.1;
+    int pixelSize = 5;
     int roadHeight = 20;
     int roadGap = 1000 / (r.size() + 1);
     int prevRoadHeight = 0;
@@ -62,7 +64,7 @@ void Gui::createSimulation(Simulation s)
     {
         sf::RectangleShape shape(sf::Vector2f(pixelSize * r[i]->getLength(), roadHeight * r[i]->getHeight()));
         shape.setFillColor(sf::Color(211, 211, 211));
-        shape.setPosition(325-r[i]->getLength()* pixelSize + (int)r[i]->getLength() * pixelSize/2, offset + roadGap *i+ prevRoadHeight);
+        shape.setPosition(325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2, offset + roadGap * i + prevRoadHeight);
         roadRects.push_back(shape);
         prevRoadHeight += roadHeight * r[i]->getHeight();
     }
@@ -75,6 +77,8 @@ void Gui::createSimulation(Simulation s)
     int carHeight = 4;
     int carLength = 4;
 
+    s.initiateSimulation();
+
     while (window.isOpen())
     {
         float time = clock.getElapsedTime().asSeconds();
@@ -82,21 +86,20 @@ void Gui::createSimulation(Simulation s)
         {
             vehs.clear();
             s.transitionFunc();
-            // std::cout << s.tempToString() << std::endl;
 
             prevRoadHeight = 0;
             for (int whichRoad = 0; whichRoad < r.size(); whichRoad++)
             {
-                
+
                 for (int whichLane = 0; whichLane < r[whichRoad]->getHeight(); whichLane++)
                 {
                     for (int whichCell = 0; whichCell < r[whichRoad]->getLength(); whichCell++)
                     {
-                        if (r[whichRoad]->road[whichLane][whichCell]->getVehicle() != nullptr)
+                        if (r[whichRoad]->getRoad()[whichLane][whichCell]->getVehicle() != nullptr)
                         {
                             sf::RectangleShape shape(sf::Vector2f(carLength, carHeight));
                             shape.setFillColor(sf::Color(255, 0, 0));
-                            shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2,offset + roadGap*whichRoad+whichLane*roadHeight-carHeight+2+roadHeight/2+ prevRoadHeight);
+                            shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
                             vehs.push_back(shape);
                         }
                     }
@@ -125,12 +128,14 @@ void Gui::createSimulation(Simulation s)
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stats.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            std::cout << "Wcisnieto statystyki\n";
+            s.saveStatisticsToFile();
+            GenerateDensityPlot();
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            std::cout << "Wcisnieto zapis mapy\n";
+            DataSaving JSON(s.getMap());
+            JSON.saveData();
         }
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
@@ -150,7 +155,6 @@ void Gui::createSimulation(Simulation s)
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            // ostrze�enie  w wypadku wyj�cia w trakcie symulacji
             window.close();
         }
 
@@ -181,10 +185,10 @@ void Gui::createSimulation(Simulation s)
         {
             window.draw(roadRects[i]);
         }
-       
+
         for (int i = 0; i < vehs.size(); i++)
             window.draw(vehs[i]);
-        
+
         window.display();
     }
 }
