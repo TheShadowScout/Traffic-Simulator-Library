@@ -19,12 +19,10 @@ Student project of a library in C++ used to create a road traffic simulator.
 5.2. [Road](#road)  
 5.3. [Map](#map)  
 5.4. [Vehicle](#vehicle)  
-5.5. [Special cells](#special-cells)  
-5.5.1 [Generator](#generator)  
-5.5.2 [Destructor](#destructor)  
-5.5.3 [Teleporter](#teleporter)  
-5.6 [Simulation](#simulation)
-6. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)
+5.5. [Generator](#generator)    
+5.6. [Simulation](#simulation)
+6. [Simulation window](#simulation-window)
+7. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)
 
 # Introduction
 # Installation
@@ -177,6 +175,45 @@ int main() {
 	}
 }
 ```
+
+Simulation Window
+```
+#pragma once
+#include "Gui/SimulationWindow.h"
+#include "Functionality/StatisticsGenerator.h"
+int main() {
+	Road* road1 = new Road(100, 1, 5);
+	Road* road2 = new Road(50, 3, 3);
+	Road* road3 = new Road(75, 2, 3);
+	Road* road4 = new Road(100, 1, 5);
+	Generator* generator1 = new Generator(0.9);
+	Generator* generator2 = new Generator(0.5);
+	Generator* generator3 = new Generator(0.7);
+	Generator* generator4 = new Generator(0.9);
+	Map* map = new Map("test");
+	map->addRoad(road1);
+	map->addRoad(road2);
+	map->addRoad(road3);
+	map->addRoad(road4);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+	map->addGenerator(generator3);
+	map->addGenerator(generator4);
+	linkCells(generator1, road1->head[0]);
+	linkCells(generator2, road2->head[0]);
+	linkCells(generator3, road3->head[0]);
+	linkCells(generator4, road4->head[0]);
+	linkCells(road2->tail[0], road2->head[1]);
+	linkCells(road2->tail[1], road2->head[2]);
+
+
+	linkCells(road3->tail[0], road3->head[1]);
+	Simulation simulation(map, 0.1);
+
+	SimulationWindow test;
+	test.createSimulationWindow(simulation);
+}
+```
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  
@@ -286,7 +323,6 @@ Class name: **Vehicle**
 | bool checkIsObstacle				| -------------------------	| Function returns if [Vehicle](#vehicle) is obstacle	|
 | void createJSON		| -------------------------	| Function creates JSON data tree of current [Vehicle](#vehicle)	|
 
-## Special cells
 ## Generator
 Filename with class: **Generator.h**  
 Class name: **Generator**  
@@ -300,34 +336,6 @@ Inherits from: [Cell](#cell)
 | ------------------------- | --------- | --------------------------------------------------------------------------------- |
 | void Generator			| --------- | Class constructor																	|
 | void create				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|
-
-## Destructor
-Filename with class: **Destructor.h**  
-Class name: **Destructor**  
-Inherits from: [Cell](#cell)
-
-| Variable name | Variable type	| Description											|
-| ------------- | ------------- | ----------------------------------------------------- |
-| name			| string		| variable that holds a [Destructor](#destructor) name	|
-
-| Function type and name	| Arguments	| Description																	|
-| ------------------------- | --------- | ----------------------------------------------------------------------------- |
-| void Destructor			| --------- | Class constructor																|
-| void remove				| --------- | Function removes a [Vehicle](#vehicle) from current [Destructor](#destructor)	|
-
-## Teleporter
-Filename with class: **Teleporter.h**  
-Class name: **Teleporter**  
-Inherits from: [Cell](#cell)
-
-| Variable name | Variable type	| Description											|
-| ------------- | ------------- | ----------------------------------------------------- |
-| name			| string		| variable that holds a [Teleporter](#teleporter) name	|
-
-| Function type and name	| Arguments										| Description																										|
-| ------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| void Teleporter			| --------------------------------------------- | Class constructor																									|
-| void teleport				| [Teleporter*](#teleporter) outputTeleporter	| Function moves [Vehicle](#vehicle) from current [Teleporter](#teleporter) to specified [Teleporter](#teleporter)	|
 
 ## Simulation
 Filename with class: **Simulation.h**  
@@ -347,6 +355,19 @@ Class name: **Simulation**
 | string tempToString				| --------------------------------- | Function return simulation move [vehicle](#vehicle) as string|
 | int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
 | Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
+
+## Simulation window
+Filename with class: **SimulationWindow.h**  
+Class name: **SimulationWindow**
+
+| Object type | Description	|
+| ------------- | ------------- |
+| Button	| defines button in GUI |
+
+| Function type and name			| Arguments							| Description												|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| void createSimulationWindow					| [Simulation*](#simulation) s, double randEventProb | Function creating simulation window											|
+
 
 # Percentage of participation in tasks 
 
