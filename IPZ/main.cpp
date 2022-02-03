@@ -8,7 +8,6 @@ int main() {
 	Road* road3 = new Road(75, 2, 3);
 	Road* road4 = new Road(100, 1, 5);
 	Generator* generator1 = new Generator(0.9);
-
 	Generator* generator2 = new Generator(0.5);
 	Generator* generator3 = new Generator(0.7);
 	Generator* generator4 = new Generator(0.9);
