@@ -20,9 +20,10 @@ Student project of a library in C++ used to create a road traffic simulator.
 5.3. [Map](#map)  
 5.4. [Vehicle](#vehicle)  
 5.5. [Generator](#generator)    
-5.6. [Simulation](#simulation)
-6. [Simulation window](#simulation-window)
-7. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)
+5.6. [Simulation](#simulation)  
+5.7. [DataSaving](#datasaving)  
+6. [SimulationWindow](#simulationwindow)  
+7. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
 
 # Introduction
 # Installation
@@ -356,7 +357,20 @@ Class name: **Simulation**
 | int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
 | Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
 
-## Simulation window
+## DataSaving
+Filename with class: **DataSaving.h**  
+Class name: **DataSaving**
+
+| Variable name | Variable type	| Description														|
+| ------------- | ------------- | ------------- |
+| mapa	| [Map*](#map) | Map to generate JSON |
+
+| Function type and name			| Arguments							| Description												|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| void DataSaving				| [Map*](#map) mapa | Object constructor |
+| void saveData();      | ----------------- | Function generates file with JSON containing map informations
+
+## SimulationWindow
 Filename with class: **SimulationWindow.h**  
 Class name: **SimulationWindow**
 
