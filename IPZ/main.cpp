@@ -1,5 +1,5 @@
 #pragma once
-#include "Gui/gui.h"
+#include "Gui/SimulationWindow.h"
 #include "Functionality/StatisticsGenerator.h"
 
 int main() {
@@ -35,8 +35,9 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.tempToString() << std::endl;
 	}*/
-	
-	createSimulation(simulation);
+
+	SimulationWindow test;
+	test.createSimulationWindow(simulation);
 	//GenerateDensityPlot();
 	//return 0;
 }

@@ -90,7 +90,7 @@
     <ClInclude Include="Functionality\StatisticsGenerator.h">
       <Filter>Header Files\Functionality</Filter>
     </ClInclude>
-    <ClInclude Include="Gui\gui.h">
+    <ClInclude Include="Gui\SimulationWindow.h">
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\DataSaving.h">
@@ -136,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="Basic Classes\DataSaving.cpp">
       <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\SimulationWindow.cpp">
+      <Filter>Source Files\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
