@@ -21,6 +21,15 @@ int Observer::getObservedPassingVehsCnt() {
 	return observedPassingVehsCnt;
 }
 
+std::string Observer::toString() {
+	std::string tempStr = "";
+	tempStr += name;
+	tempStr += ";";
+	tempStr += std::to_string(observedPassingVehsCnt);
+	tempStr += "\n";
+	return tempStr;
+}
+
 std::string Observer::filterName(std::string rawName) {
 	std::string tempName = "";
 	for (char character : rawName) {
@@ -54,14 +63,4 @@ void Observer::checkVehPassing() {
 		observedPassingVehsCnt++;
 	}
 	lastObservedVeh = nullptr;
-}
-
-std::string Observer::toString() {
-	std::string tempStr = "";
-	//tempStr += "observerName;passingVehiclesCount\n";
-	tempStr += name;
-	tempStr += ";";
-	tempStr += std::to_string(observedPassingVehsCnt);
-	tempStr += "\n";
-	return tempStr;
 }

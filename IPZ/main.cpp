@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Gui/SimulationWindow.h"
 #include "Functionality/StatisticsGenerator.h"
 

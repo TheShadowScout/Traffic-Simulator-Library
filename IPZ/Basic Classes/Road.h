@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -17,6 +16,16 @@ public:
     int static IDcnt;
     std::vector<Cell*> head;
     std::vector<Cell*> tail;
+
+protected:
+    int ID;
+    int maxSpeed;
+    int length;
+    int height;
+    std::string name;
+    std::vector<std::vector<Cell*>> road;
+
+public:
     Road(std::string name, int length, int height, int maxSpeed);
     Road(int length, int height, int maxSpeed);
     ~Road();
@@ -29,16 +38,7 @@ public:
     std::vector<std::vector<Cell*>> getRoad();
     void setMaxSpeed(int maxSpeed);
     void setName(std::string name);
-    std::string filterName(std::string rawName);
     std::string toString();
+    std::string filterName(std::string rawName);
     void createJSON();
-protected:
-    int ID;
-    int maxSpeed;
-    int length;
-    int height;
-    std::string name;
-    std::vector<std::vector<Cell*>> road;
-
-
 };

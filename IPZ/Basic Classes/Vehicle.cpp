@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Vehicle.h"
 
 Vehicle::Vehicle(std::string name, int speed, bool isObstacle, int originLane) : name(name), speed(speed), isObstacle(isObstacle), originLane(originLane) {

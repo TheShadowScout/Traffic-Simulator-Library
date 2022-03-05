@@ -1,18 +1,35 @@
 #pragma once
+
 #include "Simulation.h"
 
 Simulation::Simulation(Map* simMap, double randEventProb) : simMap(simMap), randEventProb(randEventProb), simStats(nullptr) {}
 
-void Simulation::addObserver(Observer* observer) {
-	observers.push_back(observer);
+Map* Simulation::getSimulationMap() {
+	return simMap;
 }
 
-void Simulation::initiateSimulation() {
-	simStats = new Statistics(randEventProb, simMap->getMapPassableCellsCnt());
-	simStats->updateStatistics(simMap->getCellsWithVehs());
-	for (Observer* observer : observers) {
-		observer->checkVehPassing();
+Statistics* Simulation::getSimulationStatistics() {
+	return simStats;
+}
+
+Observer* Simulation::getSimulationObserver()
+{
+	return observers[0];
+}
+
+std::string Simulation::toString() {
+	std::string simStr = "";
+	for (Generator* generator : simMap->getGenerators()) {
+		simStr += generator->toString();
 	}
+	for (Road* road : simMap->getRoads()) {
+		simStr += road->toString();
+	}
+	return simStr += "\n";
+}
+
+void Simulation::addObserver(Observer* observer) {
+	observers.push_back(observer);
 }
 
 void Simulation::saveStatisticsToFile(std::string outFolder) {
@@ -35,18 +52,27 @@ void Simulation::saveStatisticsToFile(std::string outFolder) {
 	}
 }
 
+void Simulation::initiateSimulation() {
+	simStats = new Statistics(randEventProb, simMap->getMapPassableCellsCnt());
+	simStats->updateStatistics(simMap->getCellsWithVehs());
+	for (Observer* observer : observers) {
+		observer->checkVehPassing();
+	}
+}
+
 void Simulation::transitionFunc() {
 	std::vector<Cell*> cellsWithVehs = simMap->getCellsWithVehs();
 	std::vector<MovePrediction> vehsMovesData;
 	for (Cell* vehCell : cellsWithVehs) {
 		int curVehSpeed = vehCell->getVehicle()->getSpeed();
-		vehsMovesData.push_back(evalVehMove(vehCell, curVehSpeed, true));
+		vehsMovesData.push_back(evalVehMove(vehCell, curVehSpeed));
 		//if (vehsMovesData.back().getUtilFlag() == false) {
 		//	std::cout << "Collision foreseen" << std::endl;
 		//	return;
 		//}
 		int newVehSpeed = vehsMovesData.back().getNewVehSpeed();
-		if (1.0 * std::rand() / RAND_MAX <= randEventProb && newVehSpeed > 0 && curVehSpeed <= newVehSpeed) {
+		int newVehLane = vehsMovesData.back().getNewVahLane();
+		if (1.0 * std::rand() / RAND_MAX <= randEventProb && newVehSpeed > 0 && curVehSpeed <= newVehSpeed && newVehLane == 0) {
 			vehsMovesData.back().setNewVehSpeed(newVehSpeed - 1);
 		}
 	}
@@ -64,128 +90,30 @@ void Simulation::transitionFunc() {
 	}
 }
 
-std::string Simulation::toString() {
-	std::string simStr = "";
-	for (Generator* generator : simMap->getGenerators()) {
-		simStr += generator->toString();
+MovePrediction Simulation::evalVehMove(Cell* vehCell, int curVehSpeed) {
+	int newVehSpeed = curVehSpeed + 1;
+	int distToSearch = curVehSpeed + 1;
+	int vehCellMaxSpeed = vehCell->getMaxSpeed();
+	if (curVehSpeed >= vehCellMaxSpeed) {
+		newVehSpeed = vehCellMaxSpeed;
+		distToSearch = vehCellMaxSpeed;
 	}
-	for (Road* road : simMap->getRoads()) {
-		simStr += road->toString();
-	}
-	return simStr += "\n";
-}
-
-Statistics* Simulation::getSimulationStatistics() {
-	return simStats;
-}
-
-Observer* Simulation::getSimulationObserver()
-{
-	return observers[0];
-}
-
-Map* Simulation::getMap()
-{
-	return simMap;
-}
-
-MovePrediction Simulation::evalVehMove(Cell* vehCell, int curVehSpeed, bool canCallItself) {
-	bool canSpeedUp = true;
-	int speedLimit = std::numeric_limits<int>::max();
 	Cell* tempCell = vehCell;
-	for (int i = 1; i <= distToSearch[curVehSpeed]; i++) {
+	int tempCellMaxSpeed = NULL;
+	for (int i = 1; i <= vehCellMaxSpeed; i++) {
 		tempCell = tempCell->getNextCell();
 		if (tempCell == nullptr) {
 			break;
 		}
-		int tempCellMaxSpeed = tempCell->getMaxSpeed();
-		if (i <= curVehSpeed && canSpeedUp == true && curVehSpeed >= tempCellMaxSpeed) {
-			canSpeedUp = false;
-		}
-		if (tempCellMaxSpeed < speedLimit) {
-			speedLimit = tempCellMaxSpeed;
-			if (((speedLimit + curVehSpeed) * (curVehSpeed - speedLimit) + 1) / 2 > i - 1) {
-				return MovePrediction(true, curVehSpeed - 1, 0);
-			}
-			if (((speedLimit + curVehSpeed + 1) * (curVehSpeed - speedLimit + 1) + 1) / 2 > i - 1) {
-				canSpeedUp = false;
-			}
-		}
-		Vehicle* tempCellVeh = tempCell->getVehicle();
-		if (tempCellVeh != nullptr) {
-			//change road lane start
-			if (tempCellVeh->getIsObstacle() == true && canCallItself == true) {
-				int laneRandomizer = std::rand() % 2;
-				for (int j = 1; j <= 2; j++) {
-					if ((j + laneRandomizer) % 2 == 0) {
-						Cell* leftCell = vehCell->getLeftCell();
-						if (leftCell != nullptr && leftCell->getVehicle() == nullptr) {
-							MovePrediction tempMoveData = evalChangeLane(leftCell, curVehSpeed);
-							if (tempMoveData.getUtilFlag() == true) {
-								return MovePrediction(true, tempMoveData.getNewVehSpeed(), -1);
-							}
-						}
-					}
-					else {
-						Cell* rightCell = vehCell->getRightCell();
-						if (rightCell != nullptr && rightCell->getVehicle() == nullptr) {
-							MovePrediction tempMoveData = evalChangeLane(rightCell, curVehSpeed);
-							if (tempMoveData.getUtilFlag() == true) {
-								return MovePrediction(true, tempMoveData.getNewVehSpeed(), 1);
-							}
-						}
-					}
-				}
-			}
-			//change road lane stop
-			int nextVehSpeed = tempCellVeh->getSpeed();
-			if (breakingDist[curVehSpeed] - breakingDist[std::max(nextVehSpeed - 1, 0)] > i - 1) {
-				if (breakingDist[std::max(curVehSpeed - 1, 0)] - breakingDist[std::max(nextVehSpeed - 1, 0)] > i - 1) {
-					return MovePrediction(false, 0, 0);
-				}
-				return MovePrediction(true, curVehSpeed - 1, 0);
-			}
-			if (canSpeedUp == true && breakingDist[curVehSpeed + 1] - breakingDist[std::max(nextVehSpeed - 1, 0)] <= i - 1) {
-				return MovePrediction(true, curVehSpeed + 1, 0);
-			}
-			canSpeedUp = false;
-			break;
-		}
-	}
-	if (canSpeedUp == true) {
-		return MovePrediction(true, curVehSpeed + 1, 0);
-	}
-	return MovePrediction(true, curVehSpeed, 0);
-}
-
-MovePrediction Simulation::evalChangeLane(Cell* vehCellAdjacentCell, int curVehSpeed) {
-	int speedLimit = std::numeric_limits<int>::max();
-	Cell* tempCell = vehCellAdjacentCell;
-	for (int i = 1; i <= distToSearch[vehCellAdjacentCell->getMaxSpeed()]; i++) {
-		tempCell = tempCell->getPreviousCell();
-		if (tempCell == nullptr) {
-			break;
-		}
-		int tempCellMaxSpeed = tempCell->getMaxSpeed();
-		if (tempCellMaxSpeed < speedLimit) {
-			speedLimit = tempCellMaxSpeed;
+		tempCellMaxSpeed = tempCell->getMaxSpeed();
+		if (curVehSpeed >= tempCellMaxSpeed) {
+			newVehSpeed = std::min(newVehSpeed, std::max(tempCellMaxSpeed, i));
 		}
 		if (tempCell->getVehicle() != nullptr) {
-			int prevVehSpeed = tempCell->getVehicle()->getSpeed();
-			if (std::max(curVehSpeed - 1, 0) - std::min(prevVehSpeed + 1, speedLimit) + i - 1 < breakingDist[std::min(prevVehSpeed + 1, speedLimit)] - breakingDist[std::max(curVehSpeed - 1, 0)]) {
-				return MovePrediction(false, 0, 0);
-			}
+			newVehSpeed = std::min(newVehSpeed, i - 1);
+			break;
 		}
 	}
-	MovePrediction tempMoveData = evalVehMove(vehCellAdjacentCell, curVehSpeed, false);
-	if (tempMoveData.getUtilFlag() == false) {
-		return MovePrediction(false, 0, 0);
-	}
-	int newVehSpeed = std::max(curVehSpeed - 1, tempMoveData.getNewVehSpeed());
-	if (newVehSpeed <= 0) {
-		return MovePrediction(false, 0, 0);
-	}
-	newVehSpeed = newVehSpeed;
 	return MovePrediction(true, newVehSpeed, 0);
 }
 
@@ -203,6 +131,7 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 		}
 		bool isVehDeleted = false;
 		Cell* tempCell = cellsWithVehs[i];
+		/*
 		if (vehMovesData[i].getNewVahLane() == -1) {
 			tempCell = tempCell->getLeftCell();
 			curVeh->setOriginLane(curVeh->getOriginLane() + 1);
@@ -211,6 +140,7 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 			tempCell = tempCell->getRightCell();
 			curVeh->setOriginLane(curVeh->getOriginLane() - 1);
 		}
+		*/
 		for (int j = 0; j < newVehSpeed; j++) {
 			tempCell = tempCell->getNextCell();
 			if (tempCell == nullptr) {
@@ -232,6 +162,7 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 	for (unsigned int i = 0; i < vehs.size(); i++) {
 		vehsDestCells[i]->setVehicle(vehs[i]);
 	}
+	/*
 	for (unsigned int i = 0; i < vehsDestCells.size(); i++) {
 		Vehicle* curVeh = vehsDestCells[i]->getVehicle();
 		int curVehOriginLane = curVeh->getOriginLane();
@@ -248,5 +179,6 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 			}
 		}
 	}
+	*/
 	return newCellsWithVehs;
 }

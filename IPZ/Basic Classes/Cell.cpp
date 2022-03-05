@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Cell.h"
 
 Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0) {}

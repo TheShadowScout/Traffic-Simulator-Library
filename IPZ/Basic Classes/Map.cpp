@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Map.h"
 	
 Map::Map(std::string name) : name(name) {}

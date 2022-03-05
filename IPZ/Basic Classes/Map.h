@@ -5,14 +5,13 @@
 #include <vector>
 #include <cmath>
 #include <map>
+#include <sstream>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 #include "Generator.h"
 #include "Road.h"
 #include "Cell.h"
-
-#include <sstream>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
 using boost::property_tree::ptree;
 
@@ -25,7 +24,6 @@ protected:
 	std::vector<Cell*> cellsWithVehs;
 
 public:
-
 	Map(std::string name);
 	~Map();
 	std::string getName();
@@ -39,6 +37,8 @@ public:
 	void fillWithVehs(double fillingDegree);
 	void createJSON();
 };
+
+
 
 void linkCells(Cell* previousCell, Cell* nextCell);
 void linkCells(Generator* previousCell, Cell* nextCell);

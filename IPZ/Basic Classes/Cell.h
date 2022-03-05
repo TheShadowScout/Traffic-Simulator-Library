@@ -1,12 +1,13 @@
 #pragma once
-#include "Vehicle.h"
 
 #include <iostream>
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-using boost::property_tree::ptree;
 
+#include "Vehicle.h"
+
+using boost::property_tree::ptree;
 
 class Cell {
 protected:
