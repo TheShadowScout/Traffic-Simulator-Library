@@ -45,7 +45,7 @@ Student project of a library in C++ used to create a road traffic simulator.
 ```
 .\vcpkg.exe integrate install
 ```
-6. Change C++ version to C++ 17 in VS Community
+6. Change C++ version to C++ 17, Debug/Release and x86 in VS Community
 # Test codes for libraries
 SFML
 ```
