@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Observer.h"
 
 Observer::Observer(std::string name, Cell* observationOriginCell) : observationOriginCell(observationOriginCell), lastObservedVeh(nullptr), observedPassingVehsCnt(0) {

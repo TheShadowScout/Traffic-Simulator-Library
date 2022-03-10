@@ -8,7 +8,6 @@
 
 using boost::property_tree::ptree;
 
-
 class Vehicle {
 public:
 	int static IDcnt;
@@ -18,18 +17,15 @@ protected:
 	int speed;
 	int ID;
 	bool isObstacle;
-	int originLane;
 
 public:
-	Vehicle(std::string name, int speed, bool isObstacle = false, int originLane = 0);
-	Vehicle(int speed, bool isObstacle = false, int originLane = 0);
+	Vehicle(std::string name, int speed, bool isObstacle = false);
+	Vehicle(int speed, bool isObstacle = false);
 	std::string getName();
 	int getID();
 	int getSpeed();
 	bool getIsObstacle();
-	int getOriginLane();
 	void setSpeed(int newSpeed);
-	void setOriginLane(int originLane);
 	void createJSON();
 	bool checkIsObstacle();
 };

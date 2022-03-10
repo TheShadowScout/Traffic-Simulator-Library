@@ -35,6 +35,7 @@ public:
 	void addRoad(Road* road);
 	void addGenerator(Generator* generator);
 	void fillWithVehs(double fillingDegree);
+	void updateObstacleAheadWarnings(int stepsBackCnt);
 	void createJSON();
 };
 

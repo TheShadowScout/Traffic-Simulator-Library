@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Road.h"
 
 Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {

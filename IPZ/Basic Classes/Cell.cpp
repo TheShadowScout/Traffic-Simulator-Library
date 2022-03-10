@@ -2,9 +2,9 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0), obstacleAhead(false) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed) {}
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {}
 
 Cell::~Cell() {
     delete vehicle;
@@ -56,6 +56,14 @@ void Cell::setNextCell(Cell* NextCell) {
 
 void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
+}
+
+void Cell::updateObstacleAhead() {
+    obstacleAhead = true;
+}
+
+bool Cell::checkObstacleAhead() {
+    return obstacleAhead;
 }
 
 // Czy w statystykach pojedynczej komórki jest koniecznoœæ zapisanie informacji o najbli¿szych do niej komórek, czy te¿ nie?

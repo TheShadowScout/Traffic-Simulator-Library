@@ -17,6 +17,7 @@ protected:
     Cell* nextCell;
     Vehicle* vehicle;
     int maxSpeed;
+    bool obstacleAhead;
 
 public:
     Cell();
@@ -34,5 +35,7 @@ public:
     void setPreviousCell(Cell* PreviousCell);
     void setNextCell(Cell* NextCell);
     void setMaxSpeed(int maxSpeed);
+    void updateObstacleAhead();
+    bool checkObstacleAhead();
 	void createJSON();
 };

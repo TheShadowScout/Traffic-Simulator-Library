@@ -20,9 +20,10 @@ protected:
 	Map* simMap;
 	Statistics* simStats;
 	std::vector<Observer*> observers;
+	int viewDist;
 
 public:
-	Simulation(Map* simMap, double randEventProb);
+	Simulation(Map* simMap, double randEventProb, int viewDist = 1);
 	Map* getSimulationMap();
 	Statistics* getSimulationStatistics();
 	Observer* getSimulationObserver();
@@ -33,6 +34,6 @@ public:
 	void transitionFunc();
 
 private:
-	MovePrediction evalVehMove(Cell* vehCell, int curVehSpeed);
+	MovePrediction evalVehMove(Cell* vehCell);
 	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
 };
