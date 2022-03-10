@@ -1,4 +1,5 @@
 #pragma once
+
 #include "MovePrediction.h"
 
 MovePrediction::MovePrediction(bool utilFlag, int newVehSpeed, int newVehLane) : utilFlag(utilFlag), newVehSpeed(newVehSpeed), newVehLane(newVehLane) {}

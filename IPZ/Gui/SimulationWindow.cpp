@@ -52,7 +52,7 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     menuRect.setFillColor(sf::Color(159, 193, 211));
     menuRect.setPosition(750, 0);
 
-    auto r = s.getMap()->getRoads();
+    auto r = s.getSimulationMap()->getRoads();
     std::vector<sf::RectangleShape> roadRects;
     int offset = 1000 / (2 * r.size());
     double refreshRate = 0.1;
@@ -134,7 +134,7 @@ void SimulationWindow::createSimulationWindow(Simulation s)
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
         {
-            DataSaving JSON(s.getMap());
+            DataSaving JSON(s.getSimulationMap());
             JSON.saveData();
         }
 

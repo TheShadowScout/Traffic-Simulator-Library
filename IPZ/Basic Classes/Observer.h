@@ -8,18 +8,21 @@
 class Observer {
 public:
 	int static IDcnt;
-	Observer(std::string name, Cell* observationOriginCell);
-	Observer(Cell* observationOriginCell);
-	std::string getName();
-	int getObservedPassingVehsCnt();
-	std::string filterName(std::string rawName);
-	void checkVehPassing();
-	std::string toString();
+
 protected:
+	std::string name;
+	int ID;
 	Cell* observationOriginCell;
 	Vehicle* lastObservedVeh;
 	int observedPassingVehsCnt;
 	int distToSearch;
-	std::string name;
-	int ID;
+
+public:
+	Observer(std::string name, Cell* observationOriginCell);
+	Observer(Cell* observationOriginCell);
+	std::string getName();
+	int getObservedPassingVehsCnt();
+	std::string toString();
+	std::string filterName(std::string rawName);
+	void checkVehPassing();
 };

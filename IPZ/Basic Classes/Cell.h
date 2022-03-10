@@ -1,12 +1,13 @@
 #pragma once
-#include "Vehicle.h"
 
 #include <iostream>
 #include <sstream>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-using boost::property_tree::ptree;
 
+#include "Vehicle.h"
+
+using boost::property_tree::ptree;
 
 class Cell {
 protected:
@@ -16,6 +17,7 @@ protected:
     Cell* nextCell;
     Vehicle* vehicle;
     int maxSpeed;
+    bool obstacleAhead;
 
 public:
     Cell();
@@ -33,5 +35,7 @@ public:
     void setPreviousCell(Cell* PreviousCell);
     void setNextCell(Cell* NextCell);
     void setMaxSpeed(int maxSpeed);
+    void updateObstacleAhead();
+    bool checkObstacleAhead();
 	void createJSON();
 };

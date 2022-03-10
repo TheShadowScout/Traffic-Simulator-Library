@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Road.h"
 
 Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
@@ -80,16 +81,6 @@ void Road::setName(std::string name) {
     this->name = name;
 }
 
-std::string Road::filterName(std::string rawName) {
-    std::string tempName = "";
-    for (char character : rawName) {
-        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-            tempName += character;
-        }
-    }
-    return tempName;
-}
-
 std::string Road::toString() {
     std::string roadStr = "";
     for (std::vector<Cell*> roadLane : road) {
@@ -109,6 +100,16 @@ std::string Road::toString() {
         roadStr += "\n";
     }
     return roadStr;
+}
+
+std::string Road::filterName(std::string rawName) {
+    std::string tempName = "";
+    for (char character : rawName) {
+        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
+            tempName += character;
+        }
+    }
+    return tempName;
 }
 
 void Road::createJSON() {

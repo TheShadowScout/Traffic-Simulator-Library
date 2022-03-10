@@ -1,11 +1,12 @@
 #pragma once
+
 #include "Vehicle.h"
 
-Vehicle::Vehicle(std::string name, int speed, bool isObstacle, int originLane) : name(name), speed(speed), isObstacle(isObstacle), originLane(originLane) {
+Vehicle::Vehicle(std::string name, int speed, bool isObstacle) : name(name), speed(speed), isObstacle(isObstacle) {
 	ID = IDcnt++;
 }
 
-Vehicle::Vehicle(int speed, bool isObstacle, int originLane) : speed(speed), isObstacle(isObstacle), originLane(originLane) {
+Vehicle::Vehicle(int speed, bool isObstacle) : speed(speed), isObstacle(isObstacle) {
 	ID = IDcnt++;
 	name = std::to_string(ID);
 }
@@ -26,16 +27,8 @@ bool Vehicle::getIsObstacle() {
 	return isObstacle;
 }
 
-int Vehicle::getOriginLane() {
-	return originLane;
-}
-
 void Vehicle::setSpeed(int newSpeed) {
 	this->speed = newSpeed;
-}
-
-void Vehicle::setOriginLane(int originLane) {
-	this->originLane = originLane;
 }
 
 bool Vehicle::checkIsObstacle() {

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <ctime>
 #include <vector>
@@ -14,10 +15,11 @@ protected:
 	int vehsSpeedsSum;
 	int iterationCnt;
 	std::string simInitiationTime;
+
 public:
 	Statistics(double simRandEventProb, int simMapPassableCellsCnt);
-	std::string getSimInitiationTime();
-	void updateStatistics(std::vector<Cell*> cellsWithVehs);
-	std::string toString();
 	double getDensity();
+	std::string getSimInitiationTime();
+	std::string toString();
+	void updateStatistics(std::vector<Cell*> cellsWithVehs);
 };

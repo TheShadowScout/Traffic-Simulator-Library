@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Map.h"
 	
 Map::Map(std::string name) : name(name) {}
@@ -92,6 +93,27 @@ void Map::fillWithVehs(double fillingDegree) {
 					generatedVehsCnt++;
 					if (generatedVehsCnt >= vehsToGenerateCnt) {
 						return;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Map::updateObstacleAheadWarnings(int stepsBackCnt) {
+	for (Road* road : roads) {
+		for (std::vector<Cell*> lane : road->getRoad()) {
+			for (Cell* roadCell : lane) {
+				Vehicle* cellVeh = roadCell->getVehicle();
+				if (cellVeh != nullptr && cellVeh->checkIsObstacle() == true) {
+					roadCell->updateObstacleAhead();
+					Cell* tempCell = roadCell;
+					for (int i = 1; i <= stepsBackCnt; i++) {
+						tempCell = tempCell->getPreviousCell();
+						if (tempCell == nullptr) {
+							break;
+						}
+						tempCell->updateObstacleAhead();
 					}
 				}
 			}

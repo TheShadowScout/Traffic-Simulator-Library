@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Observer.h"
 
 Observer::Observer(std::string name, Cell* observationOriginCell) : observationOriginCell(observationOriginCell), lastObservedVeh(nullptr), observedPassingVehsCnt(0) {
@@ -19,6 +20,15 @@ std::string Observer::getName() {
 
 int Observer::getObservedPassingVehsCnt() {
 	return observedPassingVehsCnt;
+}
+
+std::string Observer::toString() {
+	std::string tempStr = "";
+	tempStr += name;
+	tempStr += ";";
+	tempStr += std::to_string(observedPassingVehsCnt);
+	tempStr += "\n";
+	return tempStr;
 }
 
 std::string Observer::filterName(std::string rawName) {
@@ -54,14 +64,4 @@ void Observer::checkVehPassing() {
 		observedPassingVehsCnt++;
 	}
 	lastObservedVeh = nullptr;
-}
-
-std::string Observer::toString() {
-	std::string tempStr = "";
-	//tempStr += "observerName;passingVehiclesCount\n";
-	tempStr += name;
-	tempStr += ";";
-	tempStr += std::to_string(observedPassingVehsCnt);
-	tempStr += "\n";
-	return tempStr;
 }

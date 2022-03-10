@@ -1,4 +1,5 @@
 #pragma once
+
 #include "DataSaving.h"
 
 DataSaving::DataSaving(Map* mapa) {

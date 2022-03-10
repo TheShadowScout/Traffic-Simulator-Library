@@ -16,25 +16,24 @@
 
 class Simulation {
 protected:
-	int distToSearch[7] = { 1, 3, 6, 10, 15, 21, 28 };
-	int breakingDist[7] = { 0, 1, 3, 6, 10, 15, 21 };
 	double randEventProb;
 	Map* simMap;
 	Statistics* simStats;
 	std::vector<Observer*> observers;
+	int viewDist;
+
 public:
-	Simulation(Map* simMap, double randEventProb);
-	void addObserver(Observer* observer);
-	void initiateSimulation();
-	void saveStatisticsToFile(std::string outFolder = "StatisticsHistory/");
-	void transitionFunc();
-	std::string toString();
+	Simulation(Map* simMap, double randEventProb, int viewDist = 1);
+	Map* getSimulationMap();
 	Statistics* getSimulationStatistics();
 	Observer* getSimulationObserver();
-	Map* getMap();
-private:
-	MovePrediction evalVehMove(Cell* vehCell, int curVehSpeed, bool canCallItself);
-	MovePrediction evalChangeLane(Cell* vehCellAdjacentCell, int curVehSpeed);
-	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
+	std::string toString();
+	void addObserver(Observer* observer);
+	void saveStatisticsToFile(std::string outFolder = "StatisticsHistory/");
+	void initiateSimulation();
+	void transitionFunc();
 
+private:
+	MovePrediction evalVehMove(Cell* vehCell);
+	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
 };
