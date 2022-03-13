@@ -4,9 +4,10 @@
 #include <string>
 
 #include "Cell.h"
+#include "RoadCell.h"
 #include "Vehicle.h"
 
-class Generator : public Cell
+class Generator : public RoadCell
 {
 public:
 	int static IDcnt;
@@ -24,4 +25,3 @@ public:
 	std::string filterName(std::string rawName);
 	bool createVeh();
 };
-

@@ -26,10 +26,14 @@ void Road::createRoad() {
     for (int i = 0; i < height; i++) {
         std::vector<Cell*> newRoadLane;
         for (int j = 0; j < length; j++) {
-            Cell* newCell = new Cell(maxSpeed);
+            Cell* newCell = new RoadCell(maxSpeed); 
+            newCell->setCarHolder(new CarHolder());
             if (j == 0) {
                 head.push_back(newCell);
                 newRoadLane.push_back(newCell);
+                if (length == 1) {
+                    tail.push_back(newCell);
+                }
             }
             else {
                 newCell->setPreviousCell(newRoadLane[j - 1]);
@@ -110,6 +114,39 @@ std::string Road::filterName(std::string rawName) {
         }
     }
     return tempName;
+}
+
+std::vector<Cell*> Road::fillWithVehs(double fillingDegree) {
+    int passableCellsCnt = 0;
+    for (std::vector<Cell*> lane : road) {
+        for (Cell* roadCell : lane) {
+            Vehicle* cellVeh = roadCell->getVehicle();
+            if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
+                continue;
+            }
+            passableCellsCnt++;
+        }
+    }
+    int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
+    int generatedVehsCnt = 0;
+    std::vector<Cell*> cellsWithVehs;
+    while (generatedVehsCnt < vehsToGenerateCnt) {
+        for (std::vector<Cell*> lane : road) {
+            for (Cell* roadCell : lane) {
+                if (roadCell->getVehicle() == nullptr) {
+                    if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
+                        roadCell->setVehicle(new Vehicle(0));
+                        cellsWithVehs.push_back(roadCell);
+                        generatedVehsCnt++;
+                        if (generatedVehsCnt >= vehsToGenerateCnt) {
+                            return cellsWithVehs;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return cellsWithVehs;
 }
 
 void Road::createJSON() {

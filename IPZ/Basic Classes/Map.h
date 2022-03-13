@@ -34,6 +34,7 @@ public:
 	void setCellsWithVehs(std::vector<Cell*> CellsWithVehs);
 	void addRoad(Road* road);
 	void addGenerator(Generator* generator);
+	void addCellsWithVehs(std::vector<Cell*> newCellsWithVehs);
 	void fillWithVehs(double fillingDegree);
 	void updateObstacleAheadWarnings(int stepsBackCnt);
 	void createJSON();

@@ -96,6 +96,15 @@
     <ClInclude Include="Basic Classes\DataSaving.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Basic Classes\CarHolder.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RoadCell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\CrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -139,6 +148,15 @@
     </ClCompile>
     <ClCompile Include="Gui\SimulationWindow.cpp">
       <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CarHolder.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RoadCell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

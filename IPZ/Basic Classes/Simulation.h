@@ -33,7 +33,7 @@ public:
 	void initiateSimulation();
 	void transitionFunc();
 
-private:
+protected:
 	MovePrediction evalVehMove(Cell* vehCell);
 	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
 };

@@ -64,6 +64,10 @@ void Map::addGenerator(Generator* generator) {
 	generators.push_back(generator);
 }
 
+void Map::addCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
+	cellsWithVehs.insert(cellsWithVehs.begin(), newCellsWithVehs.begin(), newCellsWithVehs.end());
+}
+
 void Map::fillWithVehs(double fillingDegree) {
 	int passableCellsCnt = getMapPassableCellsCnt();
 	int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
@@ -142,7 +146,7 @@ void Map::createJSON() {
 	ptree mapTree;
 	mapTree.put("Map.Name", getName());
 
-	for (int i = 0; i < roads.capacity(); i++) {
+	for (unsigned int i = 0; i < roads.size(); i++) {
 		//mapTree.put("Map.Road", roads[i]->createJSON());
 		std::string nameTree = "Map.Road" + std::to_string(roads[i]->getID());
 		mapTree.put(nameTree + ".Name", roads[i]->getName());
@@ -150,7 +154,7 @@ void Map::createJSON() {
 		mapTree.put(nameTree + ".Length", roads[i]->getLength());
 		mapTree.put(nameTree + ".Height", roads[i]->getHeight());
 	}
-	for (int i = 0; i < cellsWithVehs.size(); i++) {
+	for (unsigned int i = 0; i < cellsWithVehs.size(); i++) {
 		std::string nameTree = "Map.Cell";
 		mapTree.put(nameTree + ".MaxSpeed", cellsWithVehs[i]->getMaxSpeed());
 		nameTree = "Map.Cell.Vechicle" + std::to_string(cellsWithVehs[i]->getVehicle()->getID());

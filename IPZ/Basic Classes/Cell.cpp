@@ -2,16 +2,16 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0), obstacleAhead(false) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), obstacleAhead(false) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {}
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {}
 
 Cell::~Cell() {
-    delete vehicle;
+    delete carHolder;
 }
 
 Vehicle* Cell::getVehicle() {
-    return vehicle;
+    return carHolder->getVehicle();
 }
 
 Cell* Cell::getRightCell() {
@@ -26,16 +26,12 @@ Cell* Cell::getPreviousCell() {
     return previousCell;
 }
 
-Cell* Cell::getNextCell() {
-    return nextCell;
-}
-
 int Cell::getMaxSpeed() {
     return maxSpeed;
 }
 
 void Cell::setVehicle(Vehicle* Vehicle) {
-    this->vehicle = Vehicle;
+    this->carHolder->setVehicle(Vehicle);
 }
 
 void Cell::setRightCell(Cell* RightCell) {
@@ -50,10 +46,6 @@ void Cell::setPreviousCell(Cell* PreviousCell) {
     this->previousCell = PreviousCell;
 }
 
-void Cell::setNextCell(Cell* NextCell) {
-    this->nextCell = NextCell;
-}
-
 void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
 }
@@ -64,6 +56,11 @@ void Cell::updateObstacleAhead() {
 
 bool Cell::checkObstacleAhead() {
     return obstacleAhead;
+}
+
+void Cell::setCarHolder(CarHolder* carHolder)
+{
+    this->carHolder = carHolder;
 }
 
 // Czy w statystykach pojedynczej komórki jest koniecznoœæ zapisanie informacji o najbli¿szych do niej komórek, czy te¿ nie?

@@ -6,6 +6,7 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include "Vehicle.h"
+#include "CarHolder.h"
 
 using boost::property_tree::ptree;
 
@@ -14,8 +15,7 @@ protected:
     Cell* rightCell;
     Cell* leftCell;
     Cell* previousCell;
-    Cell* nextCell;
-    Vehicle* vehicle;
+    CarHolder* carHolder;
     int maxSpeed;
     bool obstacleAhead;
 
@@ -27,13 +27,14 @@ public:
     Cell* getRightCell();
     Cell* getLeftCell();
     Cell* getPreviousCell();
-    Cell* getNextCell();
+    virtual Cell* getNextCell() = 0;
     int getMaxSpeed();
+    void setCarHolder(CarHolder* carHolder);
     void setVehicle(Vehicle* Vehicle);
     void setRightCell(Cell* RightCell);
     void setLeftCell(Cell* LeftCell);
     void setPreviousCell(Cell* PreviousCell);
-    void setNextCell(Cell* NextCell);
+    virtual void setNextCell(Cell* nextCell) = 0;
     void setMaxSpeed(int maxSpeed);
     void updateObstacleAhead();
     bool checkObstacleAhead();
