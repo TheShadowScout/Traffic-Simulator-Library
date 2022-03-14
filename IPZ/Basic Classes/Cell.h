@@ -6,6 +6,7 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include "Vehicle.h"
+#include "TrafficLights.h"
 
 using boost::property_tree::ptree;
 
@@ -18,6 +19,7 @@ protected:
     Vehicle* vehicle;
     int maxSpeed;
     bool obstacleAhead;
+    TrafficLights* light;
 
 public:
     Cell();
@@ -38,4 +40,6 @@ public:
     void updateObstacleAhead();
     bool checkObstacleAhead();
 	void createJSON();
+    void setLight(TrafficLights* newLight);
+    TrafficLights* getLight();
 };

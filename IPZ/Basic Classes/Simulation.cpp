@@ -85,6 +85,20 @@ void Simulation::transitionFunc() {
 	for (Observer* observer : observers) { //aktualizacja obserwatorów
 		observer->checkVehPassing();
 	}
+	for (int i = 0; i < simMap->getRoads().size(); i++)
+	{
+		for (int j = 0; j < simMap->getRoads()[i]->getLights().size(); j++)
+		{
+			int tempTimer = simMap->getRoads()[i]->getLights()[j]->getTimer();
+			if (tempTimer > 0)
+				simMap->getRoads()[i]->getLights()[j]->setTimer(tempTimer - 1);
+			else
+			{
+				simMap->getRoads()[i]->getLights()[j]->setTimer(simMap->getRoads()[i]->getLights()[j]->getChangePeriod());
+				simMap->getRoads()[i]->getLights()[j]->setState(!simMap->getRoads()[i]->getLights()[j]->getState());
+			}
+		}
+	}
 }
 
 MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca now¹ prêdkoœæ dla pojazdu
@@ -108,6 +122,12 @@ MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca no
 			//newVehSpeed = std::min(newVehSpeed, i - 1);
 			break;
 		}
+		if (tempCell->getLight() != nullptr && tempCell->getLight()->getState())
+		{
+			newVehSpeed = i - 1;
+			break;
+		}
+		
 	}
 	return MovePrediction(true, newVehSpeed, 0);
 }

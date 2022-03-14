@@ -2,9 +2,9 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0), obstacleAhead(false) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0), obstacleAhead(false), light(nullptr) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {}
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed), obstacleAhead(false), light(nullptr) {}
 
 Cell::~Cell() {
     delete vehicle;
@@ -76,4 +76,14 @@ void Cell::createJSON() {
     std::ostringstream oss;
     boost::property_tree::write_json(oss, CellTree);
     std::cout << oss.str();
+}
+
+void Cell::setLight(TrafficLights* newLight)
+{
+    light = newLight;
+}
+
+TrafficLights* Cell::getLight()
+{
+    return light;
 }

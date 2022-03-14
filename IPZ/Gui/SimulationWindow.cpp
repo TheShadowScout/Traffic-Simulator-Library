@@ -55,7 +55,7 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     auto r = s.getSimulationMap()->getRoads();
     std::vector<sf::RectangleShape> roadRects;
     int offset = 1000 / (2 * r.size());
-    double refreshRate = 0.1;
+    double refreshRate = 0.5;
     int pixelSize = 5;
     int roadHeight = 20;
     int roadGap = 1000 / (r.size() + 1);
