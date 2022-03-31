@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "Cell.h"
-#include <stdlib.h> 
 
 class CrossingInput : public Cell
 {

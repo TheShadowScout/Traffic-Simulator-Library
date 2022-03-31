@@ -12,17 +12,12 @@ CrossingInput::CrossingInput(int maxSpeed) : Cell(maxSpeed) {
 
 CrossingInput::~CrossingInput() {}
 
-void CrossingInput::setNextCell(Cell* nextCell)
-{
-    //this->nextCell = nextCell;
+void CrossingInput::setNextCell(Cell* nextCell) {
     this->nextCells.push_back(nextCell);
 }
 
-Cell* CrossingInput::getNextCell()
-{
-    //return nextCell;
-    int x = std::rand() % nextCells.size();
-    //std::cout << x << std::endl;
-    return nextCells[x];
+Cell* CrossingInput::getNextCell() {
+    int randomNextCellIndex = std::rand() % nextCells.size();
+    return nextCells[randomNextCellIndex];
 }
 

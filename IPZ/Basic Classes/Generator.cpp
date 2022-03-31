@@ -2,13 +2,13 @@
 
 #include "Generator.h"
 
-Generator::Generator(std::string name, double createVehProb) : RoadCell(), createVehProb(createVehProb) {
+Generator::Generator(std::string name, int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
 	ID = IDcnt++;
 	this->name = filterName(name);
 	this->setCarHolder(new CarHolder());
 }
 
-Generator::Generator(double createVehProb) : RoadCell(), createVehProb(createVehProb) {
+Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
 	ID = IDcnt++;
 	name = std::to_string(ID);
 	this->setCarHolder(new CarHolder());

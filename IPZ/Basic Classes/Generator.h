@@ -18,8 +18,8 @@ protected:
 	double createVehProb;
 
 public:
-	Generator(std::string name, double createVehProb);
-	Generator(double createVehProb);
+	Generator(std::string name, int maxSpeed, double createVehProb);
+	Generator(int maxSpeed, double createVehProb);
 	~Generator();
 	std::string toString();
 	std::string filterName(std::string rawName);

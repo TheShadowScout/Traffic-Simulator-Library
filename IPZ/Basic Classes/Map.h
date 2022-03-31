@@ -43,4 +43,3 @@ public:
 
 
 void linkCells(Cell* previousCell, Cell* nextCell);
-void linkCells(Generator* previousCell, Cell* nextCell);

@@ -176,9 +176,3 @@ void linkCells(Cell* previousCell, Cell* nextCell) {
 	previousCell->setNextCell(nextCell);
 	nextCell->setPreviousCell(previousCell);
 }
-
-void linkCells(Generator* previousCell, Cell* nextCell) {
-	previousCell->setNextCell(nextCell);
-	nextCell->setPreviousCell(previousCell);
-	previousCell->setMaxSpeed(nextCell->getMaxSpeed());
-}

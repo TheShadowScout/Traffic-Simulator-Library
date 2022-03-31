@@ -89,7 +89,7 @@ void Simulation::transitionFunc() {
 
 MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca now¹ prêdkoœæ dla pojazdu
 	//int curVehSpeed = vehCell->getVehicle()->getSpeed();
-	int newVehSpeed = vehCell->getMaxSpeed(); //nowa prêdkoœæ pojazdu, na pocz¹tku ustalana na maksymaln¹ mo¿liw¹ do uzyskania wartoœæ - maksymaln¹ prêdkoœæ dla komórki w której siê znajduje, w czasie
+	int newVehSpeed = std::min(vehCell->getVehicle()->getSpeed() + 1, vehCell->getMaxSpeed()); //nowa prêdkoœæ pojazdu, na pocz¹tku ustalana na maksymaln¹ mo¿liw¹ do uzyskania wartoœæ - maksymaln¹ prêdkoœæ dla komórki w której siê znajduje, w czasie
 	                                          //dzia³ania funkcji mo¿e byæ tylko obni¿ana
 	Cell* tempCell = vehCell;
 	int tempCellMaxSpeed = NULL;

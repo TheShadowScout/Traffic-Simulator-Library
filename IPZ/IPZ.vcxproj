@@ -23,6 +23,7 @@
     <ClInclude Include="Basic Classes\Artifacts\Teleporter.h" />
     <ClInclude Include="Basic Classes\CarHolder.h" />
     <ClInclude Include="Basic Classes\Cell.h" />
+    <ClInclude Include="Basic Classes\Crossing.h" />
     <ClInclude Include="Basic Classes\CrossingInput.h" />
     <ClInclude Include="Basic Classes\DataSaving.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
@@ -42,6 +43,7 @@
   <ItemGroup>
     <ClCompile Include="Basic Classes\CarHolder.cpp" />
     <ClCompile Include="Basic Classes\Cell.cpp" />
+    <ClCompile Include="Basic Classes\Crossing.cpp" />
     <ClCompile Include="Basic Classes\CrossingInput.cpp" />
     <ClCompile Include="Basic Classes\DataSaving.cpp" />
     <ClCompile Include="Basic Classes\Generator.cpp" />
