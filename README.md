@@ -21,9 +21,11 @@ Student project of a library in C++ used to create a road traffic simulator.
 5.4. [Vehicle](#vehicle)  
 5.5. [Generator](#generator)    
 5.6. [Simulation](#simulation)  
-5.7. [DataSaving](#datasaving)  
-6. [SimulationWindow](#simulationwindow)  
-7. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
+5.7. [DataSaving](#datasaving)
+6. [Models](#models)
+6.1 [Traffic Lights](#traffic-lights)  
+7. [SimulationWindow](#simulationwindow)  
+8. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
 
 # Introduction
 # Installation
@@ -228,6 +230,7 @@ Class name: **Cell**
 | nextCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to bottom |
 | previousCell	|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to top	|
 | maxSpeed	|int|variable that holds a max speed in [Cell](#cell)	|
+| light	|[TrafficLights](#traffic-lights)*|variable that holds a pointer to [TrafficLights](#traffic-lights)|
 
 | Function type and name			| Arguments							| Description																				|
 | --------------------------------- | ---------------------------------	| ----------------------------------------------------------------------------------------- |
@@ -245,7 +248,8 @@ Class name: **Cell**
 | void setMaxSpeed	| int maxSpeed	| Function sets max speed in [Cell](#cell)							|
 | void getMaxSpeed	| ---------------------------------	| Function returns max speed in [Cell](#cell)			|
 | void createJSON	| ---------------------------------	|Function creates JSON data tree of current [Cell](#cell)|
-
+| [TrafficLights](#traffic-lights)* getLight	| ---------------------------------	|Function return pointer to  [TrafficLights](#traffic-lights) if present in cell|
+| void setLight	| [TrafficLights](#traffic-lights)* newLight	|Function sets pointer to [TrafficLights](#traffic-lights)|
 ## Road
 Filename with class: **Road.h**  
 Class name: **Road**  
@@ -260,6 +264,7 @@ Class name: **Road**
 | road			| vector<vector<[Cell](#cell)>>	| variable that holds vector of [Cells](#cell) creating up the road			|
 | head			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the head of road |
 | tail			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the tail of road |
+| lights			| vector<[TrafficLights]*(#traffic-lights)>	        | variable that holds vector of [Traffic Lights](#traffic-lights) set up on the road |
 
 | Function type and name	| Arguments					                         | Description												              |
 | ------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------- | 
@@ -274,7 +279,20 @@ Class name: **Road**
 | int getHeight		| -------------------------------------------------- | Function returns height of current [Road](#Road)			              |
 | void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Road](#Road)	              |
 | string tempToString			| ------------------------- | Function return road as string|
+| void addLights		| [TrafficLights](#traffic-lights)* newLight | Adds light to the road|
+| std::vector<[TrafficLights](#traffic-lights)*> getLights		| [TrafficLights](#traffic-lights)* newLight | Returns vector of lights on the road|
+Example code
+```
+#include "Basic Classes/Road.h"
+#include "Basic Classes/Map.h"
 
+int main() {
+	Road* road = new Road(100, 1, 5);
+	Map* map = new Map("example map");
+	map->addRoad(road);
+	return 0;
+}
+```
 ## Map
 Filename with class: **Map.h**  
 Class name: **Map**  
@@ -370,6 +388,56 @@ Class name: **DataSaving**
 | void DataSaving				| [Map*](#map) mapa | Object constructor |
 | void saveData();      | ----------------- | Function generates file with JSON containing map informations
 
+# Models
+## Traffic Lights
+Filename with class: **TrafficLights.h**  
+Class names: **TrafficLights**, **LightColor**
+
+| Object type			| Possible values							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| enum class LightColor | red, redyellow, green, yellow | Defines state of traffic lights |
+
+| Variable name			| Variable type							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| color | LightColor | Stores current state of traffic lights |
+| yellowOn | bool | Switch turning on using yellow light |
+| redLightDuration | int | Red light duration in seconds |
+| greenLightDuration | int | Green light duration in seconds |
+| yellowLightDuration | int | Yellow light duration in seconds |
+| redYellowLightDuration | int | Red-yellow light duration in seconds |
+| timer | int | Seconds left to light state change |
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| TrafficLights | LightColor startState, int position, int redDuration, int greenDuration, bool yellowOn, int redYellow, int yellow| Traffic Lights constructor |
+| int getGreenDuration |-| Returns green light duration time in seconds |
+| int getRedDuration |-| Returns red light duration time in seconds |
+| int getRedYellowDuration |-| Returns red-yellow light duration time in seconds |
+| int getYellowDuration |-| Returns yellow light duration time in seconds |
+| LightColor getColor |-| Returns current state of lights |
+| int getPosition |-| Returns lights position on the road |
+| int getTimer |-| Returns time in seconds left to light state change |
+| bool getYellowOn |-| Returns value of variable yellowOn  |
+| void setTimer |int newTimer| Sets timer to newTimer |
+| void setColor |LightColor newColor| Sets lights state to newColor |
+| void setPosition | int newPosition | Sets lights position to newPosition in specified road |
+| void setRedLightDuration | int duration | Sets red light duration to duration in seconds |
+| void setGreenLightDuration | int duration | Sets green light duration to duration in seconds |
+| void setRedYellowLightDuration | int duration | Sets red-yellow light duration to duration in seconds |
+| void setYellowLightDuration | int duration | Sets yellow light duration to duration in seconds |
+
+Example code
+```
+#include "Basic Classes/Road.h"
+#include "Basic Classes/TrafficLights.h"
+
+int main() {
+	Road* road = new Road(100, 1, 5);
+	TrafficLights* light = new TrafficLights(LightColor(LightColor::red), 50, 7, 7);
+	road->addLights(light);
+	return 0;
+}
+```
 ## SimulationWindow
 Filename with class: **SimulationWindow.h**  
 Class name: **SimulationWindow**
