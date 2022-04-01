@@ -1,22 +1,40 @@
 #pragma once
 #include "TrafficLights.h"
 
-TrafficLights::TrafficLights(bool startState, int position, int period)
+TrafficLights::TrafficLights(LightColor startState, int position, int redDuration, int greenDuration, bool yellowOn, int redYellow, int yellow)
 {
-	isRed = startState;
+	color = startState;
 	this->position = position;
-	changePeriod = period;
-	timer = changePeriod;
+	redLightDuration = redDuration;
+	greenLightDuration = greenDuration;
+	this->yellowOn = yellowOn;
+	redYellowLightDuration = redYellow;
+	yellowLightDuration = yellow;
 }
 
-int TrafficLights::getChangePeriod()
+int TrafficLights::getGreenDuration()
 {
-	return changePeriod;
+	return greenLightDuration;
 }
 
-bool TrafficLights::getState()
+int TrafficLights::getRedDuration()
 {
-	return isRed;
+	return redLightDuration;
+}
+
+int TrafficLights::getRedYellowDuration()
+{
+	return redYellowLightDuration;
+}
+
+int TrafficLights::getYellowDuration()
+{
+	return yellowLightDuration;
+}
+
+LightColor TrafficLights::getColor()
+{
+	return color;
 }
 
 int TrafficLights::getPosition()
@@ -34,9 +52,9 @@ void TrafficLights::setTimer(int newTimer)
 	timer = newTimer;
 }
 
-void TrafficLights::setState(bool newState)
+void TrafficLights::setColor(LightColor newColor)
 {
-	isRed = newState;
+	color = newColor;
 }
 
 void TrafficLights::setPosition(int newPosition)
@@ -44,7 +62,27 @@ void TrafficLights::setPosition(int newPosition)
 	position = newPosition;
 }
 
-void TrafficLights::setChangePeriod(double newPeriod)
+void TrafficLights::setRedLightDuration(double duration)
 {
-	changePeriod = newPeriod;
+	redLightDuration = duration;
+}
+
+void TrafficLights::setRedYellowLightDuration(double duration)
+{
+	redYellowLightDuration = duration;
+}
+
+void TrafficLights::setGreenLightDuration(double duration)
+{
+	greenLightDuration = duration;
+}
+
+void TrafficLights::setYellowLightDuration(double duration)
+{
+	yellowLightDuration = duration;
+}
+
+bool TrafficLights::getYellowOn()
+{
+	return yellowOn;
 }
