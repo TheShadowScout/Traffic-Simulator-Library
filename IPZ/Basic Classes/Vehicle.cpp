@@ -3,10 +3,14 @@
 #include "Vehicle.h"
 
 Vehicle::Vehicle(std::string name, int speed, bool isObstacle) : name(name), speed(speed), isObstacle(isObstacle) {
+	if(speed < 0 || speed > 6)
+		throw std::invalid_argument("Speed must be in range between 0 and 6");
 	ID = IDcnt++;
 }
 
 Vehicle::Vehicle(int speed, bool isObstacle) : speed(speed), isObstacle(isObstacle) {
+	if(speed < 0 || speed > 6)
+		throw std::invalid_argument("Speed must be in range between 0 and 6");
 	ID = IDcnt++;
 	name = std::to_string(ID);
 }

@@ -3,6 +3,12 @@
 #include "Crossing.h"
 
 Crossing::Crossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : crossingHeight(crossingHeight), crossingMaxSpeed(crossingMaxSpeed), crossingLength(crossingLength) {
+    if(crossingHeight < 1)
+        throw std::invalid_argument("Crossing height must be higher than 1");
+    if(crossingLength < 1)
+        throw std::invalid_argument("Crossing length must be higher than 1");
+    if(crossingMaxSpeed < 1 || crossingMaxSpeed > 6)
+        throw std::invalid_argument("Crossing max speed must be in range between 1 and 6");
     for(int i = 0; i < crossingHeight; i++) {
         std::vector<CarHolder*> carHolderRow;   
         for(int j = 0; j < crossingLength; j++) {
@@ -44,7 +50,7 @@ Crossing::~Crossing() {
     }
 }
 
-void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputIndex) {
+void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
     try {
         checkParametersAreCorrect(inputSide, inputIndex, outputSide, outputIndex);
     }
@@ -124,7 +130,7 @@ void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputI
     int tempRoadCellsIndex = 0;
     switch (inputSide) {
     case 'N':
-        inputN[inputIndex]->setNextCell(tempRoadCells[0]);
+        inputN[inputIndex]->setNextCell(tempRoadCells[0], laneWeight);
         tempRoadCells[0]->setPreviousCell(inputN[inputIndex]);
         for (int i = 0; i < outputIndex; i++) {
             tempRoadCells[tempRoadCellsIndex]->setCarHolder(carHolderMatrix[i][inputIndex]);
@@ -132,7 +138,7 @@ void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputI
         }
         break;
     case 'E':
-        inputE[inputIndex]->setNextCell(tempRoadCells[0]);
+        inputE[inputIndex]->setNextCell(tempRoadCells[0], laneWeight);
         tempRoadCells[0]->setPreviousCell(inputE[inputIndex]);
         for (int i = crossingLength - 1; i > outputIndex; i--) {
             tempRoadCells[tempRoadCellsIndex]->setCarHolder(carHolderMatrix[inputIndex][i]);
@@ -140,7 +146,7 @@ void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputI
         }
         break;
     case 'S':
-        inputS[inputIndex]->setNextCell(tempRoadCells[0]);
+        inputS[inputIndex]->setNextCell(tempRoadCells[0], laneWeight);
         tempRoadCells[0]->setPreviousCell(inputS[inputIndex]);
         for (int i = crossingHeight - 1; i > outputIndex; i--) {
             tempRoadCells[tempRoadCellsIndex]->setCarHolder(carHolderMatrix[i][inputIndex]);
@@ -148,7 +154,7 @@ void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputI
         }
         break;
     case 'W':
-        inputW[inputIndex]->setNextCell(tempRoadCells[0]);
+        inputW[inputIndex]->setNextCell(tempRoadCells[0], laneWeight);
         tempRoadCells[0]->setPreviousCell(inputW[inputIndex]);
         for (int i = 0; i < outputIndex; i++) {
             tempRoadCells[tempRoadCellsIndex]->setCarHolder(carHolderMatrix[inputIndex][i]);

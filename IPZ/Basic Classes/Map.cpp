@@ -2,7 +2,10 @@
 
 #include "Map.h"
 	
-Map::Map(std::string name) : name(name) {}
+Map::Map(std::string name) : name(name) {
+	if(name == "")
+		throw std::invalid_argument("Map must have a name");
+}
 
 Map::~Map() {
 		for (Road* road : roads) {

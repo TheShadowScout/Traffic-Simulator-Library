@@ -3,12 +3,24 @@
 #include "Road.h"
 
 Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+    if(length < 1)
+        throw std::invalid_argument("Length must be bigger than 1");
+    if(height < 1)
+        throw std::invalid_argument("Height must be bigger than 1");
+    if(maxSpeed < 1 || maxSpeed > 6)
+        throw std::invalid_argument("Max speed must be in range between 1 and 6");
     this->name = filterName(name);
     ID = IDcnt++;
     createRoad();
 }
 
 Road::Road(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+    if(length < 1)
+        throw std::invalid_argument("Length must be bigger than 1");
+    if(height < 1)
+        throw std::invalid_argument("Height must be bigger than 1");
+    if(maxSpeed < 1 || maxSpeed > 6)
+        throw std::invalid_argument("Max speed must be in range between 1 and 6");
     ID = IDcnt++;
     name = std::to_string(ID);
     createRoad();

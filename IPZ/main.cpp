@@ -13,22 +13,24 @@ int main() {
 #include "Basic Classes/Crossing.h"
 
 int main() {
+	std::srand(time(NULL));
+
 	Map* map = new Map("test");
 
-	Road* road1 = new Road(1, 1, 3);
+	Road* road1 = new Road(1, 1, 1);
 
 	map->addRoad(road1);
 
-	Generator* generator1 = new Generator(2, 1.0);
+	Generator* generator1 = new Generator(1, 1.0);
 
 	map->addGenerator(generator1);
 
 	linkCells(generator1, road1->head[0]);
 
-	Crossing* crossing1 = new Crossing(11, 11, 2);
-	crossing1->addX('S', 5, 'N', 5);
-	crossing1->addX('S', 5, 'E', 5);
-	crossing1->addX('S', 5, 'W', 5);
+	Crossing* crossing1 = new Crossing(11, 11, 1);
+	crossing1->addX('S', 5, 'N', 5, 1);
+	crossing1->addX('S', 5, 'E', 5, 1);
+	crossing1->addX('S', 5, 'W', 5, 1);
 
 	crossing1->linkRoad(road1->tail[0], 'S', 5);
 
@@ -38,7 +40,7 @@ int main() {
 
 	for (int i = 0; i < 100; i++) {
 		simulation.transitionFunc();
-		//std::cout << simulation.toString() << std::endl;
+		std::cout << simulation.toString() << std::endl;
 		std::cout << crossing1->toString() << std::endl;
 	}
 }

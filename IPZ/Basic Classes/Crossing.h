@@ -27,7 +27,7 @@ protected:
 public:
 	Crossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
 	~Crossing();
-	void addX(char inputSide, int inputIndex, char outputSide, int outputIndex);
+	void addX(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight);
 	void linkRoad(Cell* previousCell, char inputSide, int inputIndex);
 	void linkRoad(char outputSide, int outputIndex, Cell* nextCell);
 	std::string toString();

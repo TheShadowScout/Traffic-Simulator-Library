@@ -2,7 +2,12 @@
 
 #include "Simulation.h"
 
-Simulation::Simulation(Map* simMap, double randEventProb, int viewDist) : simMap(simMap), randEventProb(randEventProb), viewDist(viewDist), simStats(nullptr) {}
+Simulation::Simulation(Map* simMap, double randEventProb, int viewDist) : simMap(simMap), randEventProb(randEventProb), viewDist(viewDist), simStats(nullptr) {
+	if(randEventProb < 0 || randEventProb > 1)
+		throw std::invalid_argument("Random event probability must be in range between 0 and 1");
+	if (viewDist < 0)
+		throw std::invalid_argument("View distance mustn't be negative");
+}
 
 Map* Simulation::getSimulationMap() {
 	return simMap;

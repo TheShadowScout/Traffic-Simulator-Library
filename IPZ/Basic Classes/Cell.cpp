@@ -4,7 +4,10 @@
 
 Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), obstacleAhead(false) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {}
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {
+    if(maxSpeed > 6 || maxSpeed < 1)
+        throw std::invalid_argument("Max speed must be in range between 1 and 6");
+}
 
 Cell::~Cell() {
     delete carHolder;
