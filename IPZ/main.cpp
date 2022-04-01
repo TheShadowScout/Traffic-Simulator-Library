@@ -1,4 +1,4 @@
-/*
+
 #pragma once
 
 #include "Gui/SimulationWindow.h"
@@ -6,9 +6,18 @@
 
 int main() {
 	Road* road1 = new Road(100, 1, 5);
+	// czrwone/zielone, nr komórki, czas trwania cyklu
+	TrafficLights* light1 = new TrafficLights(LightColor(LightColor::red), 50, 7, 7);
+	// TrafficLights* light2 = new TrafficLights(false, 20, 4);
+	// TrafficLights* light3 = new TrafficLights(false, 60, 5);
+	// TrafficLights* light4 = new TrafficLights(false, 50, 2);
 	Road* road2 = new Road(50, 3, 3);
 	Road* road3 = new Road(75, 2, 3);
 	Road* road4 = new Road(100, 1, 5);
+	road1->addLights(light1);
+	// road2->addLights(light2);
+	// road3->addLights(light3);
+	// road4->addLights(light4);
 	Generator* generator1 = new Generator(0.9);
 	Generator* generator2 = new Generator(0.5);
 	Generator* generator3 = new Generator(0.7);
@@ -35,70 +44,57 @@ int main() {
 
 	SimulationWindow test;
 	test.createSimulationWindow(simulation);
-	//GenerateDensityPlot();
-	//return 0;
+	/*GenerateDensityPlot();*/
+	return 0;
 }
-*/
+
 
 #pragma once
 
 ///*
-#include "Functionality/DensityPlotGenerator.h"
-#include "Functionality/StatisticsGenerator.h"
-
-int main() {
-	GenerateDensityPlot();
-	return 0;
-}
+//#include "Functionality/DensityPlotGenerator.h"
+//#include "Functionality/StatisticsGenerator.h"
+//
+//int main() {
+//	GenerateDensityPlot();
+//	return 0;
+//}
 //*/
 
 
-/*
-#include <iostream>
-
-#include "Basic Classes/Simulation.h"
-#include "Basic Classes/Map.h"
-#include "Basic Classes/Road.h"
-#include "Basic Classes/Vehicle.h"
-#include "Basic Classes/Generator.h"
-#include "Basic Classes/Observer.h"
-
-int main() {
-	Road* road1 = new Road(20, 1, 5);
-	Road* road2 = new Road(100, 1, 5);
-	Road* road3 = new Road(100, 1, 5);
-	linkCells(road1->tail[0], road2->head[0]);
-	linkCells(road2->tail[0], road3->head[0]);
-
-	//road2->tail[0]->setVehicle(new Vehicle(0, true));
-
-	//Generator* generator = new Generator(0.1);
-	//linkCells(generator, road->head[0]);
-
-	Map* map = new Map("test");
-	map->addRoad(road1);
-	map->fillWithVehs(1.0);
-	map->addRoad(road2);
-	map->addRoad(road3);
-	//map->addGenerator(generator);
-
-	//map->fillWithVehs(0.1);
-
-	Simulation simulation(map, 0.2);
-	//Observer* observer = new Observer(road2->tail[0]);
-	//simulation.addObserver(observer);
-
-	simulation.initiateSimulation();
-	for (int i = 0; i < 100; i++) {
-		simulation.transitionFunc();
-		if (i % 20 < 10) {
-			road3->head[0]->setMaxSpeed(0);
-		}
-		else {
-			road3->head[0]->setMaxSpeed(5);
-		}
-		std::cout << simulation.toString() << std::endl;
-	}
-	map->~Map();
-}
-*/
+//
+//#include <iostream>
+//
+//#include "Basic Classes/Simulation.h"
+//#include "Basic Classes/Map.h"
+//#include "Basic Classes/Road.h"
+//#include "Basic Classes/Vehicle.h"
+//#include "Basic Classes/Generator.h"
+//#include "Basic Classes/Observer.h"
+//
+//int main() {
+//	Road* road1 = new Road(100, 1, 5);
+//
+//	//road2->tail[0]->setVehicle(new Vehicle(0, true));
+//	TrafficLights* light = new TrafficLights(true, 30, 4);
+//	road1->addLights(light);
+//	Generator* generator = new Generator(0.1);
+//	//linkCells(generator, road->head[0]);
+//
+//	Map* map = new Map("test");
+//	map->addRoad(road1);
+//	map->addGenerator(generator);
+//
+//	//map->fillWithVehs(0.1);
+//
+//	Simulation simulation(map, 0.2);
+//	//Observer* observer = new Observer(road2->tail[0]);
+//	//simulation.addObserver(observer);
+//
+//	simulation.initiateSimulation();
+//	for (int i = 0; i < 100; i++) {
+//		simulation.transitionFunc();
+//		std::cout << simulation.toString() << std::endl;
+//	}
+//	map->~Map();
+//}

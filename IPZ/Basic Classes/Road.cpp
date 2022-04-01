@@ -123,3 +123,15 @@ void Road::createJSON() {
     boost::property_tree::write_json(oss, roadTree);
     std::cout << oss.str();
 }
+
+void Road::addLights(TrafficLights* newLight)
+{
+    lights.push_back(newLight);
+    for (int i = 0; i < height; i++)
+        road[i][newLight->getPosition()]->setLight(newLight);
+}
+
+std::vector<TrafficLights*> Road::getLights()
+{
+    return lights;
+}

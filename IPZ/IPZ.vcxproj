@@ -30,6 +30,7 @@
     <ClInclude Include="Basic Classes\Road.h" />
     <ClInclude Include="Basic Classes\Simulation.h" />
     <ClInclude Include="Basic Classes\Statistics.h" />
+    <ClInclude Include="Basic Classes\TrafficLights.h" />
     <ClInclude Include="Basic Classes\Vehicle.h" />
     <ClInclude Include="Functionality\DensityPlotGenerator.h" />
     <ClInclude Include="Functionality\StatisticsGenerator.h" />
@@ -46,6 +47,7 @@
     <ClCompile Include="Basic Classes\Road.cpp" />
     <ClCompile Include="Basic Classes\Simulation.cpp" />
     <ClCompile Include="Basic Classes\Statistics.cpp" />
+    <ClCompile Include="Basic Classes\TrafficLights.cpp" />
     <ClCompile Include="Basic Classes\Vehicle.cpp" />
     <ClCompile Include="Functionality\DensityPlotGenerator.cpp" />
     <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
@@ -77,7 +79,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -143,7 +145,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions); _CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
