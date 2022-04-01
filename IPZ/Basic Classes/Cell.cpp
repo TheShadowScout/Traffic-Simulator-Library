@@ -77,3 +77,13 @@ void Cell::createJSON() {
     boost::property_tree::write_json(oss, CellTree);
     std::cout << oss.str();
 }
+
+void Cell::setLight(TrafficLights* newLight)
+{
+    light = newLight;
+}
+
+TrafficLights* Cell::getLight()
+{
+    return light;
+}
