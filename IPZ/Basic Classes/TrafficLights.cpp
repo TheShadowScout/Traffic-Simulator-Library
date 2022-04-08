@@ -1,15 +1,21 @@
 #pragma once
 #include "TrafficLights.h"
 
-TrafficLights::TrafficLights(LightColor startState, int position, int redDuration, int greenDuration, bool yellowOn, int redYellow, int yellow)
+TrafficLights::TrafficLights(LightColor startState, int position, int redDuration, int greenDuration)
 {
 	color = startState;
 	this->position = position;
 	redLightDuration = redDuration;
 	greenLightDuration = greenDuration;
-	this->yellowOn = yellowOn;
-	redYellowLightDuration = redYellow;
-	yellowLightDuration = yellow;
+	switch (startState)
+	{
+	case LightColor::red:
+		timer = redDuration;
+		break;
+	case LightColor::green:
+		timer = greenDuration;
+		break;
+	}
 }
 
 int TrafficLights::getGreenDuration()
@@ -20,16 +26,6 @@ int TrafficLights::getGreenDuration()
 int TrafficLights::getRedDuration()
 {
 	return redLightDuration;
-}
-
-int TrafficLights::getRedYellowDuration()
-{
-	return redYellowLightDuration;
-}
-
-int TrafficLights::getYellowDuration()
-{
-	return yellowLightDuration;
 }
 
 LightColor TrafficLights::getColor()
@@ -52,6 +48,21 @@ void TrafficLights::setTimer(int newTimer)
 	timer = newTimer;
 }
 
+void TrafficLights::changeState()
+{
+	switch (getColor())
+	{
+	case LightColor::red:
+		setTimer(getGreenDuration());
+		setColor(LightColor::green);
+		break;
+	case LightColor::green:
+		setTimer(getRedDuration());
+		setColor(LightColor::red);
+		break;
+	}
+}
+
 void TrafficLights::setColor(LightColor newColor)
 {
 	color = newColor;
@@ -67,22 +78,7 @@ void TrafficLights::setRedLightDuration(double duration)
 	redLightDuration = duration;
 }
 
-void TrafficLights::setRedYellowLightDuration(double duration)
-{
-	redYellowLightDuration = duration;
-}
-
 void TrafficLights::setGreenLightDuration(double duration)
 {
 	greenLightDuration = duration;
-}
-
-void TrafficLights::setYellowLightDuration(double duration)
-{
-	yellowLightDuration = duration;
-}
-
-bool TrafficLights::getYellowOn()
-{
-	return yellowOn;
 }
