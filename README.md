@@ -391,12 +391,14 @@ Class name: **DataSaving**
 # Models
 ## Traffic Lights
 Filename with class: **TrafficLights.h**  
-Class names: **TrafficLights**, **LightColor**
+Class names: **TrafficLights**, **YellowTrafficLights**, **LightColor**
 
+**LightColor**
 | Object type			| Possible values							| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
 | enum class LightColor | red, redyellow, green, yellow | Defines state of traffic lights |
 
+**TrafficLights**
 | Variable name			| Variable type							| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
 | color | LightColor | Stores current state of traffic lights |
@@ -409,23 +411,31 @@ Class names: **TrafficLights**, **LightColor**
 
 | Function type and name			| Arguments						| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| TrafficLights | LightColor startState, int position, int redDuration, int greenDuration, bool yellowOn, int redYellow, int yellow| Traffic Lights constructor |
+| TrafficLights | LightColor startState, int position, int redDuration, int greenDuration| Traffic Lights constructor |
 | int getGreenDuration |-| Returns green light duration time in seconds |
 | int getRedDuration |-| Returns red light duration time in seconds |
-| int getRedYellowDuration |-| Returns red-yellow light duration time in seconds |
-| int getYellowDuration |-| Returns yellow light duration time in seconds |
 | LightColor getColor |-| Returns current state of lights |
 | int getPosition |-| Returns lights position on the road |
 | int getTimer |-| Returns time in seconds left to light state change |
-| bool getYellowOn |-| Returns value of variable yellowOn  |
 | void setTimer |int newTimer| Sets timer to newTimer |
 | void setColor |LightColor newColor| Sets lights state to newColor |
 | void setPosition | int newPosition | Sets lights position to newPosition in specified road |
 | void setRedLightDuration | int duration | Sets red light duration to duration in seconds |
 | void setGreenLightDuration | int duration | Sets green light duration to duration in seconds |
+
+**YellowTrafficLights : public TrafficLights**
+| Variable name			| Variable type							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| yellowLightDuration | int | Yellow light duration in seconds |
+| redYellowLightDuration | int | Red-yellow light duration in seconds |
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| YellowTrafficLights | LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration| Yellow Traffic Lights constructor |
+| int getRedYellowDuration |-| Returns red-yellow light duration time in seconds |
+| int getYellowDuration |-| Returns yellow light duration time in seconds |
 | void setRedYellowLightDuration | int duration | Sets red-yellow light duration to duration in seconds |
 | void setYellowLightDuration | int duration | Sets yellow light duration to duration in seconds |
-
 Example code
 ```
 #include "Basic Classes/Road.h"

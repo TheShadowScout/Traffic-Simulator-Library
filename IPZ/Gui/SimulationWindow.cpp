@@ -1,7 +1,7 @@
 #include "SimulationWindow.h"
 #include "../Functionality/DensityPlotGenerator.h"
 #include "../Basic Classes/DataSaving.h"
-
+#include <map>
 SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size, float whichButton)
 {
     font.loadFromFile(fontFile);
@@ -76,9 +76,18 @@ void SimulationWindow::createSimulationWindow(Simulation s)
 
     int carHeight = 4;
     int carLength = 4;
+    
+    std::vector<sf::RectangleShape> lights;
+    typedef std::map <int, sf::Color> TrafficLightsColors;
+    TrafficLightsColors lightsColors;
+    lightsColors.insert(TrafficLightsColors::value_type(1, sf::Color(255,0,0)));
+    lightsColors.insert(TrafficLightsColors::value_type(3, sf::Color(0,255,0)));
+    lightsColors.insert(TrafficLightsColors::value_type(4, sf::Color(255,255,0)));
+    int lightHeight = 2;
+    int lightLength = 5;
 
     s.initiateSimulation();
-
+    
     while (window.isOpen())
     {
         float time = clock.getElapsedTime().asSeconds();
@@ -101,6 +110,15 @@ void SimulationWindow::createSimulationWindow(Simulation s)
                             shape.setFillColor(sf::Color(255, 0, 0));
                             shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
                             vehs.push_back(shape);
+                            // if(r[whichRoad]->getRoad()[whichLane][whichCell]->getLights()!=NULL){
+                            //     lightColor = r[whichRoad]->getRoad()[whichLane][whichCell]->getLights().
+                            //     sf::RectangleShape shape(sf::Vector2f(lightLength, lightHeight));
+                            //     shape.setFillColor(sf::Color(255, 0, 0));
+                            //     shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
+                            //     vehs.push_back(shape);
+                            // }
+                        
+
                         }
                     }
                 }

@@ -95,48 +95,7 @@ void Simulation::transitionFunc() {
 			if (tempTimer > 0)
 				roadLights[j]->setTimer(tempTimer - 1);
 			else
-			{
-				// roadLights[j]->setTimer(roadLights[j]->getChangePeriod());
-				// roadLights[j]->setState(!roadLights[j]->getState());
-				if (!roadLights[j]->getYellowOn())
-				{
-					switch (roadLights[j]->getColor())
-					{
-					case LightColor::red:
-						roadLights[j]->setTimer(roadLights[j]->getGreenDuration());
-						roadLights[j]->setColor(LightColor::green);
-						break;
-					case LightColor::green:
-						roadLights[j]->setTimer(roadLights[j]->getRedDuration());
-						roadLights[j]->setColor(LightColor::red);
-						break;
-					default:
-						std::cout << "Cos zjebalas\n";
-					}
-				}
-				else
-				{
-					switch (roadLights[j]->getColor())
-					{
-					case LightColor::red:
-						roadLights[j]->setTimer(roadLights[j]->getRedYellowDuration());
-						roadLights[j]->setColor(LightColor::green);
-						break;
-					case LightColor::redyellow:
-						roadLights[j]->setTimer(roadLights[j]->getGreenDuration());
-						roadLights[j]->setColor(LightColor::green);
-						break;
-					case LightColor::green:
-						roadLights[j]->setTimer(roadLights[j]->getYellowDuration());
-						roadLights[j]->setColor(LightColor::yellow);
-						break;
-					case LightColor::yellow:
-						roadLights[j]->setTimer(roadLights[j]->getRedDuration());
-						roadLights[j]->setColor(LightColor::red);
-						break;
-					}
-				}
-			}
+				roadLights[j]->changeState();
 		}
 	}
 }
@@ -147,6 +106,8 @@ MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca no
 	                                          //dzia³ania funkcji mo¿e byæ tylko obni¿ana
 	Cell* tempCell = vehCell;
 	int tempCellMaxSpeed = NULL;
+	TrafficLights* vehCellLights = vehCell->getLight();
+
 	for (int i = 1; i <= newVehSpeed; i++) { //przeszukaj iloœæ kolejnych komórek zale¿n¹ od prêdkoœci pojazdu w poszukiwaniu sytuacji obni¿aj¹cych prêdkoœæ, maksymalna ich iloœæ mo¿e siê zmniejszaæ
 		                                     //wraz z dzia³aniem funkcji
 		tempCell = tempCell->getNextCell();
@@ -162,9 +123,13 @@ MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca no
 			//newVehSpeed = std::min(newVehSpeed, i - 1);
 			break;
 		}
-		if (tempCell->getLight() != nullptr && tempCell->getLight()->getColor() == LightColor::red)
+		if (vehCellLights != NULL && vehCellLights->getColor() != LightColor::green)
 		{
-			newVehSpeed = i - 1;
+			newVehSpeed = 0;
+		}
+		if (tempCell->getLight() != nullptr && tempCell->getLight()->getColor() != LightColor::green)
+		{
+			newVehSpeed = i;
 			break;
 		}
 		
