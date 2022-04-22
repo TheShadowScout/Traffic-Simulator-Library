@@ -2,6 +2,10 @@
 #include "../Functionality/DensityPlotGenerator.h"
 #include "../Basic Classes/DataSaving.h"
 #include <map>
+
+int width = sf::VideoMode::getDesktopMode().width;
+int height = sf::VideoMode::getDesktopMode().height;
+
 SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size, float whichButton)
 {
     font.loadFromFile(fontFile);
@@ -10,7 +14,7 @@ SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size
     buttonText.setCharacterSize(size);
     bounds = buttonText.getLocalBounds();
 
-    buttonText.setPosition(775, int(70 * whichButton));
+    buttonText.setPosition(width - 225, int(70 * whichButton));
     buttonText.setFillColor(sf::Color::Black);
     bounds.left = buttonText.getPosition().x;
     bounds.top = buttonText.getPosition().y + 10;
@@ -25,7 +29,7 @@ SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size
 
 void SimulationWindow::createSimulationWindow(Simulation s)
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Simulation");
+    sf::RenderWindow window(sf::VideoMode(width, height), "Simulation", sf::Style::Titlebar | sf::Style::Close);
 
     sf::Text menuText;
     sf::Font font;
@@ -36,35 +40,37 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     menuText.setString("Menu");
     menuText.setCharacterSize(40);
     sf::FloatRect bounds = menuText.getLocalBounds();
-    menuText.setPosition(1000 - int(1.9 * bounds.width), 5);
+    menuText.setPosition(width - 2 * bounds.width, 5);
     menuText.setFillColor(sf::Color::Black);
 
-    Button start("Start", "gui/calibri.ttf", 30, 1);
-    Button stop("Stop", "gui/calibri.ttf", 30, 2);
-    Button stats("Statistics", "gui/calibri.ttf", 30, 3);
-    Button saveMap("Save map", "gui/calibri.ttf", 30, 4);
-    Button loadMap("Load map", "gui/calibri.ttf", 30, 5);
-    Button saveSimulation("Save\nsimulation", "gui/calibri.ttf", 30, 6);
-    Button loadSimulation("Load\nsimulation", "gui/calibri.ttf", 30, 7.5);
-    Button exitSimulation("Quit", "gui/calibri.ttf", 30, 9);
+    std::string fontName = "gui/calibri.ttf";
 
-    sf::RectangleShape menuRect(sf::Vector2f(250, 1000));
+    Button start("Start", fontName, 30, 1);
+    Button stop("Stop", fontName, 30, 2);
+    Button stats("Statistics", fontName, 30, 3);
+    Button saveMap("Save map", fontName, 30, 4);
+    Button loadMap("Load map", fontName, 30, 5);
+    Button saveSimulation("Save\nsimulation", fontName, 30, 6);
+    Button loadSimulation("Load\nsimulation", fontName, 30, 7.5);
+    Button exitSimulation("Quit", fontName, 30, 9);
+
+    sf::RectangleShape menuRect(sf::Vector2f(250, height));
     menuRect.setFillColor(sf::Color(159, 193, 211));
-    menuRect.setPosition(750, 0);
+    menuRect.setPosition(width - 250, 0);
 
     auto r = s.getSimulationMap()->getRoads();
     std::vector<sf::RectangleShape> roadRects;
-    int offset = 1000 / (2 * r.size());
+    int offset = height / (2 * r.size());
     double refreshRate = 0.5;
-    int pixelSize = 5;
-    int roadHeight = 20;
-    int roadGap = 1000 / (r.size() + 1);
+    int pixelSize = width * 0.005;
+    int roadHeight = height * 0.020;
+    int roadGap = height / (r.size() + 1);
     int prevRoadHeight = 0;
     for (int i = 0; i < r.size(); i++)
     {
         sf::RectangleShape shape(sf::Vector2f(pixelSize * r[i]->getLength(), roadHeight * r[i]->getHeight()));
         shape.setFillColor(sf::Color(211, 211, 211));
-        shape.setPosition(325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2, offset + roadGap * i + prevRoadHeight);
+        shape.setPosition(width * 0.325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2, offset + roadGap * i + prevRoadHeight);
         roadRects.push_back(shape);
         prevRoadHeight += roadHeight * r[i]->getHeight();
     }
@@ -74,17 +80,13 @@ void SimulationWindow::createSimulationWindow(Simulation s)
 
     std::vector<sf::RectangleShape> vehs;
 
-    int carHeight = 4;
-    int carLength = 4;
+    int carHeight = int(height * 0.004);
+    int carLength = int(width * 0.004);
     
     std::vector<sf::RectangleShape> lights;
-    typedef std::map <int, sf::Color> TrafficLightsColors;
-    TrafficLightsColors lightsColors;
-    lightsColors.insert(TrafficLightsColors::value_type(1, sf::Color(255,0,0)));
-    lightsColors.insert(TrafficLightsColors::value_type(3, sf::Color(0,255,0)));
-    lightsColors.insert(TrafficLightsColors::value_type(4, sf::Color(255,255,0)));
-    int lightHeight = 2;
-    int lightLength = 5;
+    
+    int lightHeight = height * 0.005;
+    int lightLength = width * 0.005;
 
     s.initiateSimulation();
     
@@ -108,17 +110,39 @@ void SimulationWindow::createSimulationWindow(Simulation s)
                         {
                             sf::RectangleShape shape(sf::Vector2f(carLength, carHeight));
                             shape.setFillColor(sf::Color(255, 0, 0));
-                            shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
-                            vehs.push_back(shape);
-                            // if(r[whichRoad]->getRoad()[whichLane][whichCell]->getLights()!=NULL){
-                            //     lightColor = r[whichRoad]->getRoad()[whichLane][whichCell]->getLights().
-                            //     sf::RectangleShape shape(sf::Vector2f(lightLength, lightHeight));
-                            //     shape.setFillColor(sf::Color(255, 0, 0));
-                            //     shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
-                            //     vehs.push_back(shape);
-                            // }
-                        
+                            shape.setPosition(whichCell * pixelSize + width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
+                            vehs.push_back(shape);            
+                        }
 
+                        if (r[whichRoad]->getRoad()[whichLane][whichCell]->getLight() != NULL)
+                        {
+                            LightColor lightColor = r[whichRoad]->getRoad()[whichLane][whichCell]->getLight()->getColor();
+                            sf::RectangleShape shape(sf::Vector2f(lightLength, lightHeight));
+                            switch (lightColor)
+                            {
+                            case LightColor::red:
+                                shape.setFillColor(sf::Color(255, 0, 0));
+                                shape.setOutlineColor(sf::Color(0, 0, 0));
+                                shape.setOutlineThickness(1);
+
+                                break;
+                            case LightColor::green:
+                                shape.setFillColor(sf::Color(0, 255, 0));
+                                shape.setOutlineColor(sf::Color(0, 0, 0));
+                                shape.setOutlineThickness(1);
+                                break;
+                            case LightColor::yellow:
+                            case LightColor::redyellow:
+                                shape.setFillColor(sf::Color(255, 255, 0));
+                                shape.setOutlineColor(sf::Color(0, 0, 0));
+                                shape.setOutlineThickness(1);
+                                break;
+                            default:
+                                break;
+                            }
+                            
+                            shape.setPosition(whichCell * pixelSize + width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + height * 0.002 + roadHeight / 2 + prevRoadHeight - height * 0.007);
+                            lights.push_back(shape);
                         }
                     }
                 }
@@ -203,7 +227,10 @@ void SimulationWindow::createSimulationWindow(Simulation s)
         {
             window.draw(roadRects[i]);
         }
-
+        for (int i = 0; i < lights.size(); i++)
+        {
+            window.draw(lights[i]);
+        }
         for (int i = 0; i < vehs.size(); i++)
             window.draw(vehs[i]);
 
