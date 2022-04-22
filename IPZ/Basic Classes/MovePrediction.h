@@ -12,4 +12,5 @@ public:
 	int getNewVehSpeed();
 	int getNewVahLane();
 	void setNewVehSpeed(int newVehSpeed);
+	friend bool operator < (const MovePrediction& lhs, const MovePrediction& rhs);
 };

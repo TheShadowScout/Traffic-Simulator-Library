@@ -28,6 +28,10 @@ std::vector<Generator*> Map::getGenerators() {
 	return generators;
 }
 
+std::vector<Crossing*> Map::getCrossings() {
+	return crossings;
+}
+
 std::vector<Cell*> Map::getCellsWithVehs() {
 	return cellsWithVehs;
 }
@@ -65,6 +69,10 @@ void Map::addRoad(Road* road) {
 
 void Map::addGenerator(Generator* generator) {
 	generators.push_back(generator);
+}
+
+void Map::addCrossing(Crossing* crossing) {
+	crossings.push_back(crossing);
 }
 
 void Map::addCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {

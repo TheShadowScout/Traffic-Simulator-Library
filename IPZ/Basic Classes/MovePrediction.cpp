@@ -19,3 +19,7 @@ int MovePrediction::getNewVahLane() {
 void MovePrediction::setNewVehSpeed(int newVehSpeed) {
 	this->newVehSpeed = newVehSpeed;
 }
+
+bool operator<(const MovePrediction& lhs, const MovePrediction& rhs) {
+	return (lhs.newVehSpeed < rhs.newVehSpeed);
+}

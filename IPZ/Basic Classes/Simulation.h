@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <random>
 #include <algorithm>
 #include <cstdlib>
 #include <vector>
@@ -20,10 +21,14 @@ protected:
 	Map* simMap;
 	Statistics* simStats;
 	std::vector<Observer*> observers;
+	int seed;
+	std::default_random_engine randomEngine;
 	int viewDist;
+	int minSafeSpace;
+	bool shuffleIfCompetition;
 
 public:
-	Simulation(Map* simMap, double randEventProb, int viewDist = 1);
+	Simulation(Map* simMap, double randEventProb, int viewDist, int minSafeSpace, int seed = NULL, bool shuffleIfCompetition = true);
 	Map* getSimulationMap();
 	Statistics* getSimulationStatistics();
 	Observer* getSimulationObserver();
@@ -35,5 +40,7 @@ public:
 
 protected:
 	MovePrediction evalVehMove(Cell* vehCell);
+	int evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sawObstacle);
+	void evalChangeLane(Cell* vehCell, std::vector<MovePrediction>* moves);
 	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
 };

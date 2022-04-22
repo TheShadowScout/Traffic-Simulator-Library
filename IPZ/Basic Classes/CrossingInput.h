@@ -9,8 +9,8 @@ class CrossingInput : public Cell
 {
 protected:
     std::vector<Cell*> nextCells;
-    std::vector<int> lanesWeights;
-    int lanesWeightsSum;
+    std::vector<int> weights;
+    int weightsSum;
 
 public:
     CrossingInput();
@@ -18,5 +18,5 @@ public:
     ~CrossingInput();
     Cell* getNextCell();
     void setNextCell(Cell* nextCell);
-    void setNextCell(Cell* nextCell, int laneWeight);
+    void setNextCell(Cell* nextCell, int weight);
 };

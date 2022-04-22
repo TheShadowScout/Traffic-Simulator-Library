@@ -11,6 +11,7 @@
 
 #include "Generator.h"
 #include "Road.h"
+#include "Crossing.h"
 #include "Cell.h"
 
 using boost::property_tree::ptree;
@@ -21,6 +22,7 @@ protected:
 	std::string name;
 	std::vector<Road*> roads;
 	std::vector<Generator*> generators;
+	std::vector<Crossing*> crossings;
 	std::vector<Cell*> cellsWithVehs;
 
 public:
@@ -29,11 +31,13 @@ public:
 	std::string getName();
 	std::vector<Road*> getRoads();
 	std::vector<Generator*> getGenerators();
+	std::vector<Crossing*> getCrossings();
 	std::vector<Cell*> getCellsWithVehs();
 	int getMapPassableCellsCnt();
 	void setCellsWithVehs(std::vector<Cell*> CellsWithVehs);
 	void addRoad(Road* road);
 	void addGenerator(Generator* generator);
+	void addCrossing(Crossing* crossing);
 	void addCellsWithVehs(std::vector<Cell*> newCellsWithVehs);
 	void fillWithVehs(double fillingDegree);
 	void updateObstacleAheadWarnings(int stepsBackCnt);

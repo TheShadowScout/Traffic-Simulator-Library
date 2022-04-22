@@ -50,7 +50,7 @@ Crossing::~Crossing() {
     }
 }
 
-void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
+void Crossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
     try {
         checkParametersAreCorrect(inputSide, inputIndex, outputSide, outputIndex);
     }
@@ -204,7 +204,7 @@ void Crossing::addX(char inputSide, int inputIndex, char outputSide, int outputI
     }
 }
 
-void Crossing::linkRoad(Cell* previousCell, char inputSide, int inputIndex) {
+void Crossing::linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex) {
     switch(inputSide) {   
         case 'N':
             inputN[inputIndex]->setPreviousCell(previousCell);
@@ -225,7 +225,7 @@ void Crossing::linkRoad(Cell* previousCell, char inputSide, int inputIndex) {
     }
 }
 
-void Crossing::linkRoad(char outputSide, int outputIndex, Cell* nextCell) {
+void Crossing::linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell) {
     switch(outputSide) {   
         case 'N':
             outputN[outputIndex]->setNextCell(nextCell);

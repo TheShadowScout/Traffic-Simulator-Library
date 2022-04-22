@@ -1,52 +1,185 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Basic Classes\CarHolder.cpp" />
-    <ClCompile Include="Basic Classes\Cell.cpp" />
-    <ClCompile Include="Basic Classes\Crossing.cpp" />
-    <ClCompile Include="Basic Classes\CrossingInput.cpp" />
-    <ClCompile Include="Basic Classes\DataSaving.cpp" />
-    <ClCompile Include="Basic Classes\Generator.cpp" />
-    <ClCompile Include="Basic Classes\Map.cpp" />
-    <ClCompile Include="Basic Classes\MovePrediction.cpp" />
-    <ClCompile Include="Basic Classes\Observer.cpp" />
-    <ClCompile Include="Basic Classes\Road.cpp" />
-    <ClCompile Include="Basic Classes\RoadCell.cpp" />
-    <ClCompile Include="Basic Classes\Simulation.cpp" />
-    <ClCompile Include="Basic Classes\Statistics.cpp" />
-    <ClCompile Include="Basic Classes\TrafficLights.cpp" />
-    <ClCompile Include="Basic Classes\Vehicle.cpp" />
-    <ClCompile Include="Functionality\DensityPlotGenerator.cpp" />
-    <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
-    <ClCompile Include="Gui\SimulationWindow.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Project Files">
+      <UniqueIdentifier>{06982260-1816-445a-9024-6fd6deb71e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Artifacts">
+      <UniqueIdentifier>{72a6ee14-2255-40d5-8099-496b6af8b7c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Libraries">
+      <UniqueIdentifier>{2df8bda9-955f-47a6-966c-c8da46fa5deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Basic Classes">
+      <UniqueIdentifier>{1620c3fa-8ced-4483-9acf-bed5e915549a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Functionality">
+      <UniqueIdentifier>{8cc33f3c-a50f-441d-bd7d-359d7294efa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functionality">
+      <UniqueIdentifier>{ee378953-56b6-4507-b8f2-b2a25d099262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Basic Classes">
+      <UniqueIdentifier>{5acf31b4-8afe-4c0f-b559-c802b6f5856a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Non-classified Files">
+      <UniqueIdentifier>{45598abc-8dff-4aa6-8c6d-21cd2cb54b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Non-classified Files\Functionality">
+      <UniqueIdentifier>{bbf380da-020b-42e1-9ccf-1643bfc30f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gui">
+      <UniqueIdentifier>{7609d8f0-e6b1-451c-a404-c713bc9b31bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gui">
+      <UniqueIdentifier>{23410382-9fe4-44a5-939d-d4790d1dc984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basic Classes\Artifacts\Destructor.h" />
-    <ClInclude Include="Basic Classes\Artifacts\Teleporter.h" />
-    <ClInclude Include="Basic Classes\CarHolder.h" />
-    <ClInclude Include="Basic Classes\Cell.h" />
-    <ClInclude Include="Basic Classes\Crossing.h" />
-    <ClInclude Include="Basic Classes\CrossingInput.h" />
-    <ClInclude Include="Basic Classes\DataSaving.h" />
-    <ClInclude Include="Basic Classes\Generator.h" />
-    <ClInclude Include="Basic Classes\Map.h" />
-    <ClInclude Include="Basic Classes\MovePrediction.h" />
-    <ClInclude Include="Basic Classes\Observer.h" />
-    <ClInclude Include="Basic Classes\Road.h" />
-    <ClInclude Include="Basic Classes\RoadCell.h" />
-    <ClInclude Include="Basic Classes\Simulation.h" />
-    <ClInclude Include="Basic Classes\Statistics.h" />
-    <ClInclude Include="Basic Classes\TrafficLights.h" />
-    <ClInclude Include="Basic Classes\Vehicle.h" />
-    <ClInclude Include="Functionality\DensityPlotGenerator.h" />
-    <ClInclude Include="Functionality\StatisticsGenerator.h" />
-    <ClInclude Include="Gui\SimulationWindow.h" />
-    <ClInclude Include="Libraries\gnuplot-iostream.h" />
+    <ClInclude Include="Libraries\gnuplot-iostream.h">
+      <Filter>Header Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Artifacts\Destructor.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Artifacts\Teleporter.h">
+      <Filter>Header Files\Artifacts</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Cell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Generator.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Map.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\MovePrediction.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Observer.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Road.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Simulation.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Statistics.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Vehicle.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Functionality\DensityPlotGenerator.h">
+      <Filter>Header Files\Functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="Functionality\StatisticsGenerator.h">
+      <Filter>Header Files\Functionality</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\SimulationWindow.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\DataSaving.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\CarHolder.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RoadCell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\CrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Crossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\TrafficLights.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.gitignore" />
-    <None Include="..\README.md" />
-    <None Include="Functionality\DensityPlot.gnuplot" />
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Functionality\StatisticsGenerator.cpp">
+      <Filter>Source Files\Functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Cell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Functionality\DensityPlotGenerator.cpp">
+      <Filter>Source Files\Functionality</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Generator.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Map.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\MovePrediction.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Observer.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Road.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Simulation.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Statistics.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Vehicle.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\DataSaving.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\SimulationWindow.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CarHolder.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RoadCell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Crossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\TrafficLights.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Project Files</Filter>
+    </None>
+    <None Include="..\.gitignore">
+      <Filter>Project Files</Filter>
+    </None>
+    <None Include="Functionality\DensityPlot.gnuplot">
+      <Filter>Non-classified Files\Functionality</Filter>
+    </None>
   </ItemGroup>
 </Project>

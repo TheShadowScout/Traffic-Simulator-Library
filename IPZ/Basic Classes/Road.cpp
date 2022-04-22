@@ -38,7 +38,7 @@ void Road::createRoad() {
     for (int i = 0; i < height; i++) {
         std::vector<Cell*> newRoadLane;
         for (int j = 0; j < length; j++) {
-            Cell* newCell = new RoadCell(maxSpeed); 
+            Cell* newCell = new RoadCell(maxSpeed);
             newCell->setCarHolder(new CarHolder());
             if (j == 0) {
                 head.push_back(newCell);

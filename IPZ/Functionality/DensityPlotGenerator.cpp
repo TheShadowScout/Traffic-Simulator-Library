@@ -1,5 +1,5 @@
 #pragma once
-#include "DensityPlotGenerator.h";
+#include "DensityPlotGenerator.h"
 
 int Road::IDcnt = 0;
 int Vehicle::IDcnt = 0;
@@ -30,7 +30,7 @@ int GenerateDensityPlot() {
 				map->addRoad(road);
 				map->fillWithVehs(density);
 
-				Simulation simulation(map, 0.1);
+				Simulation simulation(map, 0.1, 0, 0);
 				Observer* observer = new Observer(road->tail[0]);
 				simulation.addObserver(observer);
 

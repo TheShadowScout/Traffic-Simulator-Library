@@ -32,10 +32,10 @@ public:
     virtual Cell* getNextCell() = 0;
     int getMaxSpeed();
     void setCarHolder(CarHolder* carHolder);
-    void setVehicle(Vehicle* Vehicle);
-    void setRightCell(Cell* RightCell);
-    void setLeftCell(Cell* LeftCell);
-    void setPreviousCell(Cell* PreviousCell);
+    void setVehicle(Vehicle* vehicle);
+    void setRightCell(Cell* rightCell);
+    void setLeftCell(Cell* leftCell);
+    void setPreviousCell(Cell* previousCell);
     virtual void setNextCell(Cell* nextCell) = 0;
     void setMaxSpeed(int maxSpeed);
     void updateObstacleAhead();

@@ -2,7 +2,13 @@
 
 #include "Simulation.h"
 
-Simulation::Simulation(Map* simMap, double randEventProb, int viewDist) : simMap(simMap), randEventProb(randEventProb), viewDist(viewDist), simStats(nullptr) {
+Simulation::Simulation(Map* simMap, double randEventProb, int viewDist, int minSafeSpace, int seed, bool shuffleIfCompetition) : simMap(simMap), randEventProb(randEventProb), viewDist(viewDist), minSafeSpace(minSafeSpace), seed(seed), shuffleIfCompetition(shuffleIfCompetition), simStats(nullptr) {
+	if (seed == NULL) {
+		randomEngine = std::default_random_engine(seed);
+	}
+	else {
+		randomEngine = std::default_random_engine(time(NULL));
+	}
 	if(randEventProb < 0 || randEventProb > 1)
 		throw std::invalid_argument("Random event probability must be in range between 0 and 1");
 	if (viewDist < 0)
@@ -29,6 +35,9 @@ std::string Simulation::toString() {
 	}
 	for (Road* road : simMap->getRoads()) {
 		simStr += road->toString();
+	}
+	for (Crossing* crossing : simMap->getCrossings()) {
+		simStr += crossing->toString();
 	}
 	return simStr += "\n";
 }
@@ -91,10 +100,10 @@ void Simulation::transitionFunc() {
 		observer->checkVehPassing();
 	}
 
-	for (int i = 0; i < simMap->getRoads().size(); i++)
+	for (unsigned int i = 0; i < simMap->getRoads().size(); i++)
 	{
 		std::vector<TrafficLights*> roadLights = simMap->getRoads()[i]->getLights();
-		for (int j = 0; j < roadLights.size(); j++)
+		for (unsigned int j = 0; j < roadLights.size(); j++)
 		{
 			int tempTimer = roadLights[j]->getTimer();
 			if (tempTimer > 0)
@@ -115,8 +124,6 @@ void Simulation::transitionFunc() {
 						roadLights[j]->setTimer(roadLights[j]->getRedDuration());
 						roadLights[j]->setColor(LightColor::red);
 						break;
-					default:
-						std::cout << "Cos zjebalas\n";
 					}
 				}
 				else
@@ -146,40 +153,104 @@ void Simulation::transitionFunc() {
 	}
 }
 
-MovePrediction Simulation::evalVehMove(Cell* vehCell) { //funkcja wyliczaj¹ca now¹ prêdkoœæ dla pojazdu
-	//int curVehSpeed = vehCell->getVehicle()->getSpeed();
-	int newVehSpeed = std::min(vehCell->getVehicle()->getSpeed() + 1, vehCell->getMaxSpeed()); //nowa prêdkoœæ pojazdu, na pocz¹tku ustalana na maksymaln¹ mo¿liw¹ do uzyskania wartoœæ - maksymaln¹ prêdkoœæ dla komórki w której siê znajduje, w czasie
-	                                          //dzia³ania funkcji mo¿e byæ tylko obni¿ana
-	Cell* tempCell = vehCell;
+MovePrediction Simulation::evalVehMove(Cell* vehCell) {
+	std::vector<MovePrediction> moves;
+	bool sawObstacle = false;
+	int curVehSpeed = vehCell->getVehicle()->getSpeed();
+	int newVehSpeedFront = evalNewVehSpeed(vehCell, curVehSpeed, &sawObstacle); //wyliczenie prêdkoœci przy jeŸdzie prosto
+	if (sawObstacle == true) { //jeœli widzia³ przeszkodê zmniejsz priorytet jazdy prosto
+		moves.push_back(MovePrediction(true, newVehSpeedFront, 0));
+	}
+	evalChangeLane(vehCell, &moves); //wylicznie zmiany pasa
+	if (sawObstacle == false) { //jeœli nie widzia³ przeszkody zwiêksz priorytet jazdy prosto
+		moves.push_back(MovePrediction(true, newVehSpeedFront, 0));
+	}
+	std::stable_sort(moves.begin(), moves.end()); //posortuj mozliwe ruchy rosn¹co zachowujac priorytety -> kolejnoœæ dodania
+	//std::cout << moves.size() << std::endl;
+	return moves.back(); //wybierz najlepszy ruch
+}
+
+int Simulation::evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sawObstacle) { //funkcja wyliczaj¹ca now¹ prêdkoœæ dla pojazdu
+	Vehicle* startCellVeh = startCell->getVehicle();
+	if (startCellVeh != nullptr) {
+		if (startCellVeh->checkIsObstacle() == true) {
+			return 0;
+		}
+	}
+	int newVehSpeed = std::min(curVehSpeed + 1, startCell->getMaxSpeed()); //nowa prêdkoœæ pojazdu, na pocz¹tku ustalana na maksymaln¹ mo¿liw¹ do uzyskania wartoœæ - maksymaln¹ prêdkoœæ dla komórki w której siê znajduje, w czasie
+											  //dzia³ania funkcji mo¿e byæ tylko obni¿ana
+	Cell* tempCell = startCell;
 	int tempCellMaxSpeed = NULL;
 	for (int i = 1; i <= newVehSpeed; i++) { //przeszukaj iloœæ kolejnych komórek zale¿n¹ od prêdkoœci pojazdu w poszukiwaniu sytuacji obni¿aj¹cych prêdkoœæ, maksymalna ich iloœæ mo¿e siê zmniejszaæ
-		                                     //wraz z dzia³aniem funkcji
+											 //wraz z dzia³aniem funkcji
 		tempCell = tempCell->getNextCell();
 		if (tempCell == nullptr) { //napotkana komórka nie istniej - nic nie ograniczy ju¿ prêdkoœci
 			break;
+		}
+		if (sawObstacle != nullptr && *sawObstacle == false && tempCell->checkObstacleAhead() == true) {
+			*sawObstacle = true;
 		}
 		tempCellMaxSpeed = tempCell->getMaxSpeed();
 		if (newVehSpeed > tempCellMaxSpeed) { //napotkana komórka ma ograniczenie prêdkoœci ni¿sze ni¿ aktualnie wyliczana prêdkoœæ - ograniczenie prêdkoœci do zapewniaj¹cej mksymaln¹ mo¿liw¹ prêdkoœæ
 			newVehSpeed = std::min(newVehSpeed, std::max(tempCellMaxSpeed, i));
 		}
-		if (tempCell->getVehicle() != nullptr) { //w napotkanej komórce jest pojazd, trzeba zmniejszyæ prêdkoœæ - dalej nie ma sensu szukaæ
+		Vehicle* tempCellVeh = tempCell->getVehicle();
+		if (tempCellVeh != nullptr) { //w napotkanej komórce jest pojazd, trzeba zmniejszyæ prêdkoœæ - dalej nie ma sensu szukaæ
 			newVehSpeed = i - 1;
-			//newVehSpeed = std::min(newVehSpeed, i - 1);
+			if (sawObstacle != nullptr && tempCellVeh->checkIsObstacle() == true) {
+				*sawObstacle = true;
+			}
 			break;
 		}
-		if (tempCell->getLight() != nullptr && tempCell->getLight()->getColor() == LightColor::red)
-		{
+		TrafficLights* tempCellLights = tempCell->getLight();
+		if (tempCellLights != nullptr && tempCellLights->getColor() == LightColor::red) {
 			newVehSpeed = i - 1;
 			break;
 		}
-		
 	}
-	return MovePrediction(true, newVehSpeed, 0);
+	return newVehSpeed;
+}
+
+void Simulation::evalChangeLane(Cell* vehCell, std::vector<MovePrediction>* moves) { //funkcja wyliczaj¹ca zmianê pasa
+	int curVehSpeed = vehCell->getVehicle()->getSpeed();
+	Cell* tempCell;
+	int newLane;
+	bool sawObstacle = false;
+	int laneRandomizer = std::rand() % 2;
+	for (int random_const = 1; random_const <= 2; random_const++) { //losowanie kolejnoœci sprawdzania pasa lewego i prawego
+		if ((random_const + laneRandomizer) % 2 == 0) {
+			tempCell = vehCell->getLeftCell();
+			newLane = -1;
+		}
+		else {
+			tempCell = vehCell->getRightCell();
+			newLane = 1;
+		}
+		if (tempCell != nullptr && tempCell->getVehicle() == nullptr) {
+			int newVehSpeed = evalNewVehSpeed(tempCell, curVehSpeed, &sawObstacle); //ustal prêdkoœæ pojazdu po zmianie  pasa
+			if (sawObstacle == true) { //jeœli na pasie jest przeszkoda zrezygnuj ze zmiany pasa
+				continue;
+			}
+			int prevVehDist = -6;
+			for (int i = -1; i >= -6; i--) { //przeszukaj 6 komórek w ty³ w poszukiwaniu pojazdu poprzedzaj¹cego
+				tempCell = tempCell->getPreviousCell();
+				if (tempCell == nullptr) {
+					break;
+				}
+				Vehicle* tempVeh = tempCell->getVehicle();
+				if (tempVeh != nullptr) { //jeœli pojazd poprzedzaj¹cy zosta³ znaleziony oblicz jego przysz³a prêdkoœæ
+					prevVehDist = i + evalNewVehSpeed(tempCell, tempVeh->getSpeed(), nullptr); // oblicz odle³oœæ w jakiej bêdzie pojazd poprzedzaj¹cy po wykonaniu ruchu w stosunku do pojazdu zmieniaj¹cego pas
+					break;
+				}
+			}
+			if (newVehSpeed - prevVehDist - 1 > minSafeSpace) { // jesli odleg³oœæ miêdzy pojazdami jest wiêksza lub równa od minimalnej to dodaj ruch do listy mo¿liwych
+				moves->push_back(MovePrediction(true, newVehSpeed, newLane));
+			}
+		}
+	}
 }
 
 std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData) { //funkcja poruszaj¹ca pojazdami
-	std::vector<Vehicle*> vehs;
-	std::vector<Cell*> vehsDestCells;
 	std::vector<Cell*> newCellsWithVehs;
 	for (unsigned int i = 0; i < cellsWithVehs.size(); i++) { //dla ka¿dej komórki z list komórek z pojazdami
 		int newVehSpeed = vehMovesData[i].getNewVehSpeed();
@@ -209,14 +280,32 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 		if (isVehDeleted == true) {
 			continue;
 		}
+		bool competition = false;
+		if (tempCell->getVehicle() != nullptr) { //jeœli w komórce docelowej jest ju¿ inny pojazd zrezygnuj ze zmiany pasa i jedŸ prosto
+			competition = true;
+			newVehSpeed = evalNewVehSpeed(cellsWithVehs[i], cellsWithVehs[i]->getVehicle()->getSpeed(), nullptr);
+			tempCell = cellsWithVehs[i];
+			for (int j = 0; j < newVehSpeed; j++) {
+				tempCell = tempCell->getNextCell();
+				if (tempCell == nullptr) {
+					curVeh->~Vehicle();
+					cellsWithVehs[i]->setVehicle(nullptr);
+					isVehDeleted = true;
+					break;
+				}
+			}
+		}
+		if (isVehDeleted == true) {
+			continue;
+		}
 		curVeh->setSpeed(newVehSpeed); //nadanie pojazdowi nowej prêdkoœci
-		vehs.push_back(curVeh); //dodaj pojazd do listy poruszanych pojazdów
 		cellsWithVehs[i]->setVehicle(nullptr); //usuñ poruszany pojazd z jego aktualnej komórki
-		vehsDestCells.push_back(tempCell); //dodaj komórkê docelow¹ do listy tych komórek
+		tempCell->setVehicle(curVeh);
 		newCellsWithVehs.push_back(tempCell); //dodaj komórkê docelow¹ do listy komórek z pojazdami
-	}
-	for (unsigned int i = 0; i < vehs.size(); i++) { //umieœæ pojazdy w ich komórkach docelowych
-		vehsDestCells[i]->setVehicle(vehs[i]);
+		if (competition == true && shuffleIfCompetition == true) {
+			std::shuffle(newCellsWithVehs.begin(), newCellsWithVehs.end(), randomEngine);
+		}
 	}
 	return newCellsWithVehs; //zwróæ listê nowych komórek z pojazdami
 }
+

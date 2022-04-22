@@ -2,9 +2,9 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), obstacleAhead(false) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), obstacleAhead(false), light(nullptr) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false) {
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false), light(nullptr) {
     if(maxSpeed > 6 || maxSpeed < 1)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
 }
@@ -33,20 +33,20 @@ int Cell::getMaxSpeed() {
     return maxSpeed;
 }
 
-void Cell::setVehicle(Vehicle* Vehicle) {
-    this->carHolder->setVehicle(Vehicle);
+void Cell::setVehicle(Vehicle* vehicle) {
+    this->carHolder->setVehicle(vehicle);
 }
 
-void Cell::setRightCell(Cell* RightCell) {
-    this->rightCell = RightCell;
+void Cell::setRightCell(Cell* rightCell) {
+    this->rightCell = rightCell;
 }
 
-void Cell::setLeftCell(Cell* LeftCell) {
-    this->leftCell = LeftCell;
+void Cell::setLeftCell(Cell* leftCell) {
+    this->leftCell = leftCell;
 }
 
-void Cell::setPreviousCell(Cell* PreviousCell) {
-    this->previousCell = PreviousCell;
+void Cell::setPreviousCell(Cell* previousCell) {
+    this->previousCell = previousCell;
 }
 
 void Cell::setMaxSpeed(int maxSpeed) {
