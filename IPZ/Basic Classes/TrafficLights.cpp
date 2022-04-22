@@ -73,12 +73,12 @@ void TrafficLights::setPosition(int newPosition)
 	position = newPosition;
 }
 
-void TrafficLights::setRedLightDuration(double duration)
+void TrafficLights::setRedLightDuration(int duration)
 {
 	redLightDuration = duration;
 }
 
-void TrafficLights::setGreenLightDuration(double duration)
+void TrafficLights::setGreenLightDuration(int duration)
 {
 	greenLightDuration = duration;
 }

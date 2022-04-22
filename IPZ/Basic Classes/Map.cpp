@@ -2,7 +2,10 @@
 
 #include "Map.h"
 	
-Map::Map(std::string name) : name(name) {}
+Map::Map(std::string name) : name(name) {
+	if(name == "")
+		throw std::invalid_argument("Map must have a name");
+}
 
 Map::~Map() {
 		for (Road* road : roads) {
@@ -23,6 +26,10 @@ std::vector<Road*> Map::getRoads() {
 
 std::vector<Generator*> Map::getGenerators() {
 	return generators;
+}
+
+std::vector<Crossing*> Map::getCrossings() {
+	return crossings;
 }
 
 std::vector<Cell*> Map::getCellsWithVehs() {
@@ -62,6 +69,14 @@ void Map::addRoad(Road* road) {
 
 void Map::addGenerator(Generator* generator) {
 	generators.push_back(generator);
+}
+
+void Map::addCrossing(Crossing* crossing) {
+	crossings.push_back(crossing);
+}
+
+void Map::addCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
+	cellsWithVehs.insert(cellsWithVehs.begin(), newCellsWithVehs.begin(), newCellsWithVehs.end());
 }
 
 void Map::fillWithVehs(double fillingDegree) {
@@ -142,7 +157,7 @@ void Map::createJSON() {
 	ptree mapTree;
 	mapTree.put("Map.Name", getName());
 
-	for (int i = 0; i < roads.capacity(); i++) {
+	for (unsigned int i = 0; i < roads.size(); i++) {
 		//mapTree.put("Map.Road", roads[i]->createJSON());
 		std::string nameTree = "Map.Road" + std::to_string(roads[i]->getID());
 		mapTree.put(nameTree + ".Name", roads[i]->getName());
@@ -150,7 +165,7 @@ void Map::createJSON() {
 		mapTree.put(nameTree + ".Length", roads[i]->getLength());
 		mapTree.put(nameTree + ".Height", roads[i]->getHeight());
 	}
-	for (int i = 0; i < cellsWithVehs.size(); i++) {
+	for (unsigned int i = 0; i < cellsWithVehs.size(); i++) {
 		std::string nameTree = "Map.Cell";
 		mapTree.put(nameTree + ".MaxSpeed", cellsWithVehs[i]->getMaxSpeed());
 		nameTree = "Map.Cell.Vechicle" + std::to_string(cellsWithVehs[i]->getVehicle()->getID());
@@ -171,10 +186,4 @@ void Map::createJSON() {
 void linkCells(Cell* previousCell, Cell* nextCell) {
 	previousCell->setNextCell(nextCell);
 	nextCell->setPreviousCell(previousCell);
-}
-
-void linkCells(Generator* previousCell, Cell* nextCell) {
-	previousCell->setNextCell(nextCell);
-	nextCell->setPreviousCell(previousCell);
-	previousCell->setMaxSpeed(nextCell->getMaxSpeed());
 }

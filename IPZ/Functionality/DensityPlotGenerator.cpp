@@ -1,5 +1,5 @@
 #pragma once
-#include "DensityPlotGenerator.h";
+#include "DensityPlotGenerator.h"
 
 int Road::IDcnt = 0;
 int Vehicle::IDcnt = 0;
@@ -15,7 +15,7 @@ int GenerateDensityPlot() {
 	std::ofstream file_out;
 	file_out.open(outFolder + "data" + ".csv");
 	file_out << "density;v_m_a_x = 1;v_m_a_x = 2;v_m_a_x = 3;v_m_a_x = 4;v_m_a_x = 5;v_m_a_x = 6;" << std::endl;
-	for (double density = 0; density <= 1; density += 0.1)
+	for (double density = 0; density <= 1; density += 0.01)
 	{
 		file_out << density * 100 << ";";
 		for (int speed = 1; speed <= 6; speed++)
@@ -30,7 +30,7 @@ int GenerateDensityPlot() {
 				map->addRoad(road);
 				map->fillWithVehs(density);
 
-				Simulation simulation(map, 0.1);
+				Simulation simulation(map, 0.1, 0, 0);
 				Observer* observer = new Observer(road->tail[0]);
 				simulation.addObserver(observer);
 

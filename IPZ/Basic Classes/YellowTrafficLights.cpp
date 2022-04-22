@@ -30,12 +30,12 @@ int YellowTrafficLights::getYellowDuration()
 	return yellowLightDuration;
 }
 
-void YellowTrafficLights::setRedYellowLightDuration(double duration)
+void YellowTrafficLights::setRedYellowLightDuration(int duration)
 {
 	redYellowLightDuration = duration;
 }
 
-void YellowTrafficLights::setYellowLightDuration(double duration)
+void YellowTrafficLights::setYellowLightDuration(int duration)
 {
 	yellowLightDuration = duration;
 }

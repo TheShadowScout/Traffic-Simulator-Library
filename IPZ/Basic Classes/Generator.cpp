@@ -2,25 +2,31 @@
 
 #include "Generator.h"
 
-Generator::Generator(std::string name, double createVehProb) : Cell(), createVehProb(createVehProb) {
+Generator::Generator(std::string name, int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
+	if(maxSpeed < 1 || maxSpeed > 6)
+		throw std::invalid_argument("Max speed must be in range between 1 and 6");
+	if(createVehProb < 0 || createVehProb > 1)
+		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
 	ID = IDcnt++;
 	this->name = filterName(name);
+	this->setCarHolder(new CarHolder());
 }
 
-Generator::Generator(double createVehProb) : Cell(), createVehProb(createVehProb) {
+Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
 	ID = IDcnt++;
 	name = std::to_string(ID);
+	this->setCarHolder(new CarHolder());
 }
 
 Generator::~Generator() {
-	delete vehicle;
+	delete carHolder->getVehicle();
 }
 
 std::string Generator::toString() {
-	if (vehicle == nullptr) {
+	if (carHolder->getVehicle() == nullptr) {
 		return ".\n";
 	}
-	return std::to_string(vehicle->getSpeed()) + "\n";
+	return std::to_string(carHolder->getVehicle()->getSpeed()) + "\n";
 }
 
 std::string Generator::filterName(std::string rawName) {
@@ -34,7 +40,7 @@ std::string Generator::filterName(std::string rawName) {
 }
 
 bool Generator::createVeh() {
-	if (vehicle == nullptr && 1.0 * std::rand() / RAND_MAX <= createVehProb) {
+	if (carHolder->getVehicle() == nullptr && 1.0 * std::rand() / RAND_MAX <= createVehProb) {
 		Cell* tempCell = this;
 		for (int i = 1; i <= maxSpeed; i++) {
 			tempCell = tempCell->getNextCell();
@@ -42,11 +48,11 @@ bool Generator::createVeh() {
 				break;
 			}
 			if (tempCell->getVehicle() != nullptr) {
-				vehicle = new Vehicle(i - 1);
+				carHolder->setVehicle(new Vehicle(i - 1));
 				return true;
 			}
 		}
-		vehicle = new Vehicle(maxSpeed);
+		carHolder->setVehicle(new Vehicle(maxSpeed));
 		return true;
 	}
 	return false;

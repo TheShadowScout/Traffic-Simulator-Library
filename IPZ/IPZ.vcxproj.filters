@@ -66,9 +66,6 @@
     <ClInclude Include="Basic Classes\Map.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\MovePrediction.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic Classes\Observer.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
@@ -94,6 +91,18 @@
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\DataSaving.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\CarHolder.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RoadCell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\CrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Crossing.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\TrafficLights.h">
@@ -122,9 +131,6 @@
     <ClCompile Include="Basic Classes\Map.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Basic Classes\MovePrediction.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Basic Classes\Observer.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
@@ -145,6 +151,18 @@
     </ClCompile>
     <ClCompile Include="Gui\SimulationWindow.cpp">
       <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CarHolder.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RoadCell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\CrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Crossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
     <ClCompile Include="Basic Classes\TrafficLights.cpp">
       <Filter>Source Files\Basic Classes</Filter>

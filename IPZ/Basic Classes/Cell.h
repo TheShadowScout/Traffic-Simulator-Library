@@ -6,6 +6,7 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include "Vehicle.h"
+#include "CarHolder.h"
 #include "TrafficLights.h"
 
 using boost::property_tree::ptree;
@@ -15,8 +16,7 @@ protected:
     Cell* rightCell;
     Cell* leftCell;
     Cell* previousCell;
-    Cell* nextCell;
-    Vehicle* vehicle;
+    CarHolder* carHolder;
     int maxSpeed;
     bool obstacleAhead;
     TrafficLights* light;
@@ -29,13 +29,14 @@ public:
     Cell* getRightCell();
     Cell* getLeftCell();
     Cell* getPreviousCell();
-    Cell* getNextCell();
+    virtual Cell* getNextCell() = 0;
     int getMaxSpeed();
-    void setVehicle(Vehicle* Vehicle);
-    void setRightCell(Cell* RightCell);
-    void setLeftCell(Cell* LeftCell);
-    void setPreviousCell(Cell* PreviousCell);
-    void setNextCell(Cell* NextCell);
+    void setCarHolder(CarHolder* carHolder);
+    void setVehicle(Vehicle* vehicle);
+    void setRightCell(Cell* rightCell);
+    void setLeftCell(Cell* leftCell);
+    void setPreviousCell(Cell* previousCell);
+    virtual void setNextCell(Cell* nextCell) = 0;
     void setMaxSpeed(int maxSpeed);
     void updateObstacleAhead();
     bool checkObstacleAhead();

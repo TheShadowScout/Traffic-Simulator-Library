@@ -3,6 +3,8 @@
 #include "Statistics.h"
 
 Statistics::Statistics(double simRandEventProb, int simMapPassableCellsCnt) : simRandEventProb(simRandEventProb), simMapPassableCellsCnt(simMapPassableCellsCnt), vehsCntSum(0), vehsSpeedsSum(0), iterationCnt(0) {
+	if(simRandEventProb < 0 || simRandEventProb > 1)
+		throw std::invalid_argument("Simulation random event probability must be in range between 0 and 1");
 	time_t now;
 	struct tm timeinfo;
 	char buffer[80];

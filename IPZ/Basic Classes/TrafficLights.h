@@ -21,7 +21,7 @@ public:
 	void setTimer(int newTimer);
 	void setColor(LightColor newColor);
 	void setPosition(int newPosition);
-	void setRedLightDuration(double duration);
-	void setGreenLightDuration(double duration);
+	void setRedLightDuration(int duration);
+	void setGreenLightDuration(int duration);
 	void changeState();
 };
