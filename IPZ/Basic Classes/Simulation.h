@@ -11,9 +11,23 @@
 #include "Map.h"
 #include "Cell.h"
 #include "Vehicle.h"
-#include "MovePrediction.h"
 #include "Statistics.h"
 #include "Observer.h"
+
+struct SpeedData {
+	int newVehSpeed;
+	Cell* destinationCell;
+};
+
+struct MoveData {
+	SpeedData speedData;
+	int newVehLane;
+};
+
+bool cmpMoveData(MoveData lhs, MoveData rhs);
+
+
+
 
 class Simulation {
 protected:
@@ -39,8 +53,9 @@ public:
 	void transitionFunc();
 
 protected:
-	MovePrediction evalVehMove(Cell* vehCell);
-	int evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sawObstacle);
-	void evalChangeLane(Cell* vehCell, std::vector<MovePrediction>* moves);
-	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MovePrediction> vehMovesData);
+	MoveData evalVehMove(Cell* vehCell);
+	SpeedData evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sawObstacle);
+	void evalChangeLane(Cell* vehCell, std::vector<MoveData>* moves);
+	std::vector<Cell*> moveVehs(std::vector<Cell*> cellsWithVehs, std::vector<MoveData> vehMovesData);
 };
+

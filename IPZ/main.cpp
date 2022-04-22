@@ -200,5 +200,4 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.toString() << std::endl;
 	}
-}
 //*/
