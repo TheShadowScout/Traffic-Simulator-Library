@@ -31,6 +31,11 @@ Crossing::Crossing(int crossingHeight, int crossingLength, int crossingMaxSpeed)
 }
 
 Crossing::~Crossing() {
+    for (std::vector<RoadCell*> crossingLane : crossingLanes) {
+        for (RoadCell* crossingCell : crossingLane) {
+            delete crossingCell;
+        }
+    }
     for(int i = 0; i < crossingHeight; i++) {
         for(int j = 0; j < crossingLength; j++) {
             delete carHolderMatrix[i][j];
@@ -48,6 +53,10 @@ Crossing::~Crossing() {
         delete outputE[i];
         delete outputW[i];
     }
+}
+
+std::vector<TrafficLights*> Crossing::getLights() {
+    return lights;
 }
 
 void Crossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
@@ -127,6 +136,7 @@ void Crossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSid
         tempRoadCells[i]->setNextCell(tempRoadCells[i + 1]);
         tempRoadCells[i + 1]->setPreviousCell(tempRoadCells[i]);
     }
+    crossingLanes.push_back(tempRoadCells);
     int tempRoadCellsIndex = 0;
     switch (inputSide) {
     case 'N':
@@ -335,5 +345,62 @@ void Crossing::checkParametersAreCorrect(char inputSide, int inputIndex, char ou
     }
     if (outputFlag == true) {
         throw std::invalid_argument("on the outputSide in outputIndex cell is already crossing input");
+    }
+}
+
+void Crossing::updateCrossing()
+{
+    for(CrossingInput* input : inputN) {
+        if (input != nullptr) {
+            input->drawLane();
+        }    
+    }
+    for(CrossingInput* input : inputE) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+    for(CrossingInput* input : inputW) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+    for(CrossingInput* input : inputS) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+}
+
+void Crossing::addLights(TrafficLights* newLight, char inputSide, int inputIndex) {
+    switch(inputSide){
+    case 'N':
+        if (inputN[inputIndex] != nullptr)
+        {
+            inputN[inputIndex]->setLight(newLight);
+            lights.push_back(newLight);
+        }
+        break;
+    case 'E':
+        if (inputE[inputIndex] != nullptr) 
+        {
+            inputE[inputIndex]->setLight(newLight);
+            lights.push_back(newLight);
+        }
+        break;
+    case 'S':
+        if (inputS[inputIndex] != nullptr) 
+        {
+            inputS[inputIndex]->setLight(newLight);
+            lights.push_back(newLight);
+        }
+        break;
+    case 'W':
+        if (inputW[inputIndex] != nullptr) 
+        {
+            inputW[inputIndex]->setLight(newLight);
+            lights.push_back(newLight);
+        }
+        break;
     }
 }

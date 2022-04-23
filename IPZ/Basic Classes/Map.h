@@ -23,7 +23,6 @@ protected:
 	std::vector<Road*> roads;
 	std::vector<Generator*> generators;
 	std::vector<Crossing*> crossings;
-	std::vector<Cell*> cellsWithVehs;
 
 public:
 	Map(std::string name);
@@ -32,15 +31,13 @@ public:
 	std::vector<Road*> getRoads();
 	std::vector<Generator*> getGenerators();
 	std::vector<Crossing*> getCrossings();
-	std::vector<Cell*> getCellsWithVehs();
 	int getMapPassableCellsCnt();
-	void setCellsWithVehs(std::vector<Cell*> CellsWithVehs);
 	void addRoad(Road* road);
 	void addGenerator(Generator* generator);
 	void addCrossing(Crossing* crossing);
-	void addCellsWithVehs(std::vector<Cell*> newCellsWithVehs);
 	void fillWithVehs(double fillingDegree);
-	void updateObstacleAheadWarnings(int stepsBackCnt);
+	std::vector<Cell*> getCellsWithVehs();
+	void updateMap(std::vector<Cell*>* cellsWithVehs);
 	void createJSON();
 };
 

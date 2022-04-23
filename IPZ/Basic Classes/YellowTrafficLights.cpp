@@ -1,9 +1,8 @@
 #include "YellowTrafficLights.h"
 
-YellowTrafficLights::YellowTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration) : TrafficLights(startState, position, redDuration, greenDuration), redYellowLightDuration(redYellowDuration), yellowLightDuration(yellowDuration)
+YellowTrafficLights::YellowTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration) : TrafficLights(startState, redDuration, greenDuration), redYellowLightDuration(redYellowDuration), yellowLightDuration(yellowDuration)
 {
-	switch (startState)
-	{
+	switch (startState) {
 	case LightColor::red:
 		timer = redDuration;
 		break;
@@ -16,6 +15,8 @@ YellowTrafficLights::YellowTrafficLights(LightColor startState, int position, in
 	case LightColor::yellow:
 		timer = yellowDuration;
 		break;
+	default:
+		timer = 0;
 	}
 
 }

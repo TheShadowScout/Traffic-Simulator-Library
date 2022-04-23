@@ -111,6 +111,15 @@
     <ClInclude Include="Basic Classes\YellowTrafficLights.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Basic Classes\Obstacle.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\SmartCrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\SmartCrossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -168,6 +177,15 @@
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
     <ClCompile Include="Basic Classes\YellowTrafficLights.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Obstacle.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\SmartCrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\SmartCrossing.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
   </ItemGroup>

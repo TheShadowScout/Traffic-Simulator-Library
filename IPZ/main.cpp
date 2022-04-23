@@ -17,35 +17,44 @@ int main() {
 #include "Basic Classes/Map.h"
 #include "Basic Classes/Road.h"
 #include "Basic Classes/Crossing.h"
+#include "Basic Classes/Obstacle.h"
+#include "Basic Classes/TrafficLights.h"
+#include "Basic Classes/SmartCrossing.h"
 
-/*
+///*
 int main() {
 	std::srand(time(NULL));
 
->>>>>>> tempbranch
 	Map* map = new Map("test");
 
-	Road* road1 = new Road(1, 1, 5);
+	Road* road1 = new Road(1, 1, 1);
+	Road* road2 = new Road(10, 1, 1);
+
+	road2->addObstacle(9, 0, 0);
 
 	map->addRoad(road1);
+	map->addRoad(road2);
 
-	Generator* generator1 = new Generator(5, 1.0);
+	Generator* generator1 = new Generator(1, 1.0);
 
 	map->addGenerator(generator1);
 
 	linkCells(generator1, road1->head[0]);
 
-	Crossing* crossing1 = new Crossing(11, 11, 5);
+	Crossing* crossing1 = new SmartCrossing(11, 11, 1);
 	crossing1->addNewCrossingLane('S', 5, 'N', 5, 1);
-	crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
-	crossing1->addNewCrossingLane('S', 5, 'W', 5, 1);
+	//crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
+	//crossing1->addNewCrossingLane('S', 5, 'W', 5, 1);
 
 	crossing1->linkRoadLaneToCrossing(road1->tail[0], 'S', 5);
+	crossing1->linkRoadLaneToCrossing('N', 5, road2->head[0]);
+
+	//TrafficLights* lights = new TrafficLights(LightColor::green, 10, 10);
+	//crossing1->addLights(lights, 'S', 5);
 
 	map->addCrossing(crossing1);
 
-	Simulation simulation(map, 0.2, 1, 0);
-
+	Simulation simulation(map, 0, 1, 0);
 	simulation.initiateSimulation();
 
 	for (int i = 0; i < 100; i++) {
@@ -53,7 +62,7 @@ int main() {
 		std::cout << simulation.toString() << std::endl;
 	}
 }
-*/
+//*/
 
 
 /*
@@ -165,7 +174,7 @@ int main() {
 }
 */
 
-///*
+/*
 int main() {
 	std::srand(time(NULL));
 
@@ -186,25 +195,11 @@ int main() {
 	map->addGenerator(generator2);
 	map->addGenerator(generator3);
 
-	Cell* tempCell = road1->head[1];
-	for (int i = 0; i < 50; i++) {
-		tempCell = tempCell->getNextCell();
-	}
-	tempCell->setVehicle(new Vehicle(0, true));
+	road1->addObstacle(50, 1, 0);
+	road1->addObstacle(100, 0, 0);
+	road1->addObstacle(100, 2, 0);
 
-	tempCell = road1->head[0];
-	for (int i = 0; i < 100; i++) {
-		tempCell = tempCell->getNextCell();
-	}
-	tempCell->setVehicle(new Vehicle(0, true));
-
-	tempCell = road1->head[2];
-	for (int i = 0; i < 100; i++) {
-		tempCell = tempCell->getNextCell();
-	}
-	tempCell->setVehicle(new Vehicle(0, true));
-
-	Simulation simulation(map, 0.2, 0, 0, 0);
+	Simulation simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
 	for (int i = 0; i < 100; i++) {
@@ -213,4 +208,4 @@ int main() {
 		std::cout << simulation.toString() << std::endl;
 	}
 }
-//*/
+*/

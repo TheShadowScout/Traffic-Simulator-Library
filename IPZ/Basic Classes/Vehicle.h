@@ -19,13 +19,12 @@ protected:
 	bool isObstacle;
 
 public:
-	Vehicle(std::string name, int speed, bool isObstacle = false);
-	Vehicle(int speed, bool isObstacle = false);
+	Vehicle(std::string name, int speed);
+	Vehicle(int speed);
 	std::string getName();
 	int getID();
 	int getSpeed();
 	bool getIsObstacle();
 	void setSpeed(int newSpeed);
 	void createJSON();
-	bool checkIsObstacle();
 };

@@ -29,9 +29,12 @@
     <ClInclude Include="Basic Classes\Generator.h" />
     <ClInclude Include="Basic Classes\Map.h" />
     <ClInclude Include="Basic Classes\Observer.h" />
+    <ClInclude Include="Basic Classes\Obstacle.h" />
     <ClInclude Include="Basic Classes\Road.h" />
     <ClInclude Include="Basic Classes\RoadCell.h" />
     <ClInclude Include="Basic Classes\Simulation.h" />
+    <ClInclude Include="Basic Classes\SmartCrossing.h" />
+    <ClInclude Include="Basic Classes\SmartCrossingInput.h" />
     <ClInclude Include="Basic Classes\Statistics.h" />
     <ClInclude Include="Basic Classes\TrafficLights.h" />
     <ClInclude Include="Basic Classes\Vehicle.h" />
@@ -50,9 +53,12 @@
     <ClCompile Include="Basic Classes\Generator.cpp" />
     <ClCompile Include="Basic Classes\Map.cpp" />
     <ClCompile Include="Basic Classes\Observer.cpp" />
+    <ClCompile Include="Basic Classes\Obstacle.cpp" />
     <ClCompile Include="Basic Classes\Road.cpp" />
     <ClCompile Include="Basic Classes\RoadCell.cpp" />
     <ClCompile Include="Basic Classes\Simulation.cpp" />
+    <ClCompile Include="Basic Classes\SmartCrossing.cpp" />
+    <ClCompile Include="Basic Classes\SmartCrossingInput.cpp" />
     <ClCompile Include="Basic Classes\Statistics.cpp" />
     <ClCompile Include="Basic Classes\TrafficLights.cpp" />
     <ClCompile Include="Basic Classes\Vehicle.cpp" />

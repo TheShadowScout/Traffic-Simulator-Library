@@ -128,7 +128,7 @@ std::string Road::filterName(std::string rawName) {
     return tempName;
 }
 
-std::vector<Cell*> Road::fillWithVehs(double fillingDegree) {
+void Road::fillWithVehs(double fillingDegree) {
     int passableCellsCnt = 0;
     for (std::vector<Cell*> lane : road) {
         for (Cell* roadCell : lane) {
@@ -141,24 +141,21 @@ std::vector<Cell*> Road::fillWithVehs(double fillingDegree) {
     }
     int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
     int generatedVehsCnt = 0;
-    std::vector<Cell*> cellsWithVehs;
     while (generatedVehsCnt < vehsToGenerateCnt) {
         for (std::vector<Cell*> lane : road) {
             for (Cell* roadCell : lane) {
                 if (roadCell->getVehicle() == nullptr) {
                     if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
                         roadCell->setVehicle(new Vehicle(0));
-                        cellsWithVehs.push_back(roadCell);
                         generatedVehsCnt++;
                         if (generatedVehsCnt >= vehsToGenerateCnt) {
-                            return cellsWithVehs;
+                            return;
                         }
                     }
                 }
             }
         }
     }
-    return cellsWithVehs;
 }
 
 void Road::createJSON() {
@@ -173,14 +170,23 @@ void Road::createJSON() {
     std::cout << oss.str();
 }
 
-void Road::addLights(TrafficLights* newLight)
-{
+void Road::addLights(TrafficLights* newLight, int distanceFromHead) {
     lights.push_back(newLight);
     for (int i = 0; i < height; i++)
-        road[i][newLight->getPosition()]->setLight(newLight);
+        road[i][distanceFromHead]->setLight(newLight);
 }
 
-std::vector<TrafficLights*> Road::getLights()
-{
+std::vector<TrafficLights*> Road::getLights() {
     return lights;
+}
+
+void Road::addObstacle(int distanceFromHead, int lane, int spotDistance) {
+    road[lane][distanceFromHead]->setVehicle(new Obstacle());
+    Cell* tempCell = road[lane][distanceFromHead];
+    for (int i = 1; i <= spotDistance; i++) {
+        tempCell = tempCell->getPreviousCell();
+        if (tempCell != nullptr) {
+            tempCell->setObstacleAhead(true);
+        }
+    }
 }

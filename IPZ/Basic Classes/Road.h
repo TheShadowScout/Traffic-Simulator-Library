@@ -9,6 +9,7 @@
 
 #include "Cell.h"
 #include "RoadCell.h"
+#include "Obstacle.h"
 #include "TrafficLights.h"
 
 using boost::property_tree::ptree;
@@ -43,8 +44,9 @@ public:
     void setName(std::string name);
     std::string toString();
     std::string filterName(std::string rawName);
-    std::vector<Cell*> fillWithVehs(double fillingDegree);
+    void fillWithVehs(double fillingDegree);
     void createJSON();
-    void addLights(TrafficLights* newLight);
+    void addLights(TrafficLights* newLight, int distanceFromHead);
     std::vector<TrafficLights*> getLights();
+    void addObstacle(int distanceFromHead, int lane, int spotDistance);
 };

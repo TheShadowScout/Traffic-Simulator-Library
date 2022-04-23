@@ -1,20 +1,20 @@
 #pragma once
+
 #include "TrafficLights.h"
 
-TrafficLights::TrafficLights(LightColor startState, int position, int redDuration, int greenDuration)
-{
+TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDuration) {
 	color = startState;
-	this->position = position;
 	redLightDuration = redDuration;
 	greenLightDuration = greenDuration;
-	switch (startState)
-	{
+	switch (startState) {
 	case LightColor::red:
 		timer = redDuration;
 		break;
 	case LightColor::green:
 		timer = greenDuration;
 		break;
+	default:
+		timer = 0;
 	}
 }
 
@@ -31,11 +31,6 @@ int TrafficLights::getRedDuration()
 LightColor TrafficLights::getColor()
 {
 	return color;
-}
-
-int TrafficLights::getPosition()
-{
-	return position;
 }
 
 int TrafficLights::getTimer()
@@ -66,11 +61,6 @@ void TrafficLights::changeState()
 void TrafficLights::setColor(LightColor newColor)
 {
 	color = newColor;
-}
-
-void TrafficLights::setPosition(int newPosition)
-{
-	position = newPosition;
 }
 
 void TrafficLights::setRedLightDuration(int duration)
