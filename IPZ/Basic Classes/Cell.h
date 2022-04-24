@@ -19,7 +19,7 @@ protected:
     CarHolder* carHolder;
     int maxSpeed;
     bool isObstacleAhead;
-    TrafficLights* light;
+    TrafficLights* trafficLight;
 
 public:
     Cell();
@@ -41,6 +41,6 @@ public:
     void setMaxSpeed(int maxSpeed);
     void setObstacleAhead(bool isObstacleAhead);
 	void createJSON();
-    void setLight(TrafficLights* newLight);
-    TrafficLights* getLight();
+    void setTrafficLight(TrafficLights* newLight);
+    TrafficLights* getTrafficLight();
 };

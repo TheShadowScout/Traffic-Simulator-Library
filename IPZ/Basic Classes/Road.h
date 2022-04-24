@@ -27,7 +27,7 @@ protected:
     int height;
     std::string name;
     std::vector<std::vector<Cell*>> road;
-    std::vector<TrafficLights*> lights;
+    std::vector<TrafficLights*> trafficLights;
 
 public:
     Road(std::string name, int length, int height, int maxSpeed);
@@ -46,7 +46,8 @@ public:
     std::string filterName(std::string rawName);
     void fillWithVehs(double fillingDegree);
     void createJSON();
-    void addLights(TrafficLights* newLight, int distanceFromHead);
-    std::vector<TrafficLights*> getLights();
-    void addObstacle(int distanceFromHead, int lane, int spotDistance);
+    void addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane);
+    void addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead);
+    std::vector<TrafficLights*> getTrafficLights();
+    void addObstacle(int distanceFromHead, int lane, int spotDistance = 0);
 };

@@ -74,13 +74,15 @@ void Simulation::initiateSimulation() {
 }
 
 void Simulation::transitionFunc() {
+	std::vector<Cell*> newCellsWithVehs;
+	simMap->updateMap(&newCellsWithVehs);
 	std::vector<MoveData> vehsMovesData;
 	for (Cell* vehCell : cellsWithVehs) {
 		vehsMovesData.push_back(evalVehMove(vehCell)); //wyznacz now¹ prêdkoœæ dla ka¿dego pojazdu
 		evalRandomEvent(vehCell , &vehsMovesData.back());
 	}
-	std::vector<Cell*> newCellsWithVehs = moveVehs(cellsWithVehs, vehsMovesData); //poryszenie pojazdów
-	simMap->updateMap(&newCellsWithVehs);
+	std::vector<Cell*> tempNewCellsWithVehs = moveVehs(cellsWithVehs, vehsMovesData); //poryszenie pojazdów
+	newCellsWithVehs.insert(newCellsWithVehs.end(), tempNewCellsWithVehs.begin(), tempNewCellsWithVehs.end());
 	cellsWithVehs = newCellsWithVehs;
 	simStats->updateStatistics(cellsWithVehs);
 	for (Observer* observer : observers) { //aktualizacja obserwatorów
@@ -116,7 +118,7 @@ SpeedData Simulation::evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sa
 											  //dzia³ania funkcji mo¿e byæ tylko obni¿ana
 	Cell* tempCell = startCell;
 	int tempCellMaxSpeed = NULL;
-	TrafficLights* vehCellLights = startCell->getLight();
+	TrafficLights* vehCellLights = startCell->getTrafficLight();
 	if (vehCellLights != nullptr && vehCellLights->getColor() != LightColor::green) 	{
 		return SpeedData{ 0, startCell };
 	}
@@ -142,7 +144,7 @@ SpeedData Simulation::evalNewVehSpeed(Cell* startCell, int curVehSpeed, bool* sa
 			tempCell = tempCell->getPreviousCell();
 			break;
 		}
-		if (tempCell->getLight() != nullptr && tempCell->getLight()->getColor() != LightColor::green) {
+		if (tempCell->getTrafficLight() != nullptr && tempCell->getTrafficLight()->getColor() != LightColor::green) {
 			newVehSpeed = i;
 			break;
 		}

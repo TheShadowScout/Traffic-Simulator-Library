@@ -5,7 +5,7 @@
 
 #include "Cell.h"
 
-class CrossingInput : public Cell
+class BasicCrossingInput : public Cell
 {
 protected:
     std::vector<Cell*> nextCells;
@@ -14,8 +14,8 @@ protected:
     int drawnLane;
 
 public:
-    CrossingInput();
-    CrossingInput(int maxSpeed);
+    BasicCrossingInput();
+    BasicCrossingInput(int maxSpeed);
     Cell* getNextCell();
     void setNextCell(Cell* nextCell);
     void setNextCell(Cell* nextCell, int weight);

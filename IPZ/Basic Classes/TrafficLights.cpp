@@ -18,57 +18,18 @@ TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDu
 	}
 }
 
-int TrafficLights::getGreenDuration()
-{
+int TrafficLights::getGreenDuration() {
 	return greenLightDuration;
 }
 
-int TrafficLights::getRedDuration()
-{
+int TrafficLights::getRedDuration() {
 	return redLightDuration;
 }
 
-LightColor TrafficLights::getColor()
-{
+LightColor TrafficLights::getColor() {
 	return color;
 }
 
-int TrafficLights::getTimer()
-{
+int TrafficLights::getTimer() {
 	return timer;
-}
-
-void TrafficLights::setTimer(int newTimer)
-{
-	timer = newTimer;
-}
-
-void TrafficLights::changeState()
-{
-	switch (getColor())
-	{
-	case LightColor::red:
-		setTimer(getGreenDuration());
-		setColor(LightColor::green);
-		break;
-	case LightColor::green:
-		setTimer(getRedDuration());
-		setColor(LightColor::red);
-		break;
-	}
-}
-
-void TrafficLights::setColor(LightColor newColor)
-{
-	color = newColor;
-}
-
-void TrafficLights::setRedLightDuration(int duration)
-{
-	redLightDuration = duration;
-}
-
-void TrafficLights::setGreenLightDuration(int duration)
-{
-	greenLightDuration = duration;
 }

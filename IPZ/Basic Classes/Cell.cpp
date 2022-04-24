@@ -2,9 +2,9 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), isObstacleAhead(false), light(nullptr) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), isObstacleAhead(false), trafficLight(nullptr) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), isObstacleAhead(false), light(nullptr) {
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), isObstacleAhead(false), trafficLight(nullptr) {
     if(maxSpeed > 6 || maxSpeed < 1)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
 }
@@ -78,12 +78,12 @@ void Cell::createJSON() {
     std::cout << oss.str();
 }
 
-void Cell::setLight(TrafficLights* newLight)
+void Cell::setTrafficLight(TrafficLights* newLight)
 {
-    light = newLight;
+    trafficLight = newLight;
 }
 
-TrafficLights* Cell::getLight()
+TrafficLights* Cell::getTrafficLight()
 {
-    return light;
+    return trafficLight;
 }

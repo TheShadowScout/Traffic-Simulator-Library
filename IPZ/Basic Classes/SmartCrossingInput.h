@@ -1,8 +1,8 @@
 #pragma once
 
-#include "CrossingInput.h"
+#include "BasicCrossingInput.h"
 
-class SmartCrossingInput : public CrossingInput
+class SmartCrossingInput : public BasicCrossingInput
 {
 protected:
     int maxSpeedReminder;

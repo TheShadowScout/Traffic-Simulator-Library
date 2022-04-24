@@ -2,17 +2,16 @@
 
 #include "Crossing.h"
 
-#include "SmartCrossingInput.h"
-
-class SmartCrossing : public Crossing {
+class BasicCrossing : public Crossing {
 protected:
-	std::vector<SmartCrossingInput*> inputN;
-	std::vector<SmartCrossingInput*> inputE;
-	std::vector<SmartCrossingInput*> inputS;
-	std::vector<SmartCrossingInput*> inputW;
+	std::vector<BasicCrossingInput*> inputN;
+	std::vector<BasicCrossingInput*> inputE;
+	std::vector<BasicCrossingInput*> inputS;
+	std::vector<BasicCrossingInput*> inputW;
+
 public:
-	SmartCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
-	~SmartCrossing();
+	BasicCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
+	~BasicCrossing();
 	void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight);
 	void linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex);
 	void linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell);

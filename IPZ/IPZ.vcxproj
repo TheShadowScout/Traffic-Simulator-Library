@@ -21,15 +21,18 @@
   <ItemGroup>
     <ClInclude Include="Basic Classes\Artifacts\Destructor.h" />
     <ClInclude Include="Basic Classes\Artifacts\Teleporter.h" />
+    <ClInclude Include="Basic Classes\BasicCrossing.h" />
+    <ClInclude Include="Basic Classes\BasicCrossingInput.h" />
     <ClInclude Include="Basic Classes\CarHolder.h" />
     <ClInclude Include="Basic Classes\Cell.h" />
     <ClInclude Include="Basic Classes\Crossing.h" />
-    <ClInclude Include="Basic Classes\CrossingInput.h" />
     <ClInclude Include="Basic Classes\DataSaving.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
     <ClInclude Include="Basic Classes\Map.h" />
     <ClInclude Include="Basic Classes\Observer.h" />
     <ClInclude Include="Basic Classes\Obstacle.h" />
+    <ClInclude Include="Basic Classes\RGTrafficLights.h" />
+    <ClInclude Include="Basic Classes\RGYTrafficLights.h" />
     <ClInclude Include="Basic Classes\Road.h" />
     <ClInclude Include="Basic Classes\RoadCell.h" />
     <ClInclude Include="Basic Classes\Simulation.h" />
@@ -38,22 +41,24 @@
     <ClInclude Include="Basic Classes\Statistics.h" />
     <ClInclude Include="Basic Classes\TrafficLights.h" />
     <ClInclude Include="Basic Classes\Vehicle.h" />
-    <ClInclude Include="Basic Classes\YellowTrafficLights.h" />
     <ClInclude Include="Functionality\DensityPlotGenerator.h" />
     <ClInclude Include="Functionality\StatisticsGenerator.h" />
     <ClInclude Include="Gui\SimulationWindow.h" />
     <ClInclude Include="Libraries\gnuplot-iostream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basic Classes\BasicCrossing.cpp" />
+    <ClCompile Include="Basic Classes\BasicCrossingInput.cpp" />
     <ClCompile Include="Basic Classes\CarHolder.cpp" />
     <ClCompile Include="Basic Classes\Cell.cpp" />
     <ClCompile Include="Basic Classes\Crossing.cpp" />
-    <ClCompile Include="Basic Classes\CrossingInput.cpp" />
     <ClCompile Include="Basic Classes\DataSaving.cpp" />
     <ClCompile Include="Basic Classes\Generator.cpp" />
     <ClCompile Include="Basic Classes\Map.cpp" />
     <ClCompile Include="Basic Classes\Observer.cpp" />
     <ClCompile Include="Basic Classes\Obstacle.cpp" />
+    <ClCompile Include="Basic Classes\RGTrafficLights.cpp" />
+    <ClCompile Include="Basic Classes\RGYTrafficLights.cpp" />
     <ClCompile Include="Basic Classes\Road.cpp" />
     <ClCompile Include="Basic Classes\RoadCell.cpp" />
     <ClCompile Include="Basic Classes\Simulation.cpp" />
@@ -62,7 +67,6 @@
     <ClCompile Include="Basic Classes\Statistics.cpp" />
     <ClCompile Include="Basic Classes\TrafficLights.cpp" />
     <ClCompile Include="Basic Classes\Vehicle.cpp" />
-    <ClCompile Include="Basic Classes\YellowTrafficLights.cpp" />
     <ClCompile Include="Functionality\DensityPlotGenerator.cpp" />
     <ClCompile Include="Functionality\StatisticsGenerator.cpp" />
     <ClCompile Include="Gui\SimulationWindow.cpp" />

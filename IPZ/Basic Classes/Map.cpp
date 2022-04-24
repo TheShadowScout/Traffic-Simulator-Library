@@ -132,27 +132,15 @@ void Map::updateMap(std::vector<Cell*>* cellsWithVehs) {
 	}
 	for (Crossing* crossing : crossings) {
 		crossing->updateCrossing();
-		std::vector<TrafficLights*> crossingLights = crossing->getLights();
-		for (unsigned int j = 0; j < crossingLights.size(); j++) {
-			int tempTimer = crossingLights[j]->getTimer();
-			if (tempTimer > 0) {
-				crossingLights[j]->setTimer(tempTimer - 1);
-			}
-			else {
-				crossingLights[j]->changeState();
-			}
+		std::vector<TrafficLights*> crossingLights = crossing->getTrafficLights();
+		for (TrafficLights* crossingLight : crossingLights) {
+			crossingLight->updateTrafficLights();
 		}
 	}
 	for (Road* road : roads) {
-		std::vector<TrafficLights*> roadLights = road->getLights();
-		for (unsigned int j = 0; j < roadLights.size(); j++) {
-			int tempTimer = roadLights[j]->getTimer();
-			if (tempTimer > 0) {
-				roadLights[j]->setTimer(tempTimer - 1);
-			}
-			else {
-				roadLights[j]->changeState();
-			}
+		std::vector<TrafficLights*> roadLights = road->getTrafficLights();
+		for (TrafficLights* roadLight : roadLights) {
+			roadLight->updateTrafficLights();
 		}
 	}
 }

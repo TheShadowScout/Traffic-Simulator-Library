@@ -2,7 +2,7 @@
 
 #include "SmartCrossingInput.h"
 
-SmartCrossingInput::SmartCrossingInput(int maxSpeed) : CrossingInput(maxSpeed), maxSpeedReminder(maxSpeed), drawnLaneReminder(0) { ; }
+SmartCrossingInput::SmartCrossingInput(int maxSpeed) : BasicCrossingInput(maxSpeed), maxSpeedReminder(maxSpeed), drawnLaneReminder(0) { ; }
 
 void SmartCrossingInput::setNextCell(Cell* nextCell) {
     weightsSum += 1;
@@ -66,13 +66,3 @@ void SmartCrossingInput::checkCrossingEntryAvailability(int laneIndex) {
         maxSpeed = maxSpeedReminder;
     }
 }
-
-/*
-For(int i=0;i < D³ugoœæ_linii-Liczba_pojazdów_na_skrzy¿owaniu-1;i++)
-{
-    Komórka = Mój_output.next();
-    Je¿eli(Komórka.JestPojazd() == Prawda)
-        Licznik_miejsc++;
-    Mój_output = Komórka;
-}
-*/

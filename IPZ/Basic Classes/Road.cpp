@@ -170,14 +170,19 @@ void Road::createJSON() {
     std::cout << oss.str();
 }
 
-void Road::addLights(TrafficLights* newLight, int distanceFromHead) {
-    lights.push_back(newLight);
-    for (int i = 0; i < height; i++)
-        road[i][distanceFromHead]->setLight(newLight);
+void Road::addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane) {
+    trafficLights.push_back(newLight);
+    road[lane][distanceFromHead]->setTrafficLight(newLight);
 }
 
-std::vector<TrafficLights*> Road::getLights() {
-    return lights;
+void Road::addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead) {
+    trafficLights.push_back(newLight);
+    for (int i = 0; i < height; i++)
+        road[i][distanceFromHead]->setTrafficLight(newLight);
+}
+
+std::vector<TrafficLights*> Road::getTrafficLights() {
+    return trafficLights;
 }
 
 void Road::addObstacle(int distanceFromHead, int lane, int spotDistance) {
