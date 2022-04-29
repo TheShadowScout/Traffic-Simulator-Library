@@ -20,6 +20,7 @@ int main() {
 #include "Basic Classes/Obstacle.h"
 #include "Basic Classes/RGTrafficLights.h"
 #include "Basic Classes/SmartCrossing.h"
+#include "Basic Classes/BasicCrossing.h"
 
 ///*
 int main() {
@@ -28,7 +29,7 @@ int main() {
 	Map* map = new Map("test");
 
 	Road* road1 = new Road(1, 1, 1);
-	Road* road2 = new Road(10, 1, 1);
+	Road* road2 = new Road(1, 1, 1);
 
 	//road2->addObstacle(9, 0, 0);
 
@@ -36,21 +37,23 @@ int main() {
 	map->addRoad(road2);
 
 	Generator* generator1 = new Generator(1, 1.0);
+	Generator* generator2 = new Generator(1, 1.0);
 
 	map->addGenerator(generator1);
+	map->addGenerator(generator2);
 
 	linkCells(generator1, road1->head[0]);
+	linkCells(generator2, road2->head[0]);
 
-	SmartCrossing* crossing1 = new SmartCrossing(11, 11, 1);
-	crossing1->addNewCrossingLane('S', 5, 'N', 5, 1);
-	//crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
-	//crossing1->addNewCrossingLane('S', 5, 'W', 5, 1);
+	BasicCrossing* crossing1 = new BasicCrossing(11, 11, 1);
+	crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
+	crossing1->addNewCrossingLane('N', 5, 'W', 5, 1);
 
 	crossing1->linkRoadLaneToCrossing(road1->tail[0], 'S', 5);
-	crossing1->linkRoadLaneToCrossing('N', 5, road2->head[0]);
+	crossing1->linkRoadLaneToCrossing(road2->tail[0], 'N', 5);
 
-	RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
-	crossing1->addTrafficLights(lights, 'S', 5);
+	//RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
+	//crossing1->addTrafficLights(lights, 'S', 5);
 
 	map->addCrossing(crossing1);
 

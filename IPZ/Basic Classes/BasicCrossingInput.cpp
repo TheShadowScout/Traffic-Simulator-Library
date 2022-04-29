@@ -29,12 +29,12 @@ void BasicCrossingInput::drawLane() {
     for (unsigned int i = 0; i < weights.size(); i++) {
         if (crossingLaneRandomizer < weights[i]) {
             drawnLane = i;
+            break;
         }
     }
 }
 
 Cell* BasicCrossingInput::getNextCell() {
-
     return nextCells[drawnLane];
 }
 

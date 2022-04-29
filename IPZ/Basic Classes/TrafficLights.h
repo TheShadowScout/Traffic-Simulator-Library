@@ -10,7 +10,7 @@ protected:
 	int timer;
 
 public:
-	TrafficLights(LightColor startState, int redDuration, int greenDuration);
+	TrafficLights(LightColor startState, int redDuration, int greenDuration, int timerOffset = 0);
 	int getGreenDuration();
 	int getRedDuration();
 	LightColor getColor();

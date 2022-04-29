@@ -43,7 +43,6 @@ public:
     void setMaxSpeed(int maxSpeed);
     void setName(std::string name);
     std::string toString();
-    std::string filterName(std::string rawName);
     void fillWithVehs(double fillingDegree);
     void createJSON();
     void addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane);

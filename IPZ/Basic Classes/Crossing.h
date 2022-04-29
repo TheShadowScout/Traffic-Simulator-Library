@@ -11,6 +11,7 @@
 
 class Crossing {
 protected:
+	std::string name;
 	int crossingHeight;
 	int crossingLength;
 	int crossingMaxSpeed;

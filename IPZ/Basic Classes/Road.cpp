@@ -2,14 +2,13 @@
 
 #include "Road.h"
 
-Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+Road::Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
     if(length < 1)
         throw std::invalid_argument("Length must be bigger than 1");
     if(height < 1)
         throw std::invalid_argument("Height must be bigger than 1");
     if(maxSpeed < 1 || maxSpeed > 6)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
-    this->name = filterName(name);
     ID = IDcnt++;
     createRoad();
 }
@@ -116,16 +115,6 @@ std::string Road::toString() {
         roadStr += "\n";
     }
     return roadStr;
-}
-
-std::string Road::filterName(std::string rawName) {
-    std::string tempName = "";
-    for (char character : rawName) {
-        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-            tempName += character;
-        }
-    }
-    return tempName;
 }
 
 void Road::fillWithVehs(double fillingDegree) {

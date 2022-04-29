@@ -1,18 +1,18 @@
 #include "RGYTrafficLights.h"
 
-RGYTrafficLights::RGYTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration) : TrafficLights(startState, redDuration, greenDuration), redYellowLightDuration(redYellowDuration), yellowLightDuration(yellowDuration) {
+RGYTrafficLights::RGYTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset) : TrafficLights(startState, redDuration, greenDuration, timerOffset), redYellowLightDuration(redYellowDuration), yellowLightDuration(yellowDuration) {
 	switch (startState) {
 	case LightColor::red:
-		timer = redDuration;
+		timer = redDuration - timerOffset;
 		break;
 	case LightColor::green:
-		timer = greenDuration;
+		timer = greenDuration - timerOffset;
 		break;
 	case LightColor::redyellow:
-		timer = redYellowDuration;
+		timer = redYellowDuration - timerOffset;
 		break;
 	case LightColor::yellow:
-		timer = yellowDuration;
+		timer = yellowDuration - timerOffset;
 		break;
 	default:
 		timer = 0;

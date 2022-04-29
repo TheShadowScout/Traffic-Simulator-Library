@@ -2,16 +2,16 @@
 
 #include "TrafficLights.h"
 
-TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDuration) {
+TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDuration, int timerOffset) {
 	color = startState;
 	redLightDuration = redDuration;
 	greenLightDuration = greenDuration;
 	switch (startState) {
 	case LightColor::red:
-		timer = redDuration;
+		timer = redDuration - timerOffset;
 		break;
 	case LightColor::green:
-		timer = greenDuration;
+		timer = greenDuration - timerOffset;
 		break;
 	default:
 		timer = 0;

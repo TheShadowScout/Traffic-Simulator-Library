@@ -22,6 +22,5 @@ public:
 	Generator(int maxSpeed, double createVehProb);
 	~Generator();
 	std::string toString();
-	std::string filterName(std::string rawName);
 	bool createVeh();
 };

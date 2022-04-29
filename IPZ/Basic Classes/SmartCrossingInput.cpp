@@ -32,6 +32,7 @@ void SmartCrossingInput::drawLane() {
             checkCrossingEntryAvailability(i);
             drawnLane = i;
             drawnLaneReminder = i;
+            break;
         }
     }
 }
@@ -40,7 +41,7 @@ void SmartCrossingInput::checkCrossingEntryAvailability(int laneIndex) {
     int carsInLaneCnt = 0;
     int laneLength = 0;
     Cell* tempCell = nextCells[laneIndex];
-    while (tempCell != destinationCells[laneIndex]) {
+    while (tempCell != destinationCells[laneIndex]->getNextCell()) {
         if (tempCell->getVehicle() != nullptr) {
             carsInLaneCnt++;
         }
@@ -48,18 +49,17 @@ void SmartCrossingInput::checkCrossingEntryAvailability(int laneIndex) {
         laneLength++;
     }
     int freeCells = 0;
-    tempCell = destinationCells[laneIndex]->getNextCell();
+    tempCell = destinationCells[laneIndex];
     for (int j = 1; j <= laneLength; j++) {
+        tempCell = tempCell->getNextCell();
+        if (tempCell == nullptr) {
+            break;
+        }
         if (tempCell->getVehicle() == nullptr) {
             freeCells++;
         }
-        Cell* tempCellNextCell = tempCell->getNextCell();
-        if (tempCellNextCell == nullptr) {
-            break;
-        }
-        tempCell = tempCellNextCell;
     }
-    if (carsInLaneCnt + 1 > freeCells) {
+    if (carsInLaneCnt + 1 > freeCells && tempCell != nullptr) {
         maxSpeed = 0;
     }
     else {

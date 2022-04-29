@@ -2,7 +2,7 @@
 
 #include "RGTrafficLights.h"
 
-RGTrafficLights::RGTrafficLights(LightColor startState, int redDuration, int greenDuration) : TrafficLights(startState, redDuration, greenDuration) { ; }
+RGTrafficLights::RGTrafficLights(LightColor startState, int redDuration, int greenDuration, int timerOffset) : TrafficLights(startState, redDuration, greenDuration, timerOffset) { ; }
 
 void RGTrafficLights::changeState() {
 	switch (color) 	{

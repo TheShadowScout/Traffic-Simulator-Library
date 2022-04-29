@@ -2,7 +2,7 @@
 
 #include "BasicCrossing.h"
 
-BasicCrossing::BasicCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(crossingHeight, crossingMaxSpeed, crossingLength) {
+BasicCrossing::BasicCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(crossingHeight, crossingLength, crossingMaxSpeed) {
     for(int i = 0; i < crossingLength; i++) {
         inputN.push_back(nullptr);
         inputS.push_back(nullptr);

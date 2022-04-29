@@ -2,17 +2,20 @@
 
 #include "Generator.h"
 
-Generator::Generator(std::string name, int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
+Generator::Generator(std::string name, int maxSpeed, double createVehProb) : name(name), RoadCell(maxSpeed), createVehProb(createVehProb) {
 	if(maxSpeed < 1 || maxSpeed > 6)
 		throw std::invalid_argument("Max speed must be in range between 1 and 6");
 	if(createVehProb < 0 || createVehProb > 1)
 		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
 	ID = IDcnt++;
-	this->name = filterName(name);
 	this->setCarHolder(new CarHolder());
 }
 
 Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
+	if (maxSpeed < 1 || maxSpeed > 6)
+		throw std::invalid_argument("Max speed must be in range between 1 and 6");
+	if (createVehProb < 0 || createVehProb > 1)
+		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
 	ID = IDcnt++;
 	name = std::to_string(ID);
 	this->setCarHolder(new CarHolder());
@@ -27,16 +30,6 @@ std::string Generator::toString() {
 		return ".\n";
 	}
 	return std::to_string(carHolder->getVehicle()->getSpeed()) + "\n";
-}
-
-std::string Generator::filterName(std::string rawName) {
-	std::string tempName = "";
-	for (char character : rawName) {
-		if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-			tempName += character;
-		}
-	}
-	return tempName;
 }
 
 bool Generator::createVeh() {
