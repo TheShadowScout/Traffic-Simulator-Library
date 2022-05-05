@@ -2,15 +2,12 @@
 
 #include "SmartCrossing.h"
 
-SmartCrossing::SmartCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(crossingHeight, crossingLength, crossingMaxSpeed) { 
-    for (int i = 0; i < crossingLength; i++) {
-        inputN.push_back(nullptr);
-        inputS.push_back(nullptr);
-    }
-    for (int i = 0; i < crossingHeight; i++) {
-        inputW.push_back(nullptr);
-        inputE.push_back(nullptr);
-    }
+SmartCrossing::SmartCrossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(name, crossingHeight, crossingLength, crossingMaxSpeed) { 
+    create();
+}
+
+SmartCrossing::SmartCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(crossingHeight, crossingLength, crossingMaxSpeed) {
+    create();
 }
 
 SmartCrossing::~SmartCrossing() {
@@ -21,6 +18,17 @@ SmartCrossing::~SmartCrossing() {
     for (int i = 0; i < crossingHeight; i++) {
         delete inputE[i];
         delete inputW[i];
+    }
+}
+
+void SmartCrossing::create() {
+    for (int i = 0; i < crossingLength; i++) {
+        inputN.push_back(nullptr);
+        inputS.push_back(nullptr);
+    }
+    for (int i = 0; i < crossingHeight; i++) {
+        inputW.push_back(nullptr);
+        inputE.push_back(nullptr);
     }
 }
 
@@ -193,6 +201,88 @@ void SmartCrossing::addNewCrossingLane(char inputSide, int inputIndex, char outp
     }
 }
 
+void SmartCrossing::addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex) {
+    switch (inputSide) {
+    case 'N':
+        if (inputN[inputIndex] != nullptr)
+        {
+            inputN[inputIndex]->setTrafficLight(newLight);
+            trafficLights.push_back(newLight);
+        }
+        break;
+    case 'E':
+        if (inputE[inputIndex] != nullptr)
+        {
+            inputE[inputIndex]->setTrafficLight(newLight);
+            trafficLights.push_back(newLight);
+        }
+        break;
+    case 'S':
+        if (inputS[inputIndex] != nullptr)
+        {
+            inputS[inputIndex]->setTrafficLight(newLight);
+            trafficLights.push_back(newLight);
+        }
+        break;
+    case 'W':
+        if (inputW[inputIndex] != nullptr)
+        {
+            inputW[inputIndex]->setTrafficLight(newLight);
+            trafficLights.push_back(newLight);
+        }
+        break;
+    }
+}
+
+void SmartCrossing::linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex) {
+    switch (inputSide) {
+    case 'N':
+        inputN[inputIndex]->setPreviousCell(previousCell);
+        previousCell->setNextCell(inputN[inputIndex]);
+        break;
+    case 'E':
+        inputE[inputIndex]->setPreviousCell(previousCell);
+        previousCell->setNextCell(inputE[inputIndex]);
+        break;
+    case 'S':
+        inputS[inputIndex]->setPreviousCell(previousCell);
+        previousCell->setNextCell(inputS[inputIndex]);
+        break;
+    case 'W':
+        inputW[inputIndex]->setPreviousCell(previousCell);
+        previousCell->setNextCell(inputW[inputIndex]);
+        break;
+    }
+}
+
+void SmartCrossing::linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell) {
+    Crossing::linkRoadLaneToCrossing(outputSide, outputIndex,  nextCell);
+}
+
+void SmartCrossing::updateCrossing()
+{
+    for (SmartCrossingInput* input : inputN) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+    for (SmartCrossingInput* input : inputE) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+    for (SmartCrossingInput* input : inputW) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+    for (SmartCrossingInput* input : inputS) {
+        if (input != nullptr) {
+            input->drawLane();
+        }
+    }
+}
+
 void SmartCrossing::checkParametersAreCorrect(char inputSide, int inputIndex, char outputSide, int outputIndex) {
     if (!(inputSide == 'N' ||
         inputSide == 'E' ||
@@ -266,87 +356,5 @@ void SmartCrossing::checkParametersAreCorrect(char inputSide, int inputIndex, ch
     }
     if (outputFlag == true) {
         throw std::invalid_argument("on the outputSide in outputIndex cell is already crossing input");
-    }
-}
-
-void SmartCrossing::linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex) {
-    switch (inputSide) {
-    case 'N':
-        inputN[inputIndex]->setPreviousCell(previousCell);
-        previousCell->setNextCell(inputN[inputIndex]);
-        break;
-    case 'E':
-        inputE[inputIndex]->setPreviousCell(previousCell);
-        previousCell->setNextCell(inputE[inputIndex]);
-        break;
-    case 'S':
-        inputS[inputIndex]->setPreviousCell(previousCell);
-        previousCell->setNextCell(inputS[inputIndex]);
-        break;
-    case 'W':
-        inputW[inputIndex]->setPreviousCell(previousCell);
-        previousCell->setNextCell(inputW[inputIndex]);
-        break;
-    }
-}
-
-void SmartCrossing::linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell) {
-    Crossing::linkRoadLaneToCrossing(outputSide, outputIndex,  nextCell);
-}
-
-void SmartCrossing::updateCrossing()
-{
-    for (SmartCrossingInput* input : inputN) {
-        if (input != nullptr) {
-            input->drawLane();
-        }
-    }
-    for (SmartCrossingInput* input : inputE) {
-        if (input != nullptr) {
-            input->drawLane();
-        }
-    }
-    for (SmartCrossingInput* input : inputW) {
-        if (input != nullptr) {
-            input->drawLane();
-        }
-    }
-    for (SmartCrossingInput* input : inputS) {
-        if (input != nullptr) {
-            input->drawLane();
-        }
-    }
-}
-
-void SmartCrossing::addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex) {
-    switch (inputSide) {
-    case 'N':
-        if (inputN[inputIndex] != nullptr)
-        {
-            inputN[inputIndex]->setTrafficLight(newLight);
-            trafficLights.push_back(newLight);
-        }
-        break;
-    case 'E':
-        if (inputE[inputIndex] != nullptr)
-        {
-            inputE[inputIndex]->setTrafficLight(newLight);
-            trafficLights.push_back(newLight);
-        }
-        break;
-    case 'S':
-        if (inputS[inputIndex] != nullptr)
-        {
-            inputS[inputIndex]->setTrafficLight(newLight);
-            trafficLights.push_back(newLight);
-        }
-        break;
-    case 'W':
-        if (inputW[inputIndex] != nullptr)
-        {
-            inputW[inputIndex]->setTrafficLight(newLight);
-            trafficLights.push_back(newLight);
-        }
-        break;
     }
 }

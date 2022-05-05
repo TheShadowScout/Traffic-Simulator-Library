@@ -2,9 +2,8 @@
 
 #include "Observer.h"
 
-Observer::Observer(std::string name, Cell* observationOriginCell) : observationOriginCell(observationOriginCell), lastObservedVeh(nullptr), observedPassingVehsCnt(0) {
+Observer::Observer(std::string name, Cell* observationOriginCell) : name(name), observationOriginCell(observationOriginCell), lastObservedVeh(nullptr), observedPassingVehsCnt(0) {
 	ID = IDcnt++;
-	this->name = filterName(name);
 	distToSearch = observationOriginCell->getMaxSpeed();
 }
 
@@ -20,25 +19,6 @@ std::string Observer::getName() {
 
 int Observer::getObservedPassingVehsCnt() {
 	return observedPassingVehsCnt;
-}
-
-std::string Observer::toString() {
-	std::string tempStr = "";
-	tempStr += name;
-	tempStr += ";";
-	tempStr += std::to_string(observedPassingVehsCnt);
-	tempStr += "\n";
-	return tempStr;
-}
-
-std::string Observer::filterName(std::string rawName) {
-	std::string tempName = "";
-	for (char character : rawName) {
-		if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-			tempName += character;
-		}
-	}
-	return tempName;
 }
 
 void Observer::checkVehPassing() {
@@ -64,4 +44,13 @@ void Observer::checkVehPassing() {
 		observedPassingVehsCnt++;
 	}
 	lastObservedVeh = nullptr;
+}
+
+std::string Observer::toString() {
+	std::string tempStr = "";
+	tempStr += name;
+	tempStr += ";";
+	tempStr += std::to_string(observedPassingVehsCnt);
+	tempStr += "\n";
+	return tempStr;
 }

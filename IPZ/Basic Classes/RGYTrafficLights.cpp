@@ -1,7 +1,17 @@
+#pragma once
+
 #include "RGYTrafficLights.h"
 
-RGYTrafficLights::RGYTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset) : TrafficLights(startState, redDuration, greenDuration, timerOffset), redYellowLightDuration(redYellowDuration), yellowLightDuration(yellowDuration) {
-	switch (startState) {
+RGYTrafficLights::RGYTrafficLights(std::string name, LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset) : TrafficLights(name, startColor, redDuration, greenDuration, timerOffset), redYellowDuration(redYellowDuration), yellowDuration(yellowDuration) {
+	create(timerOffset);
+}
+
+RGYTrafficLights::RGYTrafficLights(LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset) : TrafficLights(startColor, redDuration, greenDuration, timerOffset), redYellowDuration(redYellowDuration), yellowDuration(yellowDuration) {
+	create(timerOffset);
+}
+
+void RGYTrafficLights::create(int timerOffset) {
+	switch (color) {
 	case LightColor::red:
 		timer = redDuration - timerOffset;
 		break;
@@ -17,33 +27,32 @@ RGYTrafficLights::RGYTrafficLights(LightColor startState, int position, int redD
 	default:
 		timer = 0;
 	}
-
 }
 
 int RGYTrafficLights::getRedYellowDuration() {
-	return redYellowLightDuration;
+	return redYellowDuration;
 }
 
 int RGYTrafficLights::getYellowDuration() {
-	return yellowLightDuration;
+	return yellowDuration;
 }
 
 void RGYTrafficLights::changeState() {
 	switch (color) {
 	case LightColor::red:
-		timer = redLightDuration;
+		timer = redDuration;
 		color = LightColor::redyellow;
 		break;
 	case LightColor::redyellow:
-		timer = greenLightDuration;
+		timer = greenDuration;
 		color = LightColor::green;
 		break;
 	case LightColor::green:
-		timer = yellowLightDuration;
+		timer = yellowDuration;
 		color = LightColor::yellow;
 		break;
 	case LightColor::yellow:
-		timer = redLightDuration;
+		timer = redDuration;
 		color = LightColor::red;
 		break;
 	}

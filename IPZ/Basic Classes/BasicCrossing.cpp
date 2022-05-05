@@ -2,27 +2,36 @@
 
 #include "BasicCrossing.h"
 
+BasicCrossing::BasicCrossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(name, crossingHeight, crossingLength, crossingMaxSpeed) {
+    create();
+}
+
 BasicCrossing::BasicCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed) : Crossing(crossingHeight, crossingLength, crossingMaxSpeed) {
-    for(int i = 0; i < crossingLength; i++) {
+    create();
+}
+
+BasicCrossing::~BasicCrossing() {
+    for (int i = 0; i < crossingLength; i++) {
+        delete inputN[i];
+        delete inputS[i];
+    }
+    for (int i = 0; i < crossingHeight; i++) {
+        delete inputE[i];
+        delete inputW[i];
+    }
+}
+
+void BasicCrossing::create() {
+    for (int i = 0; i < crossingLength; i++) {
         inputN.push_back(nullptr);
         inputS.push_back(nullptr);
     }
-    for(int i = 0; i < crossingHeight; i++) {
+    for (int i = 0; i < crossingHeight; i++) {
         inputW.push_back(nullptr);
         inputE.push_back(nullptr);
     }
 }
 
-BasicCrossing::~BasicCrossing() {
-    for(int i = 0; i < crossingLength; i++) {
-        delete inputN[i];
-        delete inputS[i];
-    }
-    for(int i = 0; i < crossingHeight; i++) {
-        delete inputE[i];
-        delete inputW[i];
-    }
-}
 
 void BasicCrossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
     try {

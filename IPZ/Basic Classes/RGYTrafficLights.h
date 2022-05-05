@@ -3,10 +3,15 @@
 #include "TrafficLights.h"
 
 class RGYTrafficLights : public TrafficLights {
-	int redYellowLightDuration;
-	int yellowLightDuration;
+protected:
+	int redYellowDuration;
+	int yellowDuration;
+
+	void create(int timerOffset);
+
 public:
-	RGYTrafficLights(LightColor startState, int position, int redDuration, int greenDuration, int redYellow = 1, int yellow = 1, int timerOffset = 0);
+	RGYTrafficLights(std::string name, LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration = 1, int yellowDuration = 1, int timerOffset = 0);
+	RGYTrafficLights(LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration = 1, int yellowDuration = 1, int timerOffset = 0);
 	int getRedYellowDuration();
 	int getYellowDuration();
 	void changeState();

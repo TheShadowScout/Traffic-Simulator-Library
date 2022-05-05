@@ -3,16 +3,19 @@
 #include "Vehicle.h"
 
 Vehicle::Vehicle(std::string name, int speed) : name(name), speed(speed), isObstacle(false) {
-	if(speed < 0 || speed > 6)
-		throw std::invalid_argument("Speed must be in range between 0 and 6");
+	create();
 	ID = IDcnt++;
 }
 
 Vehicle::Vehicle(int speed) : speed(speed), isObstacle(false) {
-	if(speed < 0 || speed > 6)
-		throw std::invalid_argument("Speed must be in range between 0 and 6");
+	create();
 	ID = IDcnt++;
 	name = std::to_string(ID);
+}
+
+void Vehicle::create() {
+	if (speed < 0 || speed > 6)
+		throw std::invalid_argument("Speed must be in range between 0 and 6");
 }
 
 std::string Vehicle::getName() {
@@ -27,12 +30,12 @@ int Vehicle::getSpeed() {
 	return speed;
 }
 
-bool Vehicle::getIsObstacle() {
-	return isObstacle;
-}
-
 void Vehicle::setSpeed(int newSpeed) {
 	this->speed = newSpeed;
+}
+
+bool Vehicle::getIsObstacle() {
+	return isObstacle;
 }
 
 void Vehicle::createJSON() {

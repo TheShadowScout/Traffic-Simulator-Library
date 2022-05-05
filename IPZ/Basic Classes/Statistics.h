@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <ctime>
 #include <vector>
 
@@ -20,6 +19,6 @@ public:
 	Statistics(double simRandEventProb, int simMapPassableCellsCnt);
 	double getDensity();
 	std::string getSimInitiationTime();
-	std::string toString();
 	void updateStatistics(std::vector<Cell*> cellsWithVehs);
+	std::string toString();
 };

@@ -12,6 +12,10 @@ BasicCrossingInput::BasicCrossingInput(int maxSpeed) : Cell(maxSpeed), weightsSu
     this->setCarHolder(new CarHolder());
 }
 
+Cell* BasicCrossingInput::getNextCell() {
+    return nextCells[drawnLane];
+}
+
 void BasicCrossingInput::setNextCell(Cell* nextCell) {
     weightsSum += 1;
     weights.push_back(weightsSum);
@@ -33,10 +37,3 @@ void BasicCrossingInput::drawLane() {
         }
     }
 }
-
-Cell* BasicCrossingInput::getNextCell() {
-    return nextCells[drawnLane];
-}
-
-
-

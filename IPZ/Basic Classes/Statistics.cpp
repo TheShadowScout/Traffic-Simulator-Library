@@ -23,6 +23,14 @@ std::string Statistics::getSimInitiationTime() {
 	return simInitiationTime;
 }
 
+void Statistics::updateStatistics(std::vector<Cell*> cellsWithVehs) {
+	vehsCntSum += cellsWithVehs.size();
+	for (Cell* vehCell : cellsWithVehs) {
+		vehsSpeedsSum += vehCell->getVehicle()->getSpeed();
+	}
+	iterationCnt++;
+}
+
 std::string Statistics::toString() {
 	std::string tempStr = "";
 	tempStr += "time;date;randomEventProbability;meanMapFillingDegree;meanVehiclesSpeed\n";
@@ -35,12 +43,4 @@ std::string Statistics::toString() {
 	tempStr += std::to_string(1.0 * vehsSpeedsSum / vehsCntSum);
 	tempStr += "\n";
 	return tempStr;
-}
-
-void Statistics::updateStatistics(std::vector<Cell*> cellsWithVehs) {
-	vehsCntSum += cellsWithVehs.size();
-	for (Cell* vehCell : cellsWithVehs) {
-		vehsSpeedsSum += vehCell->getVehicle()->getSpeed();
-	}
-	iterationCnt++;
 }
