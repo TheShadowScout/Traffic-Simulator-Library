@@ -26,10 +26,11 @@ protected:
     std::string name;
     std::vector<std::vector<Cell*>> road;
     std::vector<TrafficLights*> lights;
+    char direction;
 
 public:
-    Road(std::string name, int length, int height, int maxSpeed);
-    Road(int length, int height, int maxSpeed);
+    Road(std::string name, int length, int height, int maxSpeed, char direction);
+    Road(int length, int height, int maxSpeed, char direction);
     ~Road();
     void createRoad();
     int getMaxSpeed();
@@ -40,6 +41,8 @@ public:
     std::vector<std::vector<Cell*>> getRoad();
     void setMaxSpeed(int maxSpeed);
     void setName(std::string name);
+    void setDirection(char direction);
+    char getDirection();
     std::string toString();
     std::string filterName(std::string rawName);
     void createJSON();

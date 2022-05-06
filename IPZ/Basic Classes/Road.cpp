@@ -2,16 +2,38 @@
 
 #include "Road.h"
 
-Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+Road::Road(std::string name, int length, int height, int maxSpeed, char direction) : length(length), height(height), maxSpeed(maxSpeed) {
     this->name = filterName(name);
     ID = IDcnt++;
+    switch (direction)
+    {
+    case 'E':
+    case 'W':
+    case 'N':
+    case 'S':
+        this->direction = direction;
+        break;
+    default:
+        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
+    }
     createRoad();
 }
 
-Road::Road(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+Road::Road(int length, int height, int maxSpeed, char direction) : length(length), height(height), maxSpeed(maxSpeed){
     ID = IDcnt++;
     name = std::to_string(ID);
     createRoad();
+    switch (direction)
+    {
+    case 'E':
+    case 'W':
+    case 'N':
+    case 'S':
+        this->direction = direction;
+        break;
+    default:
+        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
+    }
 }
 
 Road::~Road() {
@@ -79,6 +101,26 @@ void Road::setMaxSpeed(int maxSpeed) {
 
 void Road::setName(std::string name) {
     this->name = name;
+}
+
+void Road::setDirection(char direction)
+{
+    switch (direction)
+    {
+    case 'E':
+    case 'W':
+    case 'N':
+    case 'S':
+        this->direction = direction;
+        break;
+    default:
+        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
+    }
+}
+
+char Road::getDirection()
+{
+    return this->direction;
 }
 
 std::string Road::toString() {

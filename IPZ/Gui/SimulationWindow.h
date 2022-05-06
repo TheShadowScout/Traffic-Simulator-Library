@@ -15,8 +15,20 @@ class SimulationWindow
         Button(std::string txt, std::string fontFile, int size, float whichButton);
     };
 
+    struct FrequencyButton
+    {
+        sf::Text buttonText;
+        sf::FloatRect bounds;
+        sf::Font font;
+        sf::RectangleShape background;
+
+        FrequencyButton(std::string txt, std::string fontFile, int size, float whichButton, bool isLeft);
+    };
+
+    void setLights(sf::RectangleShape& shape, LightColor lightColor);
+
 public:
-    void createSimulationWindow(Simulation s);
+    void createSimulationWindow(Map* map, double randEventProb);
 };
 
 

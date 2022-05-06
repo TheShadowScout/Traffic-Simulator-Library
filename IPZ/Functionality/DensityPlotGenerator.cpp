@@ -23,7 +23,7 @@ int GenerateDensityPlot() {
 			double data = 0;
 			for (int sim = 0; sim < 50; sim++)
 			{
-				Road* road = new Road(1000, 1, speed);
+				Road* road = new Road(1000, 1, speed, 'E');
 				linkCells(road->tail[0], road->head[0]);
 
 				Map* map = new Map("test");
