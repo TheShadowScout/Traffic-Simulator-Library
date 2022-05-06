@@ -13,57 +13,64 @@ Cell::~Cell() {
     delete carHolder;
 }
 
-Vehicle* Cell::getVehicle() {
-    return carHolder->getVehicle();
-}
-
-Cell* Cell::getRightCell() {
-    return rightCell;
-}
-
-Cell* Cell::getLeftCell() {
-    return leftCell;
-}
-
-Cell* Cell::getPreviousCell() {
-    return previousCell;
-}
-
 int Cell::getMaxSpeed() {
     return maxSpeed;
-}
-
-bool Cell::getObstacleAhead() {
-    return isObstacleAhead;
-}
-
-void Cell::setVehicle(Vehicle* vehicle) {
-    this->carHolder->setVehicle(vehicle);
-}
-
-void Cell::setRightCell(Cell* rightCell) {
-    this->rightCell = rightCell;
-}
-
-void Cell::setLeftCell(Cell* leftCell) {
-    this->leftCell = leftCell;
-}
-
-void Cell::setPreviousCell(Cell* previousCell) {
-    this->previousCell = previousCell;
 }
 
 void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
 }
 
-void Cell::setObstacleAhead(bool isObstacleAhead) {
-    this->isObstacleAhead = isObstacleAhead;
+void Cell::setCarHolder(CarHolder* carHolder) {
+    this->carHolder = carHolder;
 }
 
-void Cell::setCarHolder(CarHolder* carHolder)
-{
-    this->carHolder = carHolder;
+Vehicle* Cell::getVehicle() {
+    return carHolder->getVehicle();
+}
+
+void Cell::setVehicle(Vehicle* vehicle) {
+    this->carHolder->setVehicle(vehicle);
+}
+
+Cell* Cell::getRightCell() {
+    return rightCell;
+}
+
+void Cell::setRightCell(Cell* rightCell) {
+    this->rightCell = rightCell;
+}
+
+Cell* Cell::getLeftCell() {
+    return leftCell;
+}
+
+void Cell::setLeftCell(Cell* leftCell) {
+    this->leftCell = leftCell;
+}
+
+Cell* Cell::getPreviousCell() {
+    return previousCell;
+}
+
+void Cell::setPreviousCell(Cell* previousCell) {
+    this->previousCell = previousCell;
+}
+
+TrafficLights* Cell::getTrafficLight() {
+    return trafficLight;
+}
+
+void Cell::setTrafficLight(TrafficLights* newLight) {
+    trafficLight = newLight;
+}
+
+bool Cell::getObstacleAhead() {
+    return isObstacleAhead;
+}
+
+void Cell::setObstacleAhead(bool isObstacleAhead) {
+    this->isObstacleAhead = isObstacleAhead;
 }
 
 // Czy w statystykach pojedynczej komórki jest koniecznoœæ zapisanie informacji o najbli¿szych do niej komórek, czy te¿ nie?
@@ -78,12 +85,4 @@ void Cell::createJSON() {
     std::cout << oss.str();
 }
 
-void Cell::setTrafficLight(TrafficLights* newLight)
-{
-    trafficLight = newLight;
-}
 
-TrafficLights* Cell::getTrafficLight()
-{
-    return trafficLight;
-}

@@ -8,6 +8,6 @@ protected:
 public:
     CarHolder();
     ~CarHolder();
-    void setVehicle(Vehicle* veh);
     Vehicle* getVehicle();
+    void setVehicle(Vehicle* veh)
 };

@@ -2,11 +2,19 @@
 
 #include "TrafficLights.h"
 
-TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDuration, int timerOffset) {
-	color = startState;
-	redLightDuration = redDuration;
-	greenLightDuration = greenDuration;
-	switch (startState) {
+TrafficLights::TrafficLights(std::string name, LightColor startColor, int redDuration, int greenDuration, int timerOffset) : name(name), color(startColor), redDuration(redDuration), greenDuration(greenDuration) {
+	create(timerOffset);
+	ID = IDcnt++;
+}
+
+TrafficLights::TrafficLights(LightColor startColor, int redDuration, int greenDuration, int timerOffset) : color(startColor), redDuration(redDuration), greenDuration(greenDuration) {
+	create(timerOffset);
+	ID = IDcnt++;
+	name = std::to_string(ID);
+}
+
+void TrafficLights::create(int timerOffset) {
+	switch (color) {
 	case LightColor::red:
 		timer = redDuration - timerOffset;
 		break;
@@ -19,11 +27,11 @@ TrafficLights::TrafficLights(LightColor startState, int redDuration, int greenDu
 }
 
 int TrafficLights::getGreenDuration() {
-	return greenLightDuration;
+	return greenDuration;
 }
 
 int TrafficLights::getRedDuration() {
-	return redLightDuration;
+	return redDuration;
 }
 
 LightColor TrafficLights::getColor() {

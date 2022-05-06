@@ -9,7 +9,10 @@ protected:
 	std::vector<BasicCrossingInput*> inputS;
 	std::vector<BasicCrossingInput*> inputW;
 
+	void create();
+
 public:
+	BasicCrossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed);
 	BasicCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
 	~BasicCrossing();
 	void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight);

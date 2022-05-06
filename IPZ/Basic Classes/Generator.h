@@ -1,11 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-
-#include "Cell.h"
 #include "RoadCell.h"
-#include "Vehicle.h"
 
 class Generator : public RoadCell
 {
@@ -17,10 +12,12 @@ protected:
 	int ID;
 	double createVehProb;
 
+	void create();
+
 public:
 	Generator(std::string name, int maxSpeed, double createVehProb);
 	Generator(int maxSpeed, double createVehProb);
 	~Generator();
-	std::string toString();
 	bool createVeh();
+	std::string toString();
 };

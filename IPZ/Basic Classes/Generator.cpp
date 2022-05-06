@@ -3,33 +3,26 @@
 #include "Generator.h"
 
 Generator::Generator(std::string name, int maxSpeed, double createVehProb) : name(name), RoadCell(maxSpeed), createVehProb(createVehProb) {
-	if(maxSpeed < 1 || maxSpeed > 6)
-		throw std::invalid_argument("Max speed must be in range between 1 and 6");
-	if(createVehProb < 0 || createVehProb > 1)
-		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
+	create();
 	ID = IDcnt++;
-	this->setCarHolder(new CarHolder());
 }
 
 Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
-	if (maxSpeed < 1 || maxSpeed > 6)
-		throw std::invalid_argument("Max speed must be in range between 1 and 6");
-	if (createVehProb < 0 || createVehProb > 1)
-		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
+	create();
 	ID = IDcnt++;
 	name = std::to_string(ID);
-	this->setCarHolder(new CarHolder());
 }
 
 Generator::~Generator() {
 	delete carHolder->getVehicle();
 }
 
-std::string Generator::toString() {
-	if (carHolder->getVehicle() == nullptr) {
-		return ".\n";
-	}
-	return std::to_string(carHolder->getVehicle()->getSpeed()) + "\n";
+void Generator::create() {
+	if (maxSpeed < 1 || maxSpeed > 6)
+		throw std::invalid_argument("Max speed must be in range between 1 and 6");
+	if (createVehProb < 0 || createVehProb > 1)
+		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
+	setCarHolder(new CarHolder());
 }
 
 bool Generator::createVeh() {
@@ -49,4 +42,11 @@ bool Generator::createVeh() {
 		return true;
 	}
 	return false;
+}
+
+std::string Generator::toString() {
+	if (carHolder->getVehicle() == nullptr) {
+		return ".\n";
+	}
+	return std::to_string(carHolder->getVehicle()->getSpeed()) + "\n";
 }

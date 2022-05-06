@@ -52,7 +52,7 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     menuRect.setFillColor(sf::Color(159, 193, 211));
     menuRect.setPosition(750, 0);
 
-    auto r = s.getSimulationMap()->getRoads();
+    auto r = dynamic_cast<Map*>(s.getSimulationMap())->getRoads();
     std::vector<sf::RectangleShape> roadRects;
     int offset = 1000 / (2 * r.size());
     double refreshRate = 0.5;
@@ -104,7 +104,7 @@ void SimulationWindow::createSimulationWindow(Simulation s)
                 {
                     for (int whichCell = 0; whichCell < r[whichRoad]->getLength(); whichCell++)
                     {
-                        if (r[whichRoad]->getRoad()[whichLane][whichCell]->getVehicle() != nullptr)
+                        if (r[whichRoad]->getLanes()[whichLane][whichCell]->getVehicle() != nullptr)
                         {
                             sf::RectangleShape shape(sf::Vector2f(carLength, carHeight));
                             shape.setFillColor(sf::Color(255, 0, 0));

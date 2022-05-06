@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 
+#include "../Basic Classes/Map.h"
 #include "../Basic Classes/Road.h"
 #include "../Basic Classes/Vehicle.h"
 #include "../Basic Classes/Simulation.h"

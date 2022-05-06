@@ -8,10 +8,10 @@ CarHolder::~CarHolder() {
     delete vehicle;
 }
 
-void CarHolder::setVehicle(Vehicle* veh) {
-    vehicle = veh;
-}
-
 Vehicle* CarHolder::getVehicle() {
     return vehicle;
+}
+
+void CarHolder::setVehicle(Vehicle* veh) {
+    vehicle = veh;
 }

@@ -1,23 +1,16 @@
 #pragma once
 
 #include <algorithm>
-#include <iostream>
-#include <vector>
 #include <cmath>
-#include <map>
-#include <sstream>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
-#include "Generator.h"
 #include "Road.h"
+#include "Generator.h"
 #include "Crossing.h"
-#include "Cell.h"
+#include "LaneEndsMerge.h"
 
 using boost::property_tree::ptree;
 
-class Map
-{
+class Map {
 protected:
 	std::string name;
 	std::vector<Road*> roads;
@@ -32,13 +25,14 @@ public:
 	std::vector<Generator*> getGenerators();
 	std::vector<Crossing*> getCrossings();
 	int getMapPassableCellsCnt();
+	std::vector<Cell*> getCellsWithVehs();
 	void addRoad(Road* road);
 	void addGenerator(Generator* generator);
 	void addCrossing(Crossing* crossing);
 	void fillWithVehs(double fillingDegree);
-	std::vector<Cell*> getCellsWithVehs();
 	void updateMap(std::vector<Cell*>* cellsWithVehs);
 	void createJSON();
+	std::string toString();
 };
 
 

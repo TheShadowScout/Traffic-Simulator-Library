@@ -5,6 +5,9 @@ int Road::IDcnt = 0;
 int Vehicle::IDcnt = 0;
 int Generator::IDcnt = 0;
 int Observer::IDcnt = 0;
+int Crossing::IDcnt = 0;
+int LaneEndsMerge::IDcnt = 0;
+int TrafficLights::IDcnt = 0;
 
 int GenerateDensityPlot() {
 
@@ -24,14 +27,14 @@ int GenerateDensityPlot() {
 			for (int sim = 0; sim < 50; sim++)
 			{
 				Road* road = new Road(1000, 1, speed);
-				linkCells(road->tail[0], road->head[0]);
+				linkCells(road->getLaneTail(0), road->getLaneHead(0));
 
 				Map* map = new Map("test");
 				map->addRoad(road);
 				map->fillWithVehs(density);
 
 				Simulation simulation(map, 0.1, 0, 0);
-				Observer* observer = new Observer(road->tail[0]);
+				Observer* observer = new Observer(road->getLaneTail(0));
 				simulation.addObserver(observer);
 
 				simulation.initiateSimulation();

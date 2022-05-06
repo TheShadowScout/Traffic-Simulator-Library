@@ -1,16 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <fstream>
 #include <random>
-#include <algorithm>
 #include <cstdlib>
-#include <vector>
-#include <string>
 
 #include "Map.h"
-#include "Cell.h"
-#include "Vehicle.h"
 #include "Statistics.h"
 #include "Observer.h"
 
@@ -25,7 +19,6 @@ struct MoveData {
 };
 
 bool cmpMoveData(MoveData lhs, MoveData rhs);
-
 
 
 
@@ -46,11 +39,11 @@ public:
 	Map* getSimulationMap();
 	Statistics* getSimulationStatistics();
 	Observer* getSimulationObserver();
-	std::string toString();
 	void addObserver(Observer* observer);
 	void saveStatisticsToFile(std::string outFolder = "StatisticsHistory/");
 	void initiateSimulation();
 	void transitionFunc();
+	std::string toString();
 
 protected:
 	MoveData evalVehMove(Cell* vehCell);

@@ -3,13 +3,13 @@
 #include "Simulation.h"
 
 Simulation::Simulation(Map* simMap, double randEventProb,  int minSafeSpace, int seed, bool shuffleIfCompetition) : simMap(simMap), randEventProb(randEventProb), minSafeSpace(minSafeSpace), seed(seed), shuffleIfCompetition(shuffleIfCompetition), simStats(nullptr) {
-	if (seed == NULL) {
+	if (seed != NULL) {
 		randomEngine = std::default_random_engine(seed);
 	}
 	else {
 		randomEngine = std::default_random_engine(std::rand());
 	}
-	if(randEventProb < 0 || randEventProb > 1)
+	if(randEventProb < 0.0 || randEventProb > 1.0)
 		throw std::invalid_argument("Random event probability must be in range between 0 and 1");
 }
 
@@ -23,20 +23,6 @@ Statistics* Simulation::getSimulationStatistics() {
 
 Observer* Simulation::getSimulationObserver() {
 	return observers[0];
-}
-
-std::string Simulation::toString() {
-	std::string simStr = "";
-	for (Generator* generator : simMap->getGenerators()) {
-		simStr += generator->toString();
-	}
-	for (Road* road : simMap->getRoads()) {
-		simStr += road->toString();
-	}
-	for (Crossing* crossing : simMap->getCrossings()) {
-		simStr += crossing->toString();
-	}
-	return simStr += "\n";
 }
 
 void Simulation::addObserver(Observer* observer) {
@@ -237,6 +223,10 @@ std::vector<Cell*> Simulation::moveVehs(std::vector<Cell*> cellsWithVehs, std::v
 		std::shuffle(newCellsWithVehs.begin(), newCellsWithVehs.end(), randomEngine);
 	}
 	return newCellsWithVehs;
+}
+
+std::string Simulation::toString() {
+	return simMap->toString();
 }
 
 

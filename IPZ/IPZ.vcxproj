@@ -28,6 +28,8 @@
     <ClInclude Include="Basic Classes\Crossing.h" />
     <ClInclude Include="Basic Classes\DataSaving.h" />
     <ClInclude Include="Basic Classes\Generator.h" />
+    <ClInclude Include="Basic Classes\LaneEndsMerge.h" />
+    <ClInclude Include="Basic Classes\LaneEndsMergeL.h" />
     <ClInclude Include="Basic Classes\Map.h" />
     <ClInclude Include="Basic Classes\Observer.h" />
     <ClInclude Include="Basic Classes\Obstacle.h" />
@@ -54,6 +56,8 @@
     <ClCompile Include="Basic Classes\Crossing.cpp" />
     <ClCompile Include="Basic Classes\DataSaving.cpp" />
     <ClCompile Include="Basic Classes\Generator.cpp" />
+    <ClCompile Include="Basic Classes\LaneEndsMerge.cpp" />
+    <ClCompile Include="Basic Classes\LaneEndsMergeL.cpp" />
     <ClCompile Include="Basic Classes\Map.cpp" />
     <ClCompile Include="Basic Classes\Observer.cpp" />
     <ClCompile Include="Basic Classes\Obstacle.cpp" />
