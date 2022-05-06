@@ -69,6 +69,10 @@ std::string Road::getName() {
     return name;
 }
 
+int Road::getID() {
+    return ID;
+}
+
 int Road::getLength() {
     return length;
 }
