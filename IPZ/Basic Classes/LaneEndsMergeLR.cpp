@@ -1,58 +1,81 @@
 #pragma once
 
-#include "LaneEndsMergeL.h"
+#include "LaneEndsMergeLR.h"
 
-LaneEndsMergeL::LaneEndsMergeL(std::string name, int length, int height, int maxSpeed) : LaneEndsMerge(name, length, height, maxSpeed) {
+LaneEndsMergeLR::LaneEndsMergeLR(std::string name, int length, int height, int maxSpeed) : LaneEndsMerge(name, length, height, maxSpeed) {
     create();
 }
 
-LaneEndsMergeL::LaneEndsMergeL(int length, int height, int maxSpeed) : LaneEndsMerge(length, height, maxSpeed) {
+LaneEndsMergeLR::LaneEndsMergeLR(int length, int height, int maxSpeed) : LaneEndsMerge(length, height, maxSpeed) {
     create();
 }
 
-LaneEndsMergeL::~LaneEndsMergeL() {
+LaneEndsMergeLR::~LaneEndsMergeLR() {
     delete endingLaneL.back()->getNextCell();
+    delete endingLaneR.back()->getNextCell();
     for (Cell* endingLaneCell : endingLaneL) {
+        delete endingLaneCell;
+    }
+    for (Cell* endingLaneCell : endingLaneR) {
         delete endingLaneCell;
     }
 }
 
-void LaneEndsMergeL::create() {
+void LaneEndsMergeLR::create() {
     std::vector<Cell*> endingLaneL;
+    std::vector<Cell*> endingLaneR;
     for (int i = 0; i < length; i++) {
-        RoadCell* newCell = new RoadCell(maxSpeed);
-        newCell->setCarHolder(new CarHolder());
-        newCell->setObstacleAhead(true);
+        RoadCell* newCellL = new RoadCell(maxSpeed);
+        newCellL->setCarHolder(new CarHolder());
+        newCellL->setObstacleAhead(true);
+        RoadCell* newCellR = new RoadCell(maxSpeed);
+        newCellR->setCarHolder(new CarHolder());
+        newCellR->setObstacleAhead(true);
         if (i == 0) {
-            endingLaneL.push_back(newCell);
+            endingLaneL.push_back(newCellL);
+            endingLaneR.push_back(newCellR);
         }
         else {
-            newCell->setPreviousCell(endingLaneL[i - 1]);
-            endingLaneL[i - 1]->setNextCell(newCell);
-            endingLaneL.push_back(newCell);
+            newCellL->setPreviousCell(endingLaneL[i - 1]);
+            endingLaneL[i - 1]->setNextCell(newCellL);
+            endingLaneL.push_back(newCellL);
+            newCellR->setPreviousCell(endingLaneR[i - 1]);
+            endingLaneR[i - 1]->setNextCell(newCellR);
+            endingLaneR.push_back(newCellR);
         }
-        newCell->setRightCell(lanes[0][i]);
+        newCellL->setRightCell(lanes[0][i]);
+        newCellR->setLeftCell(lanes[height - 1][i]);
     }
-    RoadCell* newCell = new RoadCell(maxSpeed);
-    newCell->setCarHolder(new CarHolder());
-    newCell->setVehicle(new Obstacle());
-    newCell->setObstacleAhead(true);
-    endingLaneL.back()->setNextCell(newCell);
-    newCell->setPreviousCell(endingLaneL.back());
+    RoadCell* newCellL = new RoadCell(maxSpeed);
+    newCellL->setCarHolder(new CarHolder());
+    newCellL->setVehicle(new Obstacle());
+    newCellL->setObstacleAhead(true);
+    endingLaneL.back()->setNextCell(newCellL);
+    newCellL->setPreviousCell(endingLaneL.back());
+    RoadCell* newCellR = new RoadCell(maxSpeed);
+    newCellR->setCarHolder(new CarHolder());
+    newCellR->setVehicle(new Obstacle());
+    newCellR->setObstacleAhead(true);
+    endingLaneR.back()->setNextCell(newCellR);
+    newCellR->setPreviousCell(endingLaneR.back());
 }
 
-Cell* LaneEndsMergeL::getEndingLaneLHead() {
+Cell* LaneEndsMergeLR::getEndingLaneLHead() {
     return endingLaneL.back();
 }
 
-std::vector<std::vector<Cell*>> LaneEndsMergeL::getEndingLanes() {
+Cell* LaneEndsMergeLR::getEndingLaneRHead() {
+    return endingLaneR.back();
+}
+
+std::vector<std::vector<Cell*>> LaneEndsMergeLR::getEndingLanes() {
     std::vector<std::vector<Cell*>> endingLanes;
     endingLanes.push_back(endingLaneL);
-    endingLanes.push_back(std::vector<Cell*>());
+    endingLanes.push_back(endingLaneR);
     return endingLanes;
 }
 
-int LaneEndsMergeL::getPassableCellsCnt() {
+int LaneEndsMergeLR::getPassableCellsCnt() {
     int passableCellsCnt = 0;
     Vehicle* cellVeh = nullptr;
     for (std::vector<Cell*> lane : lanes) {
@@ -71,10 +94,17 @@ int LaneEndsMergeL::getPassableCellsCnt() {
         }
         passableCellsCnt++;
     }
+    for (Cell* endingLaneCell : endingLaneR) {
+        cellVeh = endingLaneCell->getVehicle();
+        if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
+            continue;
+        }
+        passableCellsCnt++;
+    }
     return passableCellsCnt;
 }
 
-std::vector<Cell*> LaneEndsMergeL::getCellsWithVehs() {
+std::vector<Cell*> LaneEndsMergeLR::getCellsWithVehs() {
     std::vector<Cell*> cellsWithVehs;
     for (std::vector<Cell*> lane : lanes) {
         for (Cell* laneCell : lane) {
@@ -90,10 +120,16 @@ std::vector<Cell*> LaneEndsMergeL::getCellsWithVehs() {
             cellsWithVehs.push_back(laneCell);
         }
     }
+    for (Cell* laneCell : endingLaneR) {
+        Vehicle* cellVeh = laneCell->getVehicle();
+        if (cellVeh != nullptr && cellVeh->getIsObstacle() == false) {
+            cellsWithVehs.push_back(laneCell);
+        }
+    }
     return cellsWithVehs;
 }
 
-void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
+void LaneEndsMergeLR::fillWithVehs(double fillingDegree) {
     int passableCellsCnt = 0;
     Vehicle* cellVeh = nullptr;
     for (std::vector<Cell*> lane : lanes) {
@@ -105,6 +141,13 @@ void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
             passableCellsCnt++;
         }
         for (Cell* endingLaneCell : endingLaneL) {
+            cellVeh = endingLaneCell->getVehicle();
+            if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
+                continue;
+            }
+            passableCellsCnt++;
+        }
+        for (Cell* endingLaneCell : endingLaneR) {
             cellVeh = endingLaneCell->getVehicle();
             if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
                 continue;
@@ -138,11 +181,22 @@ void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
                     }
                 }
             }
+            for (Cell* endingLaneCell : endingLaneR) {
+                if (endingLaneCell->getVehicle() == nullptr) {
+                    if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
+                        endingLaneCell->setVehicle(new Vehicle(0));
+                        generatedVehsCnt++;
+                        if (generatedVehsCnt >= vehsToGenerateCnt) {
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-std::string LaneEndsMergeL::toString() {
+std::string LaneEndsMergeLR::toString() {
     ;
     return std::string();
 }

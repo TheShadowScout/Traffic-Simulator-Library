@@ -17,6 +17,14 @@ Generator::~Generator() {
 	delete carHolder->getVehicle();
 }
 
+int Generator::getID() {
+	return ID;
+}
+
+std::string Generator::getName() {
+	return name;
+}
+
 void Generator::create() {
 	if (maxSpeed < 1 || maxSpeed > 6)
 		throw std::invalid_argument("Max speed must be in range between 1 and 6");

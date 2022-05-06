@@ -21,6 +21,14 @@ LaneEndsMerge::~LaneEndsMerge() {
     }
 }
 
+int LaneEndsMerge::getID() {
+    return ID;
+}
+
+std::string LaneEndsMerge::getName() {
+    return name;
+}
+
 void LaneEndsMerge::create() {
     if (length < 1)
         throw std::invalid_argument("Length must be bigger than 1");

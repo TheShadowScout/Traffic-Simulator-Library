@@ -29,6 +29,8 @@ public:
 	Crossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed);
 	Crossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
 	~Crossing();
+	int getID();
+	std::string getName();
 	std::vector<TrafficLights*> getTrafficLights();
 	virtual void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) = 0;
 	virtual void linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex) = 0;

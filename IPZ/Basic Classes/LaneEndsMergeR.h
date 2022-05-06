@@ -3,16 +3,16 @@
 #include "LaneEndsMerge.h"
 #include "Obstacle.h"
 
-class LaneEndsMergeL : public LaneEndsMerge {
+class LaneEndsMergeR : public LaneEndsMerge {
 protected:
-    std::vector<Cell*> endingLaneL;
+    std::vector<Cell*> endingLaneR;
 
     void create();
 
 public:
-    LaneEndsMergeL(std::string name, int length, int height, int maxSpeed);
-    LaneEndsMergeL(int length, int height, int maxSpeed);
-    ~LaneEndsMergeL();
+    LaneEndsMergeR(std::string name, int length, int height, int maxSpeed);
+    LaneEndsMergeR(int length, int height, int maxSpeed);
+    ~LaneEndsMergeR();
     Cell* getEndingLaneLHead();
     std::vector<std::vector<Cell*>> getEndingLanes();
     int getPassableCellsCnt();

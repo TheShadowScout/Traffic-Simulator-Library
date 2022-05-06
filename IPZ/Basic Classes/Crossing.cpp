@@ -58,6 +58,14 @@ Crossing::~Crossing() {
     }
 }
 
+int Crossing::getID() {
+    return ID;
+}
+
+std::string Crossing::getName() {
+    return name;
+}
+
 std::vector<TrafficLights*> Crossing::getTrafficLights() {
     return trafficLights;
 }
