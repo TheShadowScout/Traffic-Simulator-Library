@@ -160,21 +160,21 @@ int Generator::IDcnt = 0;
 int main() {
 	Road* road1 = new Road(100, 1, 5);
 	Road* road2 = new Road(50, 3, 3);
-	Generator* generator1 = new Generator(0.9);
-	Generator* generator2 = new Generator(0.5);
+	Generator* generator1 = new Generator(5, 0.9);
+	Generator* generator2 = new Generator(5, 0.5);
 	Map* map = new Map("test");
 	map->addRoad(road1);
 	map->addRoad(road2);
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
-	linkCells(generator1, road1->head[0]);
-	linkCells(generator2, road2->head[0]);
-	linkCells(road2->tail[0], road2->head[1]);
-	linkCells(road2->tail[1], road2->head[2]);
+	linkCells(generator1, road1->getLaneHead(0));
+	linkCells(generator2, road2->getLaneHead(0));
+	linkCells(road2->getLaneTail(0), road2->getLaneHead(1));
+	linkCells(road2->getLaneTail(1), road2->getLaneHead(2));
 	Simulation simulation(map, 0.1);
 	for (int i = 0; i < 100; i++) {
 		simulation.transitionFunc();
-		std::cout << simulation.tempToString() << std::endl;
+		std::cout << simulation.toString() << std::endl;
 	}
 }
 ```
@@ -189,10 +189,10 @@ int main() {
 	Road* road2 = new Road(50, 3, 3);
 	Road* road3 = new Road(75, 2, 3);
 	Road* road4 = new Road(100, 1, 5);
-	Generator* generator1 = new Generator(0.9);
-	Generator* generator2 = new Generator(0.5);
-	Generator* generator3 = new Generator(0.7);
-	Generator* generator4 = new Generator(0.9);
+	Generator* generator1 = new Generator(6,0.9);
+	Generator* generator2 = new Generator(6,0.5);
+	Generator* generator3 = new Generator(6,0.7);
+	Generator* generator4 = new Generator(6,0.9);
 	Map* map = new Map("test");
 	map->addRoad(road1);
 	map->addRoad(road2);
@@ -202,15 +202,15 @@ int main() {
 	map->addGenerator(generator2);
 	map->addGenerator(generator3);
 	map->addGenerator(generator4);
-	linkCells(generator1, road1->head[0]);
-	linkCells(generator2, road2->head[0]);
-	linkCells(generator3, road3->head[0]);
-	linkCells(generator4, road4->head[0]);
-	linkCells(road2->tail[0], road2->head[1]);
-	linkCells(road2->tail[1], road2->head[2]);
+	linkCells(generator1, road1->getLaneHead(0));
+	linkCells(generator2, road2->getLaneHead(0));
+	linkCells(generator3, road3->getLaneHead(0));
+	linkCells(generator4, road4->getLaneHead(0));
+	linkCells(road2->getLaneTail(0), road2->getLaneHead(1));
+	linkCells(road2->getLaneTail(1), road2->getLaneHead(2));
 
 
-	linkCells(road3->tail[0], road3->head[1]);
+	linkCells(road3->getLaneTail(0), road3->getLaneHead(1));
 	Simulation simulation(map, 0.1);
 
 	SimulationWindow test;
