@@ -65,6 +65,10 @@ int Road::getMaxSpeed() {
     return maxSpeed;
 }
 
+int Road::getID() {
+    return ID;
+}
+
 std::string Road::getName() {
     return name;
 }

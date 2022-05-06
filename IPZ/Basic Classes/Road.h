@@ -28,6 +28,7 @@ public:
     Cell* getLaneHead(int lane);
     Cell* getLaneTail(int lane);
     int getMaxSpeed();
+    int getID();
     std::string getName();
     int getLength();
     int getHeight();

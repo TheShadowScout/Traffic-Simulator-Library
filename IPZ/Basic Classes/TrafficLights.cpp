@@ -13,6 +13,14 @@ TrafficLights::TrafficLights(LightColor startColor, int redDuration, int greenDu
 	name = std::to_string(ID);
 }
 
+int TrafficLights::getID() {
+	return ID;
+}
+
+std::string TrafficLights::getName() {
+	return name;
+}
+
 void TrafficLights::create(int timerOffset) {
 	switch (color) {
 	case LightColor::red:

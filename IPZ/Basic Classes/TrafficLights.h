@@ -21,6 +21,8 @@ protected:
 public:
 	TrafficLights(std::string name, LightColor startColor, int redDuration, int greenDuration, int timerOffset = 0);
 	TrafficLights(LightColor startColor, int redDuration, int greenDuration, int timerOffset = 0);
+	int getID();
+	std::string getName();
 	int getGreenDuration();
 	int getRedDuration();
 	LightColor getColor();

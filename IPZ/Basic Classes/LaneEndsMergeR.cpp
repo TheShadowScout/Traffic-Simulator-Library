@@ -1,58 +1,58 @@
 #pragma once
 
-#include "LaneEndsMergeL.h"
+#include "LaneEndsMergeR.h"
 
-LaneEndsMergeL::LaneEndsMergeL(std::string name, int length, int height, int maxSpeed) : LaneEndsMerge(name, length, height, maxSpeed) {
+LaneEndsMergeR::LaneEndsMergeR(std::string name, int length, int height, int maxSpeed) : LaneEndsMerge(name, length, height, maxSpeed) {
     create();
 }
 
-LaneEndsMergeL::LaneEndsMergeL(int length, int height, int maxSpeed) : LaneEndsMerge(length, height, maxSpeed) {
+LaneEndsMergeR::LaneEndsMergeR(int length, int height, int maxSpeed) : LaneEndsMerge(length, height, maxSpeed) {
     create();
 }
 
-LaneEndsMergeL::~LaneEndsMergeL() {
-    delete endingLaneL.back()->getNextCell();
-    for (Cell* endingLaneCell : endingLaneL) {
+LaneEndsMergeR::~LaneEndsMergeR() {
+    delete endingLaneR.back()->getNextCell();
+    for (Cell* endingLaneCell : endingLaneR) {
         delete endingLaneCell;
     }
 }
 
-void LaneEndsMergeL::create() {
-    std::vector<Cell*> endingLaneL;
+void LaneEndsMergeR::create() {
+    std::vector<Cell*> endingLaneR;
     for (int i = 0; i < length; i++) {
         RoadCell* newCell = new RoadCell(maxSpeed);
         newCell->setCarHolder(new CarHolder());
         newCell->setObstacleAhead(true);
         if (i == 0) {
-            endingLaneL.push_back(newCell);
+            endingLaneR.push_back(newCell);
         }
         else {
-            newCell->setPreviousCell(endingLaneL[i - 1]);
-            endingLaneL[i - 1]->setNextCell(newCell);
-            endingLaneL.push_back(newCell);
+            newCell->setPreviousCell(endingLaneR[i - 1]);
+            endingLaneR[i - 1]->setNextCell(newCell);
+            endingLaneR.push_back(newCell);
         }
-        newCell->setRightCell(lanes[0][i]);
+        newCell->setLeftCell(lanes[height - 1][i]);
     }
     RoadCell* newCell = new RoadCell(maxSpeed);
     newCell->setCarHolder(new CarHolder());
     newCell->setVehicle(new Obstacle());
     newCell->setObstacleAhead(true);
-    endingLaneL.back()->setNextCell(newCell);
-    newCell->setPreviousCell(endingLaneL.back());
+    endingLaneR.back()->setNextCell(newCell);
+    newCell->setPreviousCell(endingLaneR.back());
 }
 
-Cell* LaneEndsMergeL::getEndingLaneLHead() {
-    return endingLaneL.back();
+Cell* LaneEndsMergeR::getEndingLaneLHead() {
+    return endingLaneR.back();
 }
 
-std::vector<std::vector<Cell*>> LaneEndsMergeL::getEndingLanes() {
+std::vector<std::vector<Cell*>> LaneEndsMergeR::getEndingLanes() {
     std::vector<std::vector<Cell*>> endingLanes;
-    endingLanes.push_back(endingLaneL);
     endingLanes.push_back(std::vector<Cell*>());
+    endingLanes.push_back(endingLaneR);
     return endingLanes;
 }
 
-int LaneEndsMergeL::getPassableCellsCnt() {
+int LaneEndsMergeR::getPassableCellsCnt() {
     int passableCellsCnt = 0;
     Vehicle* cellVeh = nullptr;
     for (std::vector<Cell*> lane : lanes) {
@@ -64,7 +64,7 @@ int LaneEndsMergeL::getPassableCellsCnt() {
             passableCellsCnt++;
         }
     }
-    for (Cell* endingLaneCell : endingLaneL) {
+    for (Cell* endingLaneCell : endingLaneR) {
         cellVeh = endingLaneCell->getVehicle();
         if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
             continue;
@@ -74,7 +74,7 @@ int LaneEndsMergeL::getPassableCellsCnt() {
     return passableCellsCnt;
 }
 
-std::vector<Cell*> LaneEndsMergeL::getCellsWithVehs() {
+std::vector<Cell*> LaneEndsMergeR::getCellsWithVehs() {
     std::vector<Cell*> cellsWithVehs;
     for (std::vector<Cell*> lane : lanes) {
         for (Cell* laneCell : lane) {
@@ -84,7 +84,7 @@ std::vector<Cell*> LaneEndsMergeL::getCellsWithVehs() {
             }
         }
     }
-    for (Cell* laneCell : endingLaneL) {
+    for (Cell* laneCell : endingLaneR) {
         Vehicle* cellVeh = laneCell->getVehicle();
         if (cellVeh != nullptr && cellVeh->getIsObstacle() == false) {
             cellsWithVehs.push_back(laneCell);
@@ -93,7 +93,7 @@ std::vector<Cell*> LaneEndsMergeL::getCellsWithVehs() {
     return cellsWithVehs;
 }
 
-void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
+void LaneEndsMergeR::fillWithVehs(double fillingDegree) {
     int passableCellsCnt = 0;
     Vehicle* cellVeh = nullptr;
     for (std::vector<Cell*> lane : lanes) {
@@ -104,7 +104,7 @@ void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
             }
             passableCellsCnt++;
         }
-        for (Cell* endingLaneCell : endingLaneL) {
+        for (Cell* endingLaneCell : endingLaneR) {
             cellVeh = endingLaneCell->getVehicle();
             if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
                 continue;
@@ -127,7 +127,7 @@ void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
                     }
                 }
             }
-            for (Cell* endingLaneCell : endingLaneL) {
+            for (Cell* endingLaneCell : endingLaneR) {
                 if (endingLaneCell->getVehicle() == nullptr) {
                     if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
                         endingLaneCell->setVehicle(new Vehicle(0));
@@ -142,7 +142,7 @@ void LaneEndsMergeL::fillWithVehs(double fillingDegree) {
     }
 }
 
-std::string LaneEndsMergeL::toString() {
+std::string LaneEndsMergeR::toString() {
     ;
     return std::string();
 }

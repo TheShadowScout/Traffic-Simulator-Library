@@ -3,17 +3,19 @@
 #include "LaneEndsMerge.h"
 #include "Obstacle.h"
 
-class LaneEndsMergeL : public LaneEndsMerge {
+class LaneEndsMergeLR : public LaneEndsMerge {
 protected:
     std::vector<Cell*> endingLaneL;
+    std::vector<Cell*> endingLaneR;
 
     void create();
 
 public:
-    LaneEndsMergeL(std::string name, int length, int height, int maxSpeed);
-    LaneEndsMergeL(int length, int height, int maxSpeed);
-    ~LaneEndsMergeL();
+    LaneEndsMergeLR(std::string name, int length, int height, int maxSpeed);
+    LaneEndsMergeLR(int length, int height, int maxSpeed);
+    ~LaneEndsMergeLR();
     Cell* getEndingLaneLHead();
+    Cell* getEndingLaneRHead();
     std::vector<std::vector<Cell*>> getEndingLanes();
     int getPassableCellsCnt();
     std::vector<Cell*> getCellsWithVehs();
