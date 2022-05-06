@@ -9,5 +9,5 @@ public:
     CarHolder();
     ~CarHolder();
     Vehicle* getVehicle();
-    void setVehicle(Vehicle* veh)
+    void setVehicle(Vehicle* veh);
 };
