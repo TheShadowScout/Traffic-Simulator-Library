@@ -18,8 +18,8 @@ protected:
     Cell* previousCell;
     CarHolder* carHolder;
     int maxSpeed;
-    bool obstacleAhead;
-    TrafficLights* light;
+    bool isObstacleAhead;
+    TrafficLights* trafficLight;
 
 public:
     Cell();
@@ -31,6 +31,7 @@ public:
     Cell* getPreviousCell();
     virtual Cell* getNextCell() = 0;
     int getMaxSpeed();
+    bool getObstacleAhead();
     void setCarHolder(CarHolder* carHolder);
     void setVehicle(Vehicle* vehicle);
     void setRightCell(Cell* rightCell);
@@ -38,9 +39,8 @@ public:
     void setPreviousCell(Cell* previousCell);
     virtual void setNextCell(Cell* nextCell) = 0;
     void setMaxSpeed(int maxSpeed);
-    void updateObstacleAhead();
-    bool checkObstacleAhead();
+    void setObstacleAhead(bool isObstacleAhead);
 	void createJSON();
-    void setLight(TrafficLights* newLight);
-    TrafficLights* getLight();
+    void setTrafficLight(TrafficLights* newLight);
+    TrafficLights* getTrafficLight();
 };

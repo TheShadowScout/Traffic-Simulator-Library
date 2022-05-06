@@ -2,13 +2,13 @@
 
 #include "Vehicle.h"
 
-Vehicle::Vehicle(std::string name, int speed, bool isObstacle) : name(name), speed(speed), isObstacle(isObstacle) {
+Vehicle::Vehicle(std::string name, int speed) : name(name), speed(speed), isObstacle(false) {
 	if(speed < 0 || speed > 6)
 		throw std::invalid_argument("Speed must be in range between 0 and 6");
 	ID = IDcnt++;
 }
 
-Vehicle::Vehicle(int speed, bool isObstacle) : speed(speed), isObstacle(isObstacle) {
+Vehicle::Vehicle(int speed) : speed(speed), isObstacle(false) {
 	if(speed < 0 || speed > 6)
 		throw std::invalid_argument("Speed must be in range between 0 and 6");
 	ID = IDcnt++;
@@ -35,17 +35,13 @@ void Vehicle::setSpeed(int newSpeed) {
 	this->speed = newSpeed;
 }
 
-bool Vehicle::checkIsObstacle() {
-	return isObstacle;
-}
-
 void Vehicle::createJSON() {
 	ptree VehicleTree;
 	std::string nameTree = "Vehicle" + std::to_string(getID());
 	VehicleTree.put(nameTree + ".Name", getName());
 	VehicleTree.put(nameTree + ".ID", getID());
 	VehicleTree.put(nameTree + ".Speed", getSpeed());
-	VehicleTree.put(nameTree + ".IsObstacle", checkIsObstacle());   // Tutaj nie jestem pewien czy nie nale¿y przekonwertowaæ bool na string?
+	VehicleTree.put(nameTree + ".IsObstacle", getIsObstacle());   // Tutaj nie jestem pewien czy nie nale¿y przekonwertowaæ bool na string?
 	std::ostringstream oss;
 	boost::property_tree::write_json(oss, VehicleTree);
 	std::cout << oss.str();

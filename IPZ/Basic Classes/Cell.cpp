@@ -2,9 +2,9 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), obstacleAhead(false), light(nullptr) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), isObstacleAhead(false), trafficLight(nullptr) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), obstacleAhead(false), light(nullptr) {
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), isObstacleAhead(false), trafficLight(nullptr) {
     if(maxSpeed > 6 || maxSpeed < 1)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
 }
@@ -33,6 +33,10 @@ int Cell::getMaxSpeed() {
     return maxSpeed;
 }
 
+bool Cell::getObstacleAhead() {
+    return isObstacleAhead;
+}
+
 void Cell::setVehicle(Vehicle* vehicle) {
     this->carHolder->setVehicle(vehicle);
 }
@@ -53,12 +57,8 @@ void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
 }
 
-void Cell::updateObstacleAhead() {
-    obstacleAhead = true;
-}
-
-bool Cell::checkObstacleAhead() {
-    return obstacleAhead;
+void Cell::setObstacleAhead(bool isObstacleAhead) {
+    this->isObstacleAhead = isObstacleAhead;
 }
 
 void Cell::setCarHolder(CarHolder* carHolder)
@@ -78,12 +78,12 @@ void Cell::createJSON() {
     std::cout << oss.str();
 }
 
-void Cell::setLight(TrafficLights* newLight)
+void Cell::setTrafficLight(TrafficLights* newLight)
 {
-    light = newLight;
+    trafficLight = newLight;
 }
 
-TrafficLights* Cell::getLight()
+TrafficLights* Cell::getTrafficLight()
 {
-    return light;
+    return trafficLight;
 }

@@ -1,27 +1,19 @@
 #pragma once
+
 enum class LightColor { red = 1, redyellow = 2, green = 3, yellow = 4 };
 
-class TrafficLights
-{
-	// bool isRed; // enum RED:YELLOW:GREEN
+class TrafficLights {
 protected:
 	LightColor color;
-	int position;
 	int redLightDuration;
 	int greenLightDuration;
 	int timer;
 
 public:
-	TrafficLights(LightColor startState, int position, int redDuration, int greenDuration);
+	TrafficLights(LightColor startState, int redDuration, int greenDuration, int timerOffset = 0);
 	int getGreenDuration();
 	int getRedDuration();
 	LightColor getColor();
-	int getPosition();
 	int getTimer();
-	void setTimer(int newTimer);
-	void setColor(LightColor newColor);
-	void setPosition(int newPosition);
-	void setRedLightDuration(int duration);
-	void setGreenLightDuration(int duration);
-	void changeState();
+	virtual void updateTrafficLights() = 0;
 };

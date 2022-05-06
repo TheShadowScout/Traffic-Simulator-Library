@@ -14,6 +14,9 @@ Map::~Map() {
 		for (Generator* generator : generators) {
 			delete generator;
 		}
+		for (Crossing* crossing : crossings) {
+			delete crossing;
+		}
 	}
 
 std::string Map::getName() {
@@ -30,10 +33,6 @@ std::vector<Generator*> Map::getGenerators() {
 
 std::vector<Crossing*> Map::getCrossings() {
 	return crossings;
-}
-
-std::vector<Cell*> Map::getCellsWithVehs() {
-	return cellsWithVehs;
 }
 
 int Map::getMapPassableCellsCnt() {
@@ -59,10 +58,6 @@ int Map::getMapPassableCellsCnt() {
 	return passableCellsCnt;
 }
 
-void Map::setCellsWithVehs(std::vector<Cell*> CellsWithVehs) {
-	this->cellsWithVehs = CellsWithVehs;
-}
-
 void Map::addRoad(Road* road) {
 	roads.push_back(road);
 }
@@ -73,10 +68,6 @@ void Map::addGenerator(Generator* generator) {
 
 void Map::addCrossing(Crossing* crossing) {
 	crossings.push_back(crossing);
-}
-
-void Map::addCellsWithVehs(std::vector<Cell*> newCellsWithVehs) {
-	cellsWithVehs.insert(cellsWithVehs.begin(), newCellsWithVehs.begin(), newCellsWithVehs.end());
 }
 
 void Map::fillWithVehs(double fillingDegree) {
@@ -90,7 +81,6 @@ void Map::fillWithVehs(double fillingDegree) {
 					if (roadCell->getVehicle() == nullptr) {
 						if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
 							roadCell->setVehicle(new Vehicle(0));
-							cellsWithVehs.push_back(roadCell);
 							generatedVehsCnt++;
 							if (generatedVehsCnt >= vehsToGenerateCnt) {
 								return;
@@ -104,7 +94,6 @@ void Map::fillWithVehs(double fillingDegree) {
 			if (generator->getVehicle() == nullptr) {
 				if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
 					generator->setVehicle(new Vehicle(0));
-					cellsWithVehs.push_back(generator);
 					generatedVehsCnt++;
 					if (generatedVehsCnt >= vehsToGenerateCnt) {
 						return;
@@ -115,23 +104,43 @@ void Map::fillWithVehs(double fillingDegree) {
 	}
 }
 
-void Map::updateObstacleAheadWarnings(int stepsBackCnt) {
-	for (Road* road : roads) {
-		for (std::vector<Cell*> lane : road->getRoad()) {
-			for (Cell* roadCell : lane) {
+std::vector<Cell*> Map::getCellsWithVehs() {
+	std::vector<Cell*> cellsWithVehs;
+	for (Road* roads : roads) {
+		for (std::vector<Cell*> roadLane : roads->getRoad()) {
+			for (Cell* roadCell : roadLane) {
 				Vehicle* cellVeh = roadCell->getVehicle();
-				if (cellVeh != nullptr && cellVeh->checkIsObstacle() == true) {
-					roadCell->updateObstacleAhead();
-					Cell* tempCell = roadCell;
-					for (int i = 1; i <= stepsBackCnt; i++) {
-						tempCell = tempCell->getPreviousCell();
-						if (tempCell == nullptr) {
-							break;
-						}
-						tempCell->updateObstacleAhead();
-					}
+				if (cellVeh != nullptr && cellVeh->getIsObstacle() == false) {
+					cellsWithVehs.push_back(roadCell);
 				}
 			}
+		}
+	}
+	for (Generator* generator : generators) {
+		if (generator->getVehicle() != nullptr) {
+			cellsWithVehs.push_back(generator);
+		}
+	}
+	return cellsWithVehs;
+}
+
+void Map::updateMap(std::vector<Cell*>* cellsWithVehs) {
+	for (Generator* generator : generators) {
+		if (generator->createVeh() == true) {
+			cellsWithVehs->push_back(generator);
+		}
+	}
+	for (Crossing* crossing : crossings) {
+		crossing->updateCrossing();
+		std::vector<TrafficLights*> crossingLights = crossing->getTrafficLights();
+		for (TrafficLights* crossingLight : crossingLights) {
+			crossingLight->updateTrafficLights();
+		}
+	}
+	for (Road* road : roads) {
+		std::vector<TrafficLights*> roadLights = road->getTrafficLights();
+		for (TrafficLights* roadLight : roadLights) {
+			roadLight->updateTrafficLights();
 		}
 	}
 }
@@ -165,6 +174,7 @@ void Map::createJSON() {
 		mapTree.put(nameTree + ".Length", roads[i]->getLength());
 		mapTree.put(nameTree + ".Height", roads[i]->getHeight());
 	}
+	std::vector<Cell*> cellsWithVehs = getCellsWithVehs();
 	for (unsigned int i = 0; i < cellsWithVehs.size(); i++) {
 		std::string nameTree = "Map.Cell";
 		mapTree.put(nameTree + ".MaxSpeed", cellsWithVehs[i]->getMaxSpeed());

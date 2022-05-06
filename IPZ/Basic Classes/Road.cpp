@@ -2,14 +2,13 @@
 
 #include "Road.h"
 
-Road::Road(std::string name, int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+Road::Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
     if(length < 1)
         throw std::invalid_argument("Length must be bigger than 1");
     if(height < 1)
         throw std::invalid_argument("Height must be bigger than 1");
     if(maxSpeed < 1 || maxSpeed > 6)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
-    this->name = filterName(name);
     ID = IDcnt++;
     createRoad();
 }
@@ -118,17 +117,7 @@ std::string Road::toString() {
     return roadStr;
 }
 
-std::string Road::filterName(std::string rawName) {
-    std::string tempName = "";
-    for (char character : rawName) {
-        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-            tempName += character;
-        }
-    }
-    return tempName;
-}
-
-std::vector<Cell*> Road::fillWithVehs(double fillingDegree) {
+void Road::fillWithVehs(double fillingDegree) {
     int passableCellsCnt = 0;
     for (std::vector<Cell*> lane : road) {
         for (Cell* roadCell : lane) {
@@ -141,24 +130,21 @@ std::vector<Cell*> Road::fillWithVehs(double fillingDegree) {
     }
     int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
     int generatedVehsCnt = 0;
-    std::vector<Cell*> cellsWithVehs;
     while (generatedVehsCnt < vehsToGenerateCnt) {
         for (std::vector<Cell*> lane : road) {
             for (Cell* roadCell : lane) {
                 if (roadCell->getVehicle() == nullptr) {
                     if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
                         roadCell->setVehicle(new Vehicle(0));
-                        cellsWithVehs.push_back(roadCell);
                         generatedVehsCnt++;
                         if (generatedVehsCnt >= vehsToGenerateCnt) {
-                            return cellsWithVehs;
+                            return;
                         }
                     }
                 }
             }
         }
     }
-    return cellsWithVehs;
 }
 
 void Road::createJSON() {
@@ -173,14 +159,28 @@ void Road::createJSON() {
     std::cout << oss.str();
 }
 
-void Road::addLights(TrafficLights* newLight)
-{
-    lights.push_back(newLight);
-    for (int i = 0; i < height; i++)
-        road[i][newLight->getPosition()]->setLight(newLight);
+void Road::addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane) {
+    trafficLights.push_back(newLight);
+    road[lane][distanceFromHead]->setTrafficLight(newLight);
 }
 
-std::vector<TrafficLights*> Road::getLights()
-{
-    return lights;
+void Road::addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead) {
+    trafficLights.push_back(newLight);
+    for (int i = 0; i < height; i++)
+        road[i][distanceFromHead]->setTrafficLight(newLight);
+}
+
+std::vector<TrafficLights*> Road::getTrafficLights() {
+    return trafficLights;
+}
+
+void Road::addObstacle(int distanceFromHead, int lane, int spotDistance) {
+    road[lane][distanceFromHead]->setVehicle(new Obstacle());
+    Cell* tempCell = road[lane][distanceFromHead];
+    for (int i = 1; i <= spotDistance; i++) {
+        tempCell = tempCell->getPreviousCell();
+        if (tempCell != nullptr) {
+            tempCell->setObstacleAhead(true);
+        }
+    }
 }
