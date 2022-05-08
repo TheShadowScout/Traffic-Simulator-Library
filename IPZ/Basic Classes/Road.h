@@ -25,7 +25,6 @@ public:
     Road(std::string name, int length, int height, int maxSpeed);
     Road(int length, int height, int maxSpeed);
     ~Road();
-    int getID();
     Cell* getLaneHead(int lane);
     Cell* getLaneTail(int lane);
     int getMaxSpeed();
@@ -40,7 +39,7 @@ public:
     void addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane);
     void addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead);
     void addObstacle(int distanceFromHead, int lane, int spotDistance = 0);
-    int fillWithVehs(double fillingDegree);
+    void fillWithVehs(double fillingDegree);
     void createJSON();
     std::string toString();
 };

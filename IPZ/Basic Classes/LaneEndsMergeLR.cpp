@@ -22,8 +22,6 @@ LaneEndsMergeLR::~LaneEndsMergeLR() {
 }
 
 void LaneEndsMergeLR::create() {
-    std::vector<Cell*> endingLaneL;
-    std::vector<Cell*> endingLaneR;
     for (int i = 0; i < length; i++) {
         RoadCell* newCellL = new RoadCell(maxSpeed);
         newCellL->setCarHolder(new CarHolder());
@@ -61,11 +59,11 @@ void LaneEndsMergeLR::create() {
 }
 
 Cell* LaneEndsMergeLR::getEndingLaneLHead() {
-    return endingLaneL.back();
+    return endingLaneL.front();
 }
 
 Cell* LaneEndsMergeLR::getEndingLaneRHead() {
-    return endingLaneR.back();
+    return endingLaneR.front();
 }
 
 std::vector<std::vector<Cell*>> LaneEndsMergeLR::getEndingLanes() {
@@ -197,6 +195,52 @@ void LaneEndsMergeLR::fillWithVehs(double fillingDegree) {
 }
 
 std::string LaneEndsMergeLR::toString() {
-    ;
-    return std::string();
+    std::string repStr = "LaneEndsMergeLR: ";
+    repStr += name;
+    repStr += "\n";
+    for (Cell* laneCell : endingLaneL) {
+        if (laneCell->getVehicle() == nullptr) {
+            repStr += ".";
+        }
+        else {
+            if (laneCell->getVehicle()->getIsObstacle() == true) {
+                repStr += "!";
+            }
+            else {
+                repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+            }
+        }
+    }
+    repStr += "\n";
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
+            if (laneCell->getVehicle() == nullptr) {
+                repStr += ".";
+            }
+            else {
+                if (laneCell->getVehicle()->getIsObstacle() == true) {
+                    repStr += "!";
+                }
+                else {
+                    repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                }
+            }
+        }
+        repStr += "\n";
+    }
+    for (Cell* laneCell : endingLaneR) {
+        if (laneCell->getVehicle() == nullptr) {
+            repStr += ".";
+        }
+        else {
+            if (laneCell->getVehicle()->getIsObstacle() == true) {
+                repStr += "!";
+            }
+            else {
+                repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+            }
+        }
+    }
+    repStr += "\n";
+    return repStr;
 }

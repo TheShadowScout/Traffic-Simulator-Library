@@ -13,7 +13,7 @@ public:
     LaneEndsMergeR(std::string name, int length, int height, int maxSpeed);
     LaneEndsMergeR(int length, int height, int maxSpeed);
     ~LaneEndsMergeR();
-    Cell* getEndingLaneLHead();
+    Cell* getEndingLaneRHead();
     std::vector<std::vector<Cell*>> getEndingLanes();
     int getPassableCellsCnt();
     std::vector<Cell*> getCellsWithVehs();

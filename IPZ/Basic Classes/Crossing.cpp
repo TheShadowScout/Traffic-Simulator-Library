@@ -92,17 +92,17 @@ void Crossing::linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* ne
 }
 
 std::string Crossing::toString() {
-    std::string crossingStr = "";
+    std::string repStr = "";
     for (std::vector<CarHolder*> carHolderRow : carHolderMatrix) {
         for (CarHolder* carHolder : carHolderRow) {
             if (carHolder->getVehicle() == nullptr) {
-                crossingStr += ".";
+                repStr += ".";
             }
             else {
-                crossingStr += std::to_string(carHolder->getVehicle()->getSpeed());
+                repStr += std::to_string(carHolder->getVehicle()->getSpeed());
             }
         }
-        crossingStr += "\n";
+        repStr += "\n";
     }
-    return crossingStr;
+    return repStr;
 }

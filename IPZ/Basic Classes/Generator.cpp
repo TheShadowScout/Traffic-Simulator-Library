@@ -53,8 +53,15 @@ bool Generator::createVeh() {
 }
 
 std::string Generator::toString() {
+	std::string repStr = "Generator: ";
+	repStr += name;
+	repStr += "\n";
 	if (carHolder->getVehicle() == nullptr) {
-		return ".\n";
+		repStr += ".";
 	}
-	return std::to_string(carHolder->getVehicle()->getSpeed()) + "\n";
+	else {
+		repStr += std::to_string(carHolder->getVehicle()->getSpeed());
+	}
+	repStr += "\n";
+	return repStr;
 }

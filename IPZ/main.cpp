@@ -8,22 +8,15 @@ int main() {
 */
 
 #include "Basic Classes/Simulation.h"
-#include "Basic Classes/Map.h"
-#include "Basic Classes/Road.h"
-#include "Basic Classes/Crossing.h"
-#include "Basic Classes/Obstacle.h"
 #include "Basic Classes/RGTrafficLights.h"
 #include "Basic Classes/SmartCrossing.h"
 #include "Basic Classes/BasicCrossing.h"
 #include "Basic Classes/LaneEndsMergeL.h"
+#include "Basic Classes/LaneEndsMergeLR.h"
+#include "Basic Classes/LaneEndsMergeR.h"
 
-///*
+/*
 int main() {
-	//std::srand(time(NULL));
-
-	//LaneEndsMergeL* x = new LaneEndsMergeL(10, 2, 3);
-
-	///*
 	std::srand(time(NULL));
 
 	Map* map = new Map("test");
@@ -64,9 +57,8 @@ int main() {
 		simulation.transitionFunc();
 		std::cout << simulation.toString() << std::endl;
 	}
-	//*/
 }
-//*/
+*/
 
 
 /*
@@ -104,3 +96,35 @@ int main() {
 	}
 }
 */
+
+///*
+int main() {
+	std::srand(time(NULL));
+
+	Map* map = new Map("test");
+
+	LaneEndsMergeLR* laneEndsMerge = new LaneEndsMergeLR(20, 1, 3);
+
+	Generator* generator1 = new Generator(3, 0.5);
+	Generator* generator2 = new Generator(3, 0.5);
+
+	Road* road1 = new Road(10, 1, 3);
+
+	linkCells(generator2, laneEndsMerge->getEndingLaneLHead());
+	linkCells(generator1, laneEndsMerge->getEndingLaneRHead());
+	linkCells(laneEndsMerge->getLaneTail(0), road1->getLaneHead(0));
+
+	map->addRoad(road1);
+	map->addLaneEndsMerge(laneEndsMerge);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+
+	Simulation simulation(map, 0, 0, 0);
+	simulation.initiateSimulation();
+
+	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
+		std::cout << simulation.toString() << std::endl;
+	}
+}
+//*/
