@@ -18,7 +18,6 @@ LaneEndsMergeR::~LaneEndsMergeR() {
 }
 
 void LaneEndsMergeR::create() {
-    std::vector<Cell*> endingLaneR;
     for (int i = 0; i < length; i++) {
         RoadCell* newCell = new RoadCell(maxSpeed);
         newCell->setCarHolder(new CarHolder());
@@ -41,8 +40,8 @@ void LaneEndsMergeR::create() {
     newCell->setPreviousCell(endingLaneR.back());
 }
 
-Cell* LaneEndsMergeR::getEndingLaneLHead() {
-    return endingLaneR.back();
+Cell* LaneEndsMergeR::getEndingLaneRHead() {
+    return endingLaneR.front();
 }
 
 std::vector<std::vector<Cell*>> LaneEndsMergeR::getEndingLanes() {
@@ -143,6 +142,38 @@ void LaneEndsMergeR::fillWithVehs(double fillingDegree) {
 }
 
 std::string LaneEndsMergeR::toString() {
-    ;
-    return std::string();
+    std::string repStr = "LaneEndsMergeR: ";
+    repStr += name;
+    repStr += "\n";
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
+            if (laneCell->getVehicle() == nullptr) {
+                repStr += ".";
+            }
+            else {
+                if (laneCell->getVehicle()->getIsObstacle() == true) {
+                    repStr += "!";
+                }
+                else {
+                    repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                }
+            }
+        }
+        repStr += "\n";
+    }
+    for (Cell* laneCell : endingLaneR) {
+        if (laneCell->getVehicle() == nullptr) {
+            repStr += ".";
+        }
+        else {
+            if (laneCell->getVehicle()->getIsObstacle() == true) {
+                repStr += "!";
+            }
+            else {
+                repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+            }
+        }
+    }
+    repStr += "\n";
+    return repStr;
 }

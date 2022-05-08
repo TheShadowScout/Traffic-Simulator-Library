@@ -18,6 +18,9 @@ Map::~Map() {
 	for (Crossing* crossing : crossings) {
 		delete crossing;
 	}
+	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
+		delete laneEndsMerge;
+	}
 }
 
 std::string Map::getName() {
@@ -36,6 +39,10 @@ std::vector<Crossing*> Map::getCrossings() {
 	return crossings;
 }
 
+std::vector<LaneEndsMerge*> Map::getLaneEndsMerges() {
+	return laneEndsMerges;
+}
+
 int Map::getMapPassableCellsCnt() {
 	int passableCellsCnt = 0;
 	for (Road* road : roads) {
@@ -48,19 +55,26 @@ int Map::getMapPassableCellsCnt() {
 		}
 		passableCellsCnt++;
 	}
+	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
+		passableCellsCnt += laneEndsMerge->getPassableCellsCnt();
+	}
 	return passableCellsCnt;
 }
 
 std::vector<Cell*> Map::getCellsWithVehs() {
 	std::vector<Cell*> cellsWithVehs;
-	for (Road* road : roads) {
-		std::vector<Cell*> roadCellsWithVehs = road->getCellsWithVehs();
-		cellsWithVehs.insert(cellsWithVehs.end(), roadCellsWithVehs.begin(), roadCellsWithVehs.end());
-	}
 	for (Generator* generator : generators) {
 		if (generator->getVehicle() != nullptr) {
 			cellsWithVehs.push_back(generator);
 		}
+	}
+	for (Road* road : roads) {
+		std::vector<Cell*> roadCellsWithVehs = road->getCellsWithVehs();
+		cellsWithVehs.insert(cellsWithVehs.end(), roadCellsWithVehs.begin(), roadCellsWithVehs.end());
+	}
+	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
+		std::vector<Cell*> laneEndsMergeCellsWithVehs = laneEndsMerge->getCellsWithVehs();
+		cellsWithVehs.insert(cellsWithVehs.end(), laneEndsMergeCellsWithVehs.begin(), laneEndsMergeCellsWithVehs.end());
 	}
 	return cellsWithVehs;
 }
@@ -77,25 +91,29 @@ void Map::addCrossing(Crossing* crossing) {
 	crossings.push_back(crossing);
 }
 
+void Map::addLaneEndsMerge(LaneEndsMerge* laneEndsMerge) {
+	laneEndsMerges.push_back(laneEndsMerge);
+}
+
 void Map::fillWithVehs(double fillingDegree) {
-	int passableCellsCnt = getMapPassableCellsCnt();
-	int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
+	int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * generators.size())), (int)generators.size());
 	int generatedVehsCnt = 0;
-	while (generatedVehsCnt < vehsToGenerateCnt) {
-		for (Road* road : roads) {
-			generatedVehsCnt += road->fillWithVehs(fillingDegree);
-		}
-		for (Generator* generator : generators) {
-			if (generator->getVehicle() == nullptr) {
-				if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
-					generator->setVehicle(new Vehicle(0));
-					generatedVehsCnt++;
-					if (generatedVehsCnt >= vehsToGenerateCnt) {
-						return;
-					}
+	for (Generator* generator : generators) {
+		if (generator->getVehicle() == nullptr) {
+			if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
+				generator->setVehicle(new Vehicle(0));
+				generatedVehsCnt++;
+				if (generatedVehsCnt >= vehsToGenerateCnt) {
+					return;
 				}
 			}
 		}
+	}
+	for (Road* road : roads) {
+		road->fillWithVehs(fillingDegree);
+	}
+	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
+		laneEndsMerge->fillWithVehs(fillingDegree);
 	}
 }
 
@@ -105,17 +123,17 @@ void Map::updateMap(std::vector<Cell*>* cellsWithVehs) {
 			cellsWithVehs->push_back(generator);
 		}
 	}
+	for (Road* road : roads) {
+		std::vector<TrafficLights*> roadLights = road->getTrafficLights();
+		for (TrafficLights* roadLight : roadLights) {
+			roadLight->updateTrafficLights();
+		}
+	}
 	for (Crossing* crossing : crossings) {
 		crossing->updateCrossing();
 		std::vector<TrafficLights*> crossingLights = crossing->getTrafficLights();
 		for (TrafficLights* crossingLight : crossingLights) {
 			crossingLight->updateTrafficLights();
-		}
-	}
-	for (Road* road : roads) {
-		std::vector<TrafficLights*> roadLights = road->getTrafficLights();
-		for (TrafficLights* roadLight : roadLights) {
-			roadLight->updateTrafficLights();
 		}
 	}
 }
@@ -159,6 +177,9 @@ std::string Map::toString() {
 	}
 	for (Crossing* crossing : crossings) {
 		mapStr += crossing->toString();
+	}
+	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
+		mapStr += laneEndsMerge->toString();
 	}
 	return mapStr += "\n";
 }

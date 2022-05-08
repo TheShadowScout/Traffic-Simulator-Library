@@ -139,7 +139,7 @@ void Road::addObstacle(int distanceFromHead, int lane, int spotDistance) {
     }
 }
 
-int Road::fillWithVehs(double fillingDegree) {
+void Road::fillWithVehs(double fillingDegree) {
     int passableCellsCnt = getPassableCellsCnt();
     int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
     int generatedVehsCnt = 0;
@@ -151,14 +151,13 @@ int Road::fillWithVehs(double fillingDegree) {
                         laneCell->setVehicle(new Vehicle(0));
                         generatedVehsCnt++;
                         if (generatedVehsCnt >= vehsToGenerateCnt) {
-                            return generatedVehsCnt;
+                            return;
                         }
                     }
                 }
             }
         }
     }
-    return generatedVehsCnt;
 }
 
 void Road::createJSON() {
@@ -174,22 +173,24 @@ void Road::createJSON() {
 }
 
 std::string Road::toString() {
-    std::string roadStr = "";
+    std::string repStr = "Road: ";
+    repStr += name;
+    repStr += "\n";
     for (std::vector<Cell*> lane : lanes) {
         for (Cell* laneCell : lane) {
             if (laneCell->getVehicle() == nullptr) {
-                roadStr += ".";
+                repStr += ".";
             }
             else {
                 if (laneCell->getVehicle()->getIsObstacle() == true) {
-                    roadStr += "!";
+                    repStr += "!";
                 }
                 else {
-                    roadStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                    repStr += std::to_string(laneCell->getVehicle()->getSpeed());
                 }
             }
         }
-        roadStr += "\n";
+        repStr += "\n";
     }
-    return roadStr;
+    return repStr;
 }
