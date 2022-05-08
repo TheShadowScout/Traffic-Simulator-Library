@@ -25,7 +25,6 @@ public:
     Road(std::string name, int length, int height, int maxSpeed);
     Road(int length, int height, int maxSpeed);
     ~Road();
-    int getID();
     Cell* getLaneHead(int lane);
     Cell* getLaneTail(int lane);
     int getMaxSpeed();
