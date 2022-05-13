@@ -6,6 +6,9 @@
 
 int main() {
 	Road* road1 = new Road(76, 1, 5, 'S');
+	Road* road2 = new Road(76, 1, 5, 'E');
+	Road* road3 = new Road(76, 1, 5, 'N');
+	Road* road4 = new Road(76, 1, 5, 'W');
 	// Road* road2 = new Road(75, 3, 5, 'E');
 	TrafficLights* light1 = new TrafficLights(LightColor(LightColor::red), 20, 7, 7);
 	road1->addLights(light1);
@@ -15,6 +18,9 @@ int main() {
 	//Generator* generator4 = new Generator(0.8);
 	Map* map = new Map("test");
 	map->addRoad(road1);
+	map->addRoad(road2);
+	map->addRoad(road3);
+	map->addRoad(road4);
 	// map->addRoad(road2);
 	map->addGenerator(generator1);
 	//map->addGenerator(generator2);
