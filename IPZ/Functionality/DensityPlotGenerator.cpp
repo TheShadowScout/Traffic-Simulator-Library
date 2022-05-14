@@ -28,7 +28,6 @@ int GenerateDensityPlot() {
 			{
 				Road* road = new Road(1000, 1, speed);
 				linkCells(road->getLaneTail(0), road->getLaneHead(0));
-
 				Map* map = new Map("test");
 				map->addRoad(road);
 				map->fillWithVehs(density);

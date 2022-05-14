@@ -1,7 +1,8 @@
 #include "SimulationWindow.h"
-#include "../Functionality/DensityPlotGenerator.h"
-#include "../Basic Classes/DataSaving.h"
-#include <map>
+
+int width = sf::VideoMode::getDesktopMode().width;
+int height = sf::VideoMode::getDesktopMode().height;
+
 SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size, float whichButton)
 {
     font.loadFromFile(fontFile);
@@ -9,13 +10,14 @@ SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size
     buttonText.setString(txt);
     buttonText.setCharacterSize(size);
     bounds = buttonText.getLocalBounds();
-
-    buttonText.setPosition(775, int(70 * whichButton));
+    
+    buttonText.setPosition(width - 225, int(70 * whichButton));
     buttonText.setFillColor(sf::Color::Black);
     bounds.left = buttonText.getPosition().x;
     bounds.top = buttonText.getPosition().y + 10;
     bounds.width = 200;
     bounds.height += 20;
+    
 
     background.setSize(sf::Vector2f(bounds.width, bounds.height));
     background.setPosition(bounds.left, bounds.top);
@@ -23,11 +25,69 @@ SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size
     buttonText.setPosition((bounds.left + bounds.width / 12), (bounds.top + bounds.height / 50));
 }
 
-void SimulationWindow::createSimulationWindow(Simulation s)
+void  SimulationWindow::setLights(sf::RectangleShape& shape, LightColor lightColor)
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "Simulation");
+    switch (lightColor)
+    {
+    case LightColor::red:
+        shape.setFillColor(sf::Color(255, 0, 0));
+        shape.setOutlineColor(sf::Color(0, 0, 0));
+        shape.setOutlineThickness(1);
+
+        break;
+    case LightColor::green:
+        shape.setFillColor(sf::Color(0, 255, 0));
+        shape.setOutlineColor(sf::Color(0, 0, 0));
+        shape.setOutlineThickness(1);
+        break;
+    case LightColor::yellow:
+    case LightColor::redyellow:
+        shape.setFillColor(sf::Color(255, 255, 0));
+        shape.setOutlineColor(sf::Color(0, 0, 0));
+        shape.setOutlineThickness(1);
+        break;
+    default:
+        break;
+    }
+}
+
+SimulationWindow::FrequencyButton::FrequencyButton(std::string txt, std::string fontFile, int size, float whichButton, bool isLeft)
+{
+    font.loadFromFile(fontFile);
+    buttonText.setFont(font);
+    buttonText.setString(txt);
+    buttonText.setCharacterSize(size);
+    bounds = buttonText.getLocalBounds();
+
+    buttonText.setPosition(width - 225, int(70 * whichButton));
+    buttonText.setFillColor(sf::Color::Black);
+    if (isLeft)
+    {
+        bounds.left = buttonText.getPosition().x;
+    }
+    else
+    {
+        bounds.left = buttonText.getPosition().x + 150;
+    }
+    
+    bounds.height = 40;
+    bounds.top = buttonText.getPosition().y + 10;
+    bounds.width = 50;
+
+    background.setSize(sf::Vector2f(bounds.width, bounds.height));
+    background.setPosition(bounds.left, bounds.top);
+
+    buttonText.setPosition((bounds.left + bounds.width / 12), (bounds.top + bounds.height / 50));
+}
+
+
+void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations)
+{
+    double refreshRate = 0.5;
+    sf::RenderWindow window(sf::VideoMode(width, height), "Simulation", sf::Style::Titlebar | sf::Style::Close);
 
     sf::Text menuText;
+    sf::Text refreshRateText;
     sf::Font font;
 
     font.loadFromFile("gui/calibri.ttf");
@@ -36,36 +96,180 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     menuText.setString("Menu");
     menuText.setCharacterSize(40);
     sf::FloatRect bounds = menuText.getLocalBounds();
-    menuText.setPosition(1000 - int(1.9 * bounds.width), 5);
+    menuText.setPosition(width - 2 * bounds.width, 5);
     menuText.setFillColor(sf::Color::Black);
 
-    Button start("Start", "gui/calibri.ttf", 30, 1);
-    Button stop("Stop", "gui/calibri.ttf", 30, 2);
-    Button stats("Statistics", "gui/calibri.ttf", 30, 3);
-    Button saveMap("Save map", "gui/calibri.ttf", 30, 4);
-    Button loadMap("Load map", "gui/calibri.ttf", 30, 5);
-    Button saveSimulation("Save\nsimulation", "gui/calibri.ttf", 30, 6);
-    Button loadSimulation("Load\nsimulation", "gui/calibri.ttf", 30, 7.5);
-    Button exitSimulation("Quit", "gui/calibri.ttf", 30, 9);
+    refreshRateText.setFont(font);
+    std::stringstream ss;
+    ss << std::setprecision(2) << refreshRate;
+    refreshRateText.setString(ss.str());
+    refreshRateText.setCharacterSize(30);
+    sf::FloatRect rfBounds = refreshRateText.getLocalBounds();
+    refreshRateText.setPosition(width - 225 + 85, 70 * 7.65);
+    refreshRateText.setFillColor(sf::Color::Black);
 
-    sf::RectangleShape menuRect(sf::Vector2f(250, 1000));
+    std::string fontName = "gui/calibri.ttf";
+
+    Button start("Start", fontName, 30, 1);
+    Button stop("Stop", fontName, 30, 2);
+    Button stats("Statistics", fontName, 30, 3);
+    Button saveMap("Save map", fontName, 30, 4);
+    Button loadMap("Load map", fontName, 30, 5);
+    Button clearSimulation("Clear\nsimulation", fontName, 30, 6);
+    FrequencyButton lowerFrequency("  +", fontName, 30, 7.5, false);
+    FrequencyButton higherFrequency("  -", fontName, 30, 7.5, true);
+    Button exitSimulation("Quit", fontName, 30, 8.5);
+
+    sf::RectangleShape menuRect(sf::Vector2f(250, height));
     menuRect.setFillColor(sf::Color(159, 193, 211));
-    menuRect.setPosition(750, 0);
+    menuRect.setPosition(width - 250, 0);
 
+
+
+    double cellSizeConst = 0.005;
+
+    double cellWidth = 1.0 * width * cellSizeConst;
+    double cellHeight = 1.0 * height * cellSizeConst;
+
+    bool simulationStarted = false;
+    sf::Clock clock;
+
+    while (window.isOpen())
+    {
+        float time = clock.getElapsedTime().asSeconds();
+        if (simulationStarted && time >= refreshRate) {
+            simulation->transitionFunc();
+            for (Localization* localization : localizations) {
+                localization->draw(cellWidth, cellHeight);
+            }
+        }
+        clock.restart();
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                window.close();
+                break;
+            case sf::Event::MouseButtonPressed:
+                // rozpoczêcie symulacji
+                if (start.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulationStarted = true;
+                }
+                // zatrzymanie symulacji
+                if (stop.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulationStarted = false;
+                }
+                // generowanie statystyk
+                if (stats.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulation->saveStatisticsToFile();
+                    GenerateDensityPlot();
+                }
+                // zapisywanie mapy
+                if (saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    //DataSaving JSON(simulation->getSimulationMap());
+                    //JSON.saveData();
+                }
+                // wczytywanie mapy
+                if (loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    std::cout << "Wcisnieto wczytywanie mapy\n";
+                }
+                // czyszczenie symulacji
+                if (clearSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    std::cout << "Czyszczenie symulacji" << std::endl;
+                }
+                // wy³¹czanie programu
+                if (exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    window.close();
+                }
+                // zmniejszanie czêstotliwoœci odœwie¿ania symulacji
+                if (lowerFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    // Max
+                    if (refreshRate > 0.2)
+                        refreshRate -= 0.1;
+                    ss.str("");
+                    ss << std::setprecision(2) << 1.1 - refreshRate;
+                    refreshRateText.setString(ss.str());
+                }
+                // zwiêkszanie czêstotliwoœci odœwie¿ania symulacji
+                if (higherFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    // Min
+                    if (refreshRate < 0.9)
+                        refreshRate += 0.1;
+                    ss.str("");
+                    ss << std::setprecision(2) << 1.1 - refreshRate;
+                    refreshRateText.setString(ss.str());
+                }
+            }
+        }
+
+        window.clear(sf::Color(255, 255, 255));
+
+        window.draw(menuRect);
+        window.draw(menuText);
+        window.draw(refreshRateText);
+
+        window.draw(start.background);
+        window.draw(stop.background);
+        window.draw(stats.background);
+        window.draw(saveMap.background);
+        window.draw(loadMap.background);
+        window.draw(clearSimulation.background);
+        window.draw(lowerFrequency.background);
+        window.draw(higherFrequency.background);
+        window.draw(exitSimulation.background);
+
+        window.draw(start.buttonText);
+        window.draw(stop.buttonText);
+        window.draw(stats.buttonText);
+        window.draw(saveMap.buttonText);
+        window.draw(loadMap.buttonText);
+        window.draw(clearSimulation.buttonText);
+        window.draw(lowerFrequency.buttonText);
+        window.draw(higherFrequency.buttonText);
+        window.draw(exitSimulation.buttonText);
+
+        window.display();
+    }
+}
+    /*
     auto r = dynamic_cast<Map*>(s.getSimulationMap())->getRoads();
     std::vector<sf::RectangleShape> roadRects;
-    int offset = 1000 / (2 * r.size());
-    double refreshRate = 0.5;
-    int pixelSize = 5;
-    int roadHeight = 20;
-    int roadGap = 1000 / (r.size() + 1);
+    int offset = height / (2 * r.size());
+    int offset2 = (width - 250) / (2 * r.size());
+    int pixelSize = width * 0.005;
+    int roadHeight = height * 0.020;
+    int roadGap = height / (r.size() + 1);
     int prevRoadHeight = 0;
+
+    // drogi
     for (int i = 0; i < r.size(); i++)
     {
-        sf::RectangleShape shape(sf::Vector2f(pixelSize * r[i]->getLength(), roadHeight * r[i]->getHeight()));
-        shape.setFillColor(sf::Color(211, 211, 211));
-        shape.setPosition(325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2, offset + roadGap * i + prevRoadHeight);
-        roadRects.push_back(shape);
+        if (r[i]->getDirection() == 'N' || r[i]->getDirection() == 'S')
+        {
+            sf::RectangleShape shape(sf::Vector2f(roadHeight * r[i]->getHeight(), pixelSize * r[i]->getLength()));
+            shape.setPosition(offset2 + roadGap * i + prevRoadHeight, 0);// width * 0.325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2);
+            shape.setFillColor(sf::Color(211, 211, 211));
+            roadRects.push_back(shape);
+        }
+        else
+        {
+            sf::RectangleShape shape(sf::Vector2f(pixelSize * r[i]->getLength(), roadHeight * r[i]->getHeight()));
+            shape.setPosition(width * 0.325 - r[i]->getLength() * pixelSize + (int)r[i]->getLength() * pixelSize / 2, offset + roadGap * i + prevRoadHeight);
+            shape.setFillColor(sf::Color(211, 211, 211));
+            roadRects.push_back(shape);
+        }
+
         prevRoadHeight += roadHeight * r[i]->getHeight();
     }
 
@@ -73,21 +277,16 @@ void SimulationWindow::createSimulationWindow(Simulation s)
     sf::Clock clock;
 
     std::vector<sf::RectangleShape> vehs;
+    int carHeight = int(height * 0.004);
+    int carLength = int(width * 0.004);
 
-    int carHeight = 4;
-    int carLength = 4;
-    
     std::vector<sf::RectangleShape> lights;
-    typedef std::map <int, sf::Color> TrafficLightsColors;
-    TrafficLightsColors lightsColors;
-    lightsColors.insert(TrafficLightsColors::value_type(1, sf::Color(255,0,0)));
-    lightsColors.insert(TrafficLightsColors::value_type(3, sf::Color(0,255,0)));
-    lightsColors.insert(TrafficLightsColors::value_type(4, sf::Color(255,255,0)));
-    int lightHeight = 2;
-    int lightLength = 5;
+
+    int lightHeight = height * 0.005;
+    int lightLength = width * 0.005;
 
     s.initiateSimulation();
-    
+
     while (window.isOpen())
     {
         float time = clock.getElapsedTime().asSeconds();
@@ -108,17 +307,42 @@ void SimulationWindow::createSimulationWindow(Simulation s)
                         {
                             sf::RectangleShape shape(sf::Vector2f(carLength, carHeight));
                             shape.setFillColor(sf::Color(255, 0, 0));
-                            shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
-                            vehs.push_back(shape);
-                            // if(r[whichRoad]->getRoad()[whichLane][whichCell]->getLights()!=NULL){
-                            //     lightColor = r[whichRoad]->getRoad()[whichLane][whichCell]->getLights().
-                            //     sf::RectangleShape shape(sf::Vector2f(lightLength, lightHeight));
-                            //     shape.setFillColor(sf::Color(255, 0, 0));
-                            //     shape.setPosition(whichCell * pixelSize + 325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
-                            //     vehs.push_back(shape);
-                            // }
-                        
+                            switch (r[whichRoad]->getDirection())
+                            {
+                                case 'N':
+                                    break;
+                                case 'S':
+                                    std::cout << whichCell * pixelSize + width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2 << std::endl;
+                                    shape.setPosition(offset2 + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight, whichCell * pixelSize); //+ width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2);
+                                    break;
+                                case 'E':
+                                    shape.setPosition(whichCell * pixelSize + width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + 2 + roadHeight / 2 + prevRoadHeight);
+                                    break;
+                                case 'W':
+                                    break;
+                            }
 
+                            vehs.push_back(shape);
+                        }
+
+                        if (r[whichRoad]->getRoad()[whichLane][whichCell]->getLight() != NULL)
+                        {
+                            LightColor lightColor = r[whichRoad]->getRoad()[whichLane][whichCell]->getLight()->getColor();
+
+                            if (r[whichRoad]->getDirection() == 'N' || r[whichRoad]->getDirection() == 'S')
+                            {
+                                sf::RectangleShape shape(sf::Vector2f(lightHeight, lightLength));
+                                setLights(shape, lightColor);
+                                shape.setPosition(offset2 + roadGap * whichRoad + whichLane * roadHeight - carHeight + height * 0.002 + roadHeight / 2 + prevRoadHeight - height * 0.007, whichCell * pixelSize); //+ width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2);
+                                lights.push_back(shape);
+                            }
+                            else
+                            {
+                                sf::RectangleShape shape(sf::Vector2f(lightLength, lightHeight));
+                                setLights(shape, lightColor);
+                                shape.setPosition(whichCell * pixelSize + width * 0.325 - r[whichRoad]->getLength() * pixelSize + (int)r[whichRoad]->getLength() * pixelSize / 2, offset + roadGap * whichRoad + whichLane * roadHeight - carHeight + height * 0.002 + roadHeight / 2 + prevRoadHeight - height * 0.007);
+                                lights.push_back(shape);
+                            }
                         }
                     }
                 }
@@ -126,87 +350,19 @@ void SimulationWindow::createSimulationWindow(Simulation s)
             }
             clock.restart();
         }
-
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && start.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            simulationStarted = true;
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stop.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            simulationStarted = false;
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && stats.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            s.saveStatisticsToFile();
-            GenerateDensityPlot();
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            DataSaving JSON(s.getSimulationMap());
-            JSON.saveData();
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            std::cout << "Wcisnieto wczytywanie mapy\n";
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && saveSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            std::cout << "Wcisnieto zapis symulacji\n";
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && loadSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            std::cout << "Wcisnieto wczytywanie symulacji\n";
-        }
-
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-        {
-            window.close();
-        }
-
-        window.clear(sf::Color(255, 255, 255));
-
-        window.draw(menuRect);
-        window.draw(menuText);
-
-        window.draw(start.background);
-        window.draw(stop.background);
-        window.draw(stats.background);
-        window.draw(saveMap.background);
-        window.draw(saveSimulation.background);
-        window.draw(loadMap.background);
-        window.draw(loadSimulation.background);
-        window.draw(exitSimulation.background);
-
-        window.draw(start.buttonText);
-        window.draw(stop.buttonText);
-        window.draw(stats.buttonText);
-        window.draw(saveMap.buttonText);
-        window.draw(saveSimulation.buttonText);
-        window.draw(loadMap.buttonText);
-        window.draw(loadSimulation.buttonText);
-        window.draw(exitSimulation.buttonText);
-
         for (int i = 0; i < r.size(); i++)
         {
             window.draw(roadRects[i]);
         }
-
+        for (int i = 0; i < lights.size(); i++)
+        {
+            window.draw(lights[i]);
+        }
         for (int i = 0; i < vehs.size(); i++)
             window.draw(vehs[i]);
+        
 
         window.display();
     }
 }
+*/

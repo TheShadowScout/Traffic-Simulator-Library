@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TrafficLights.h"
+#include "../Basic Classes/TrafficLights.h"
 
 class RGYTrafficLights : public TrafficLights {
 protected:

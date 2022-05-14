@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Crossing.h"
+#include "../Basic Classes/Crossing.h"
 
 class BasicCrossing : public Crossing {
 protected:

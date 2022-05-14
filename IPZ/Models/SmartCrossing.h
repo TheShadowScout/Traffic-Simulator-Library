@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Crossing.h"
-#include "SmartCrossingInput.h"
+#include "../Basic Classes/Crossing.h"
+#include "../Basic Classes/SmartCrossingInput.h"
 
 class SmartCrossing : public Crossing {
 protected:

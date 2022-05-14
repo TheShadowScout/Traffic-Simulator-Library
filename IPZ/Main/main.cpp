@@ -1,12 +1,14 @@
-#include "Basic Classes/Simulation.h"
-
-#include "Basic Classes/LaneEndsMergeL.h"
-#include "Basic Classes/LaneEndsMergeLR.h"
-#include "Basic Classes/LaneEndsMergeR.h"
-#include "Basic Classes/BasicCrossing.h"
-#include "Basic Classes/SmartCrossing.h"
-#include "Basic Classes/RGTrafficLights.h"
-#include "Basic Classes/RGYTrafficLights.h"
+#include "../Basic Classes/Simulation.h"
+#include "../Models/RGTrafficLights.h"
+#include "../Models/SmartCrossing.h"
+#include "../Models/BasicCrossing.h"
+#include "../Models/LaneEndsMergeL.h"
+#include "../Models/LaneEndsMergeLR.h"
+#include "../Models/LaneEndsMergeR.h"
+#include "../Models/BasicCrossing.h"
+#include "../Models/SmartCrossing.h"
+#include "../Models/RGTrafficLights.h"
+#include "../Models/RGYTrafficLights.h"
 
 #define V 2
 #if V == 0
@@ -15,6 +17,8 @@ int main() {
 
 	Map* map = new Map("test map");
 
+	Road* road1 = new Road(1, 1, 1);
+	Road* road2 = new Road(1, 1, 1);
 	Road* road = new Road(150, 3, 3);
 	road->fillWithVehs(0.2);
 	road->addObstacle(50, 1);
@@ -25,6 +29,8 @@ int main() {
 	Generator* generator1 = new Generator(3, 0.2);
 	Generator* generator2 = new Generator(3, 0.2);
 
+	map->addRoad(road1);
+	map->addRoad(road2);
 	linkCells(generator0, road->getLaneHead(0));
 	linkCells(generator1, road->getLaneHead(1));
 	linkCells(generator2, road->getLaneHead(2));
@@ -108,7 +114,6 @@ int main() {
 	linkCells(generator3, road3->getLaneHead(0));
 
 	BasicCrossing* crossing = new BasicCrossing(8, 8, 4);
-
 	crossing->addNewCrossingLane('N', 2, 'S', 2, 1);
 	crossing->addNewCrossingLane('N', 2, 'W', 3, 2);
 	crossing->addNewCrossingLane('N', 3, 'S', 3, 2);
@@ -144,10 +149,11 @@ int main() {
 	map->addGenerator(generator3);
 	map->addCrossing(crossing);
 
-	Simulation simulation = Simulation(map, 0.2, 0);
+	Simulation simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
 	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
 		std::cout << "Iteration: " << i << std::endl;
 		std::cout << simulation.toString() << std::endl;
 		simulation.transitionFunc();

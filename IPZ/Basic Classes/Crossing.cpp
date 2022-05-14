@@ -12,8 +12,8 @@ Crossing::Crossing(int height, int length, int maxSpeed) : height(height), lengt
 }
 
 Crossing::~Crossing() {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < length; j++) {
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < length; j++) {
             delete carHolderMatrix[i][j];
         }
     }

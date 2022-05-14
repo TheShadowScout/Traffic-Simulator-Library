@@ -46,6 +46,12 @@
     <Filter Include="Header Files\Gui">
       <UniqueIdentifier>{23410382-9fe4-44a5-939d-d4790d1dc984}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{4960d7d8-359b-47aa-8945-6fea322ceab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Models">
+      <UniqueIdentifier>{e33c8ce1-89f8-4bdb-aaa9-4769a11b89ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries\gnuplot-iostream.h">
@@ -90,59 +96,77 @@
     <ClInclude Include="Gui\SimulationWindow.h">
       <Filter>Header Files\Gui</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\DataSaving.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\CarHolder.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\RoadCell.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\Crossing.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic Classes\TrafficLights.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\Obstacle.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\SmartCrossingInput.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\SmartCrossing.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\BasicCrossing.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\RGTrafficLights.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\RGYTrafficLights.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
     <ClInclude Include="Basic Classes\BasicCrossingInput.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Basic Classes\CarHolder.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Crossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Obstacle.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RoadCell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\SmartCrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\RGTrafficLights.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\RGYTrafficLights.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\SmartCrossing.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\BasicCrossing.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\LaneEndsMergeL.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\LaneEndsMergeLR.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\LaneEndsMergeR.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\Localization.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\SmartCrossingLocalization.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\BasicCrossingLocalization.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\LaneEndsMergeLocalizationLR.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\LaneEndsMergeLocalizationR.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\LaneEndsMergeLocalizationL.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\GeneratorLocalization.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui\RoadLocalization.h">
+      <Filter>Header Files\Gui</Filter>
+    </ClInclude>
     <ClInclude Include="Basic Classes\LaneEndsMerge.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\LaneEndsMergeL.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\LaneEndsMergeR.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Basic Classes\LaneEndsMergeLR.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Functionality\StatisticsGenerator.cpp">
       <Filter>Source Files\Functionality</Filter>
     </ClCompile>
@@ -173,56 +197,80 @@
     <ClCompile Include="Basic Classes\Vehicle.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Basic Classes\DataSaving.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\SimulationWindow.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
-    <ClCompile Include="Basic Classes\CarHolder.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\RoadCell.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\Crossing.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Basic Classes\TrafficLights.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\Obstacle.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\SmartCrossingInput.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\SmartCrossing.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\BasicCrossing.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\RGTrafficLights.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\RGYTrafficLights.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
     <ClCompile Include="Basic Classes\BasicCrossingInput.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Basic Classes\CarHolder.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Crossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Obstacle.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RoadCell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\SmartCrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\LaneEndsMergeL.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\LaneEndsMergeLR.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\LaneEndsMergeR.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\RGTrafficLights.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\RGYTrafficLights.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\SmartCrossing.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\BasicCrossing.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\BasicCrossingLocalization.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\GeneratorLocalization.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\LaneEndsMergeLocalizationLR.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\LaneEndsMergeLocalizationL.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\SmartCrossingLocalization.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\LaneEndsMergeLocalizationR.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\Localization.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui\RoadLocalization.cpp">
+      <Filter>Source Files\Gui</Filter>
+    </ClCompile>
     <ClCompile Include="Basic Classes\LaneEndsMerge.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Basic Classes\LaneEndsMergeL.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\LaneEndsMergeR.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\LaneEndsMergeLR.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
+    <ClCompile Include="Main\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
