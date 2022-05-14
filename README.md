@@ -377,8 +377,7 @@ Inherits from: [Cell](#cell)
 | Function type and name	| Arguments	| Description																		|
 | ------------- | ------------- | ----------------------------------------------------- |
 | Generator			| string name, int maxSpeed, double createVehProb | Class constructor																	|
-| Generator			| int maxSpeed, double createVehProb | Class constructor	|
-| ~Generator | --- | Class destructor																|
+| Generator			| int maxSpeed, double createVehProb | Class constructor	|															|
 | int getID | --- | Function returns ID of current [Generator](#generator) |
 | string getName			| ------------------------- | Function returns name of current [Generator](#generator)		|
 | void createVeh				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|

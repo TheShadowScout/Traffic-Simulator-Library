@@ -4,12 +4,10 @@
 
 LaneEndsMerge::LaneEndsMerge(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
     create();
-    ID = IDcnt++;
 }
 
 LaneEndsMerge::LaneEndsMerge(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
     create();
-    ID = IDcnt++;
     name = std::to_string(ID);
 }
 
@@ -36,6 +34,7 @@ void LaneEndsMerge::create() {
         throw std::invalid_argument("Height must be bigger than 1");
     if (maxSpeed < 1 || maxSpeed > 6)
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
+    ID = IDcnt++;
     for (int i = 0; i < height; i++) {
         std::vector<Cell*> newRoadLane;
         for (int j = 0; j < length; j++) {

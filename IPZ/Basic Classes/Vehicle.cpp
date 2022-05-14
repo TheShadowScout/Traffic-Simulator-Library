@@ -4,18 +4,17 @@
 
 Vehicle::Vehicle(std::string name, int speed) : name(name), speed(speed), isObstacle(false) {
 	create();
-	ID = IDcnt++;
 }
 
 Vehicle::Vehicle(int speed) : speed(speed), isObstacle(false) {
 	create();
-	ID = IDcnt++;
 	name = std::to_string(ID);
 }
 
 void Vehicle::create() {
 	if (speed < 0 || speed > 6)
 		throw std::invalid_argument("Speed must be in range between 0 and 6");
+	ID = IDcnt++;
 }
 
 std::string Vehicle::getName() {
