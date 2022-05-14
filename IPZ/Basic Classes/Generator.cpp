@@ -4,17 +4,11 @@
 
 Generator::Generator(std::string name, int maxSpeed, double createVehProb) : name(name), RoadCell(maxSpeed), createVehProb(createVehProb) {
 	create();
-	ID = IDcnt++;
 }
 
 Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
 	create();
-	ID = IDcnt++;
 	name = std::to_string(ID);
-}
-
-Generator::~Generator() {
-	delete carHolder->getVehicle();
 }
 
 int Generator::getID() {
@@ -30,6 +24,7 @@ void Generator::create() {
 		throw std::invalid_argument("Max speed must be in range between 1 and 6");
 	if (createVehProb < 0 || createVehProb > 1)
 		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
+	ID = IDcnt++;
 	setCarHolder(new CarHolder());
 }
 

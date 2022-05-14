@@ -1,4 +1,3 @@
-// Include
 #include <SFML/Graphics.hpp>
 #include "../Basic Classes/Simulation.h"
 
