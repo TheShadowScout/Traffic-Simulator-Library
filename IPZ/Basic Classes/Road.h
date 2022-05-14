@@ -1,13 +1,7 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
-
-#include "Cell.h"
+#include "RoadCell.h"
+#include "Obstacle.h"
 #include "TrafficLights.h"
 
 using boost::property_tree::ptree;
@@ -15,8 +9,6 @@ using boost::property_tree::ptree;
 class Road {
 public:
     int static IDcnt;
-    std::vector<Cell*> head;
-    std::vector<Cell*> tail;
 
 protected:
     int ID;
@@ -24,28 +16,30 @@ protected:
     int length;
     int height;
     std::string name;
-    std::vector<std::vector<Cell*>> road;
-    std::vector<TrafficLights*> lights;
-    char direction;
+    std::vector<std::vector<Cell*>> lanes;
+    std::vector<TrafficLights*> trafficLights;
+
+    void create();
 
 public:
-    Road(std::string name, int length, int height, int maxSpeed, char direction);
-    Road(int length, int height, int maxSpeed, char direction);
+    Road(std::string name, int length, int height, int maxSpeed);
+    Road(int length, int height, int maxSpeed);
     ~Road();
-    void createRoad();
+    Cell* getLaneHead(int lane);
+    Cell* getLaneTail(int lane);
     int getMaxSpeed();
     int getID();
     std::string getName();
     int getLength();
     int getHeight();
-    std::vector<std::vector<Cell*>> getRoad();
-    void setMaxSpeed(int maxSpeed);
-    void setName(std::string name);
-    void setDirection(char direction);
-    char getDirection();
-    std::string toString();
-    std::string filterName(std::string rawName);
+    std::vector<std::vector<Cell*>> getLanes();
+    int getPassableCellsCnt();
+    std::vector<Cell*> getCellsWithVehs();
+    std::vector<TrafficLights*> getTrafficLights();
+    void addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane);
+    void addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead);
+    void addObstacle(int distanceFromHead, int lane, int spotDistance = 0);
+    void fillWithVehs(double fillingDegree);
     void createJSON();
-    void addLights(TrafficLights* newLight);
-    std::vector<TrafficLights*> getLights();
+    std::string toString();
 };

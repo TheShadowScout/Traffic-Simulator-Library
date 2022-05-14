@@ -1,12 +1,8 @@
 #pragma once
 
-#include <iostream>
-#include <string>
+#include "RoadCell.h"
 
-#include "Cell.h"
-#include "Vehicle.h"
-
-class Generator : public Cell
+class Generator : public RoadCell
 {
 public:
 	int static IDcnt;
@@ -16,12 +12,14 @@ protected:
 	int ID;
 	double createVehProb;
 
-public:
-	Generator(std::string name, double createVehProb);
-	Generator(double createVehProb);
-	~Generator();
-	std::string toString();
-	std::string filterName(std::string rawName);
-	bool createVeh();
-};
+	void create();
 
+public:
+	Generator(std::string name, int maxSpeed, double createVehProb);
+	Generator(int maxSpeed, double createVehProb);
+	~Generator();
+	int getID();
+	std::string getName();
+	bool createVeh();
+	std::string toString();
+};

@@ -66,9 +66,6 @@
     <ClInclude Include="Basic Classes\Map.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\MovePrediction.h">
-      <Filter>Header Files\Basic Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Basic Classes\Observer.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
@@ -96,10 +93,49 @@
     <ClInclude Include="Basic Classes\DataSaving.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Basic Classes\CarHolder.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RoadCell.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\Crossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
     <ClInclude Include="Basic Classes\TrafficLights.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Basic Classes\YellowTrafficLights.h">
+    <ClInclude Include="Basic Classes\Obstacle.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\SmartCrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\SmartCrossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\BasicCrossing.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RGTrafficLights.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\RGYTrafficLights.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\BasicCrossingInput.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\LaneEndsMerge.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\LaneEndsMergeL.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\LaneEndsMergeR.h">
+      <Filter>Header Files\Basic Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic Classes\LaneEndsMergeLR.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -120,9 +156,6 @@
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
     <ClCompile Include="Basic Classes\Map.cpp">
-      <Filter>Source Files\Basic Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Basic Classes\MovePrediction.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
     <ClCompile Include="Basic Classes\Observer.cpp">
@@ -146,10 +179,49 @@
     <ClCompile Include="Gui\SimulationWindow.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
+    <ClCompile Include="Basic Classes\CarHolder.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RoadCell.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\Crossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
     <ClCompile Include="Basic Classes\TrafficLights.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Basic Classes\YellowTrafficLights.cpp">
+    <ClCompile Include="Basic Classes\Obstacle.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\SmartCrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\SmartCrossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\BasicCrossing.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RGTrafficLights.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\RGYTrafficLights.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\BasicCrossingInput.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\LaneEndsMerge.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\LaneEndsMergeL.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\LaneEndsMergeR.cpp">
+      <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic Classes\LaneEndsMergeLR.cpp">
       <Filter>Source Files\Basic Classes</Filter>
     </ClCompile>
   </ItemGroup>

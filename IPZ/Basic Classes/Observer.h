@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-
 #include "Cell.h"
-#include "Vehicle.h"
 
 class Observer {
 public:
@@ -22,7 +19,6 @@ public:
 	Observer(Cell* observationOriginCell);
 	std::string getName();
 	int getObservedPassingVehsCnt();
-	std::string toString();
-	std::string filterName(std::string rawName);
 	void checkVehPassing();
+	std::string toString();
 };

@@ -130,7 +130,7 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
     menuRect.setFillColor(sf::Color(159, 193, 211));
     menuRect.setPosition(width - 250, 0);
 
-    auto r = s.getSimulationMap()->getRoads();
+    auto r = dynamic_cast<Map*>(s.getSimulationMap())->getRoads();
     std::vector<sf::RectangleShape> roadRects;
     int offset = height / (2 * r.size());
     int offset2 = (width - 250) / (2 * r.size());
@@ -192,7 +192,7 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
                 {
                     for (int whichCell = 0; whichCell < r[whichRoad]->getLength(); whichCell++)
                     {
-                        if (r[whichRoad]->getRoad()[whichLane][whichCell]->getVehicle() != nullptr)
+                        if (r[whichRoad]->getLanes()[whichLane][whichCell]->getVehicle() != nullptr)
                         {
                             sf::RectangleShape shape(sf::Vector2f(carLength, carHeight));
                             shape.setFillColor(sf::Color(255, 0, 0));

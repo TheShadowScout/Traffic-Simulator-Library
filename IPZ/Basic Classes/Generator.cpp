@@ -2,39 +2,39 @@
 
 #include "Generator.h"
 
-Generator::Generator(std::string name, double createVehProb) : Cell(), createVehProb(createVehProb) {
+Generator::Generator(std::string name, int maxSpeed, double createVehProb) : name(name), RoadCell(maxSpeed), createVehProb(createVehProb) {
+	create();
 	ID = IDcnt++;
-	this->name = filterName(name);
 }
 
-Generator::Generator(double createVehProb) : Cell(), createVehProb(createVehProb) {
+Generator::Generator(int maxSpeed, double createVehProb) : RoadCell(maxSpeed), createVehProb(createVehProb) {
+	create();
 	ID = IDcnt++;
 	name = std::to_string(ID);
 }
 
 Generator::~Generator() {
-	delete vehicle;
+	delete carHolder->getVehicle();
 }
 
-std::string Generator::toString() {
-	if (vehicle == nullptr) {
-		return ".\n";
-	}
-	return std::to_string(vehicle->getSpeed()) + "\n";
+int Generator::getID() {
+	return ID;
 }
 
-std::string Generator::filterName(std::string rawName) {
-	std::string tempName = "";
-	for (char character : rawName) {
-		if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-			tempName += character;
-		}
-	}
-	return tempName;
+std::string Generator::getName() {
+	return name;
+}
+
+void Generator::create() {
+	if (maxSpeed < 1 || maxSpeed > 6)
+		throw std::invalid_argument("Max speed must be in range between 1 and 6");
+	if (createVehProb < 0 || createVehProb > 1)
+		throw std::invalid_argument("Create vehicle probability must be in range between 0 and 1");
+	setCarHolder(new CarHolder());
 }
 
 bool Generator::createVeh() {
-	if (vehicle == nullptr && 1.0 * std::rand() / RAND_MAX <= createVehProb) {
+	if (carHolder->getVehicle() == nullptr && 1.0 * std::rand() / RAND_MAX <= createVehProb) {
 		Cell* tempCell = this;
 		for (int i = 1; i <= maxSpeed; i++) {
 			tempCell = tempCell->getNextCell();
@@ -42,12 +42,26 @@ bool Generator::createVeh() {
 				break;
 			}
 			if (tempCell->getVehicle() != nullptr) {
-				vehicle = new Vehicle(i - 1);
+				carHolder->setVehicle(new Vehicle(i - 1));
 				return true;
 			}
 		}
-		vehicle = new Vehicle(maxSpeed);
+		carHolder->setVehicle(new Vehicle(maxSpeed));
 		return true;
 	}
 	return false;
+}
+
+std::string Generator::toString() {
+	std::string repStr = "Generator: ";
+	repStr += name;
+	repStr += "\n";
+	if (carHolder->getVehicle() == nullptr) {
+		repStr += ".";
+	}
+	else {
+		repStr += std::to_string(carHolder->getVehicle()->getSpeed());
+	}
+	repStr += "\n";
+	return repStr;
 }

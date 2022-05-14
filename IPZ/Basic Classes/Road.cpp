@@ -2,85 +2,75 @@
 
 #include "Road.h"
 
-Road::Road(std::string name, int length, int height, int maxSpeed, char direction) : length(length), height(height), maxSpeed(maxSpeed) {
-    this->name = filterName(name);
+Road::Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
+    create();
     ID = IDcnt++;
-    switch (direction)
-    {
-    case 'E':
-    case 'W':
-    case 'N':
-    case 'S':
-        this->direction = direction;
-        break;
-    default:
-        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
-    }
-    createRoad();
 }
 
-Road::Road(int length, int height, int maxSpeed, char direction) : length(length), height(height), maxSpeed(maxSpeed){
+Road::Road(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
+    create();
     ID = IDcnt++;
     name = std::to_string(ID);
-    createRoad();
-    switch (direction)
-    {
-    case 'E':
-    case 'W':
-    case 'N':
-    case 'S':
-        this->direction = direction;
-        break;
-    default:
-        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
-    }
 }
 
 Road::~Road() {
-    for (std::vector<Cell*> roadLane : road) {
-        for (Cell* laneCell : roadLane) {
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
             delete laneCell;
         }
     }
 }
 
-void Road::createRoad() {
+void Road::create() {
+    if (length < 1)
+        throw std::invalid_argument("Length must be bigger than 1");
+    if (height < 1)
+        throw std::invalid_argument("Height must be bigger than 1");
+    if (maxSpeed < 1 || maxSpeed > 6)
+        throw std::invalid_argument("Max speed must be in range between 1 and 6");
+    ID = IDcnt++;
     for (int i = 0; i < height; i++) {
         std::vector<Cell*> newRoadLane;
         for (int j = 0; j < length; j++) {
-            Cell* newCell = new Cell(maxSpeed);
+            RoadCell* newCell = new RoadCell(maxSpeed);
+            newCell->setCarHolder(new CarHolder());
             if (j == 0) {
-                head.push_back(newCell);
                 newRoadLane.push_back(newCell);
             }
             else {
                 newCell->setPreviousCell(newRoadLane[j - 1]);
                 newRoadLane[j - 1]->setNextCell(newCell);
                 newRoadLane.push_back(newCell);
-                if (j == length - 1)
-                    tail.push_back(newCell);
             }
         }
-        road.push_back(newRoadLane);
+        lanes.push_back(newRoadLane);
         if (i > 0) {
             for (int j = 0; j < length; j++) {
-                road[i][j]->setLeftCell(road[i - 1][j]);
-                road[i - 1][j]->setRightCell(road[i][j]);
+                lanes[i][j]->setLeftCell(lanes[i - 1][j]);
+                lanes[i - 1][j]->setRightCell(lanes[i][j]);
             }
         }
     }
+}
+
+Cell* Road::getLaneHead(int lane) {
+    return lanes[lane].front();
+}
+
+Cell* Road::getLaneTail(int lane) {
+    return lanes[lane].back();
 }
 
 int Road::getMaxSpeed() {
     return maxSpeed;
 }
 
-int Road::getID() {
-    return ID;
-}
-
 std::string Road::getName() {
     return name;
+}
+
+int Road::getID() {
+    return ID;
 }
 
 int Road::getLength() {
@@ -91,89 +81,116 @@ int Road::getHeight() {
     return height;
 }
 
-std::vector<std::vector<Cell*>> Road::getRoad() {
-    return road;
+std::vector<std::vector<Cell*>> Road::getLanes() {
+    return lanes;
 }
 
-void Road::setMaxSpeed(int maxSpeed) {
-    this->maxSpeed = maxSpeed;
+int Road::getPassableCellsCnt() {
+    int passableCellsCnt = 0;
+    Vehicle* cellVeh = nullptr;
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
+            cellVeh = laneCell->getVehicle();
+            if (cellVeh != nullptr && cellVeh->getIsObstacle() == true) {
+                continue;
+            }
+            passableCellsCnt++;
+        }
+    }
+    return passableCellsCnt;
 }
 
-void Road::setName(std::string name) {
-    this->name = name;
+std::vector<Cell*> Road::getCellsWithVehs() {
+    std::vector<Cell*> cellsWithVehs;
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
+            Vehicle* cellVeh = laneCell->getVehicle();
+            if (cellVeh != nullptr && cellVeh->getIsObstacle() == false) {
+                cellsWithVehs.push_back(laneCell);
+            }
+        }
+    }
+    return cellsWithVehs;
 }
 
-void Road::setDirection(char direction)
-{
-    switch (direction)
-    {
-    case 'E':
-    case 'W':
-    case 'N':
-    case 'S':
-        this->direction = direction;
-        break;
-    default:
-        throw std::exception("Nieprawid³owy kierunek ruchu na drodze!");
+std::vector<TrafficLights*> Road::getTrafficLights() {
+    return trafficLights;
+}
+
+void Road::addTrafficLightsToOneLane(TrafficLights* newLight, int distanceFromHead, int lane) {
+    trafficLights.push_back(newLight);
+    lanes[lane][distanceFromHead]->setTrafficLight(newLight);
+}
+
+void Road::addTrafficLightsToAllLanes(TrafficLights* newLight, int distanceFromHead) {
+    trafficLights.push_back(newLight);
+    for (int i = 0; i < height; i++)
+        lanes[i][distanceFromHead]->setTrafficLight(newLight);
+}
+
+void Road::addObstacle(int distanceFromHead, int lane, int spotDistance) {
+    lanes[lane][distanceFromHead]->setVehicle(new Obstacle());
+    Cell* tempCell = lanes[lane][distanceFromHead];
+    for (int i = 1; i <= spotDistance; i++) {
+        tempCell = tempCell->getPreviousCell();
+        if (tempCell != nullptr) {
+            tempCell->setObstacleAhead(true);
+        }
     }
 }
 
-char Road::getDirection()
-{
-    return this->direction;
-}
-
-std::string Road::toString() {
-    std::string roadStr = "";
-    for (std::vector<Cell*> roadLane : road) {
-        for (Cell* laneCell : roadLane) {
-            if (laneCell->getVehicle() == nullptr) {
-                roadStr += ".";
-            }
-            else {
-                if (laneCell->getVehicle()->getIsObstacle() == true) {
-                    roadStr += "!";
-                }
-                else {
-                    roadStr += std::to_string(laneCell->getVehicle()->getSpeed());
+void Road::fillWithVehs(double fillingDegree) {
+    int passableCellsCnt = getPassableCellsCnt();
+    int vehsToGenerateCnt = std::min((int)(std::round(fillingDegree * passableCellsCnt)), passableCellsCnt);
+    int generatedVehsCnt = 0;
+    while (generatedVehsCnt < vehsToGenerateCnt) {
+        for (std::vector<Cell*> lane : lanes) {
+            for (Cell* laneCell : lane) {
+                if (laneCell->getVehicle() == nullptr) {
+                    if (1.0 * std::rand() / RAND_MAX <= fillingDegree) {
+                        laneCell->setVehicle(new Vehicle(0));
+                        generatedVehsCnt++;
+                        if (generatedVehsCnt >= vehsToGenerateCnt) {
+                            return;
+                        }
+                    }
                 }
             }
         }
-        roadStr += "\n";
     }
-    return roadStr;
-}
-
-std::string Road::filterName(std::string rawName) {
-    std::string tempName = "";
-    for (char character : rawName) {
-        if ((character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (character >= '0' && character <= '9')) {
-            tempName += character;
-        }
-    }
-    return tempName;
 }
 
 void Road::createJSON() {
     ptree roadTree;
-    std::string nameTree = "Road" + std::to_string(getID());
-    roadTree.put(nameTree + ".Name", getName());
-    roadTree.put(nameTree + ".ID", getID());
-    roadTree.put(nameTree + ".Length", getLength());
-    roadTree.put(nameTree + ".Height", getHeight());
+    std::string nameTree = "Road" + std::to_string(ID);
+    roadTree.put(nameTree + ".Name", name);
+    roadTree.put(nameTree + ".ID", ID);
+    roadTree.put(nameTree + ".Length", length);
+    roadTree.put(nameTree + ".Height", height);
     std::ostringstream oss;
     boost::property_tree::write_json(oss, roadTree);
     std::cout << oss.str();
 }
 
-void Road::addLights(TrafficLights* newLight)
-{
-    lights.push_back(newLight);
-    for (int i = 0; i < height; i++)
-        road[i][newLight->getPosition()]->setLight(newLight);
-}
-
-std::vector<TrafficLights*> Road::getLights()
-{
-    return lights;
+std::string Road::toString() {
+    std::string repStr = "Road: ";
+    repStr += name;
+    repStr += "\n";
+    for (std::vector<Cell*> lane : lanes) {
+        for (Cell* laneCell : lane) {
+            if (laneCell->getVehicle() == nullptr) {
+                repStr += ".";
+            }
+            else {
+                if (laneCell->getVehicle()->getIsObstacle() == true) {
+                    repStr += "!";
+                }
+                else {
+                    repStr += std::to_string(laneCell->getVehicle()->getSpeed());
+                }
+            }
+        }
+        repStr += "\n";
+    }
+    return repStr;
 }

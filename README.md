@@ -21,13 +21,29 @@ Student project of a library in C++ used to create a road traffic simulator.
 5.4. [Vehicle](#vehicle)  
 5.5. [Generator](#generator)    
 5.6. [Simulation](#simulation)  
-5.7. [DataSaving](#datasaving)
-6. [Models](#models)
-6.1 [Traffic Lights](#traffic-lights)  
-7. [SimulationWindow](#simulationwindow)  
+5.7. [TrafficLights](#trafficlights)    
+5.8. [CarHolder](#carholder)  
+5.9. [Statistics](#statistics)  
+5.10. [Observer](#observer)  
+5.11. [RoadCell](#roadcell)  
+5.12. [BasicCrossingInput](#basiccrossinginput)  
+5.13. [Crossing](#crossing)  
+5.14. [LaneEndsMerge](#laneendsmerge)  
+5.15. [Obstacle](#obstacle)  
+5.16. [SmartCrossing](#smartcrossinginput)
+6. [Models](#models)  
+6.1 [RGTrafficLights](#rgtrafficlights)  
+6.2 [RGYTrafficLights](#rgytrafficlights)  
+6.2 [BasicCrossing](#basiccrossing)  
+6.3 [SmartCrossing](#smartcrossing)  
+6.4 [LaneEndsMergeL](#laneendsmergel)  
+6.5 [LaneEndsMergeR](#laneendsmerger)  
+6.6 [LaneEndsMergeLR](#laneendsmergelr)  
+7. [SimulationWindow](#simulationwindow)    
 8. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
 
 # Introduction
+
 # Installation
 1. Download to selected folder [vcpkg](https://vcpkg.io/en/getting-started.html)  
 2. Using Developer Command Prompt, go to vcpkg folder and install vcpkg.exe
@@ -42,7 +58,7 @@ Student project of a library in C++ used to create a road traffic simulator.
 ```
 .\vcpkg.exe install boost:x64-windows boost:x86-windows
 ```
-4. Install [Gnuplot](http://www.gnuplot.info/download.html) and add it to environment variables / PATH
+4. Install [Gnuplot](http://www.gnuplot.info/download.html) and adds it to environment variables / PATH
 5. Use command
 ```
 .\vcpkg.exe integrate install
@@ -144,143 +160,141 @@ int main() {
 ```
 
 # Test codes for program
-Simulation
+Demo
 ```
-#include "Basic Classes/Cell.h"
-#include "Basic Classes/Road.h"
-#include "Basic Classes/Map.h"
-#include "Basic Classes/Vehicle.h"
-#include "Basic Classes/Generator.h"
-#include "Libraries/Simulation.h"
-
-int Road::IDcnt = 0;
-int Vehicle::IDcnt = 0;
-int Generator::IDcnt = 0;
+#include "Basic Classes/Simulation.h"
+#include "Basic Classes/RGTrafficLights.h"
+#include "Basic Classes/SmartCrossing.h"
+#include "Basic Classes/BasicCrossing.h"
+#include "Basic Classes/LaneEndsMergeL.h"
+#include "Basic Classes/LaneEndsMergeLR.h"
+#include "Basic Classes/LaneEndsMergeR.h"
 
 int main() {
-	Road* road1 = new Road(100, 1, 5);
-	Road* road2 = new Road(50, 3, 3);
-	Generator* generator1 = new Generator(0.9);
-	Generator* generator2 = new Generator(0.5);
+	std::srand(time(NULL));
+
 	Map* map = new Map("test");
+
+	Road* road1 = new Road(1, 1, 1);
+	Road* road2 = new Road(1, 1, 1);
+
+	//road2->addObstacle(9, 0, 0);
+
 	map->addRoad(road1);
 	map->addRoad(road2);
+
+	Generator* generator1 = new Generator(1, 1.0);
+	Generator* generator2 = new Generator(1, 1.0);
+
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
-	linkCells(generator1, road1->head[0]);
-	linkCells(generator2, road2->head[0]);
-	linkCells(road2->tail[0], road2->head[1]);
-	linkCells(road2->tail[1], road2->head[2]);
-	Simulation simulation(map, 0.1);
+
+	linkCells(generator1, road1->getLaneHead(0));
+	linkCells(generator2, road2->getLaneHead(0));
+
+	BasicCrossing* crossing1 = new BasicCrossing(11, 11, 1);
+	crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
+	crossing1->addNewCrossingLane('N', 5, 'W', 5, 1);
+
+	crossing1->linkRoadLaneToCrossing(road1->getLaneTail(0), 'S', 5);
+	crossing1->linkRoadLaneToCrossing(road2->getLaneTail(0), 'N', 5);
+
+	//RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
+	//crossing1->addTrafficLights(lights, 'S', 5);
+
+	map->addCrossing(crossing1);
+
+	Simulation simulation(map, 0, 1, 0);
+	simulation.initiateSimulation();
+
 	for (int i = 0; i < 100; i++) {
 		simulation.transitionFunc();
-		std::cout << simulation.tempToString() << std::endl;
+		std::cout << simulation.toString() << std::endl;
 	}
 }
 ```
 
-Simulation Window
-```
-#pragma once
-#include "Gui/SimulationWindow.h"
-#include "Functionality/StatisticsGenerator.h"
-int main() {
-	Road* road1 = new Road(100, 1, 5);
-	Road* road2 = new Road(50, 3, 3);
-	Road* road3 = new Road(75, 2, 3);
-	Road* road4 = new Road(100, 1, 5);
-	Generator* generator1 = new Generator(0.9);
-	Generator* generator2 = new Generator(0.5);
-	Generator* generator3 = new Generator(0.7);
-	Generator* generator4 = new Generator(0.9);
-	Map* map = new Map("test");
-	map->addRoad(road1);
-	map->addRoad(road2);
-	map->addRoad(road3);
-	map->addRoad(road4);
-	map->addGenerator(generator1);
-	map->addGenerator(generator2);
-	map->addGenerator(generator3);
-	map->addGenerator(generator4);
-	linkCells(generator1, road1->head[0]);
-	linkCells(generator2, road2->head[0]);
-	linkCells(generator3, road3->head[0]);
-	linkCells(generator4, road4->head[0]);
-	linkCells(road2->tail[0], road2->head[1]);
-	linkCells(road2->tail[1], road2->head[2]);
-
-
-	linkCells(road3->tail[0], road3->head[1]);
-	Simulation simulation(map, 0.1);
-
-	SimulationWindow test;
-	test.createSimulationWindow(simulation);
-}
-```
 # Basic classes
 ## Cell
 Filename with class: **Cell.h**  
 Class name: **Cell**  
 
-| Variable name	| Variable type			        | Description											|
-| ------------- |-| ----------------------------------------------------------------- |
-| vehicle       |Vehicle*| variable that holds a pointer to [Vehicle](#vehicle)				|
-| rightCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to right	|
-| leftCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to left	|
-| nextCell		|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to bottom |
-| previousCell	|Cell*| variable that holds a pointer to [Cell](#cell) adjacent to top	|
-| maxSpeed	|int|variable that holds a max speed in [Cell](#cell)	|
-| light	|[TrafficLights](#traffic-lights)*|variable that holds a pointer to [TrafficLights](#traffic-lights)|
+| Variable name	  | Variable type			              | Description											                                          |
+| -------------   |-                                | -----------------------------------------------------------------         |
+| carHolder       |[CarHolder](#carholder)*                       | variable that holds a pointer to [CarHolder][#carholder] adjacent to top  |
+| rightCell		    |Cell*                            | variable that holds a pointer to [Cell](#cell) adjacent to right	        |
+| leftCell		    |Cell*                            | variable that holds a pointer to [Cell](#cell) adjacent to left	          |
+| previousCell	  |Cell*                            | variable that holds a pointer to [Cell](#cell) adjacent to top	          |
+| maxSpeed	      |int                              |variable that holds a max speed in [Cell](#cell)	                          |
+| trafficLight	  |[TrafficLights](#traffic-lights)*|variable that holds a pointer to [TrafficLights](#traffic-lights)          |
+| isObstacleAhead | boolean                         | flag that informs is an obstacle ahead of current [Cell](#cell)           |
 
-| Function type and name			| Arguments							| Description																				|
-| --------------------------------- | ---------------------------------	| ----------------------------------------------------------------------------------------- |
-| void Cell							| ---------------------------------	| Class constructor																			|
-| void setVehicle					| [Vehicle*](#vehicle) vehicle		| Function sets in current [Cell](#cell) new pointer to [Vehicle](#vehicle)					|
-| void setRightCell					| [Cell*](#cell) newRightCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the right	|
-| void setLeftCell					| [Cell*](#cell) newLeftCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the left	|
-| void setPreviousCell				| [Cell*](#cell) newPreviousCell	| Function sets in current [Cell](#cell) new pointer to  [Cell](#cell) adjacent to bottom	|
-| void setNextCell					| [Cell*](#cell) newNextCell		| Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to top		|
-| [Vehicle*](#vehicle)  getVehicle	| ---------------------------------	| Function returns pointer to [Vehicle](#vehicle) in current cell							|
-| [Cell*](#cell)  getRightCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to right								|
-| [Cell*](#cell)  getLeftCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to left								|
-| [Cell*](#cell)  getPreviousCell	| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to bottom								|
-| [Cell*](#cell)  getNextCell		| ---------------------------------	| Function returns pointer to [Cell](#cell) adjacent to top									|
-| void setMaxSpeed	| int maxSpeed	| Function sets max speed in [Cell](#cell)							|
-| void getMaxSpeed	| ---------------------------------	| Function returns max speed in [Cell](#cell)			|
-| void createJSON	| ---------------------------------	|Function creates JSON data tree of current [Cell](#cell)|
-| [TrafficLights](#traffic-lights)* getLight	| ---------------------------------	|Function return pointer to  [TrafficLights](#traffic-lights) if present in cell|
-| void setLight	| [TrafficLights](#traffic-lights)* newLight	|Function sets pointer to [TrafficLights](#traffic-lights)|
+| Function type and name			                                | Arguments							                      | Description																				                                        |
+| ---------------------------------                           | ---------------------------------	          | ----------------------------------------------------------------------------------------- |
+| [Cell*](#cell)						                                  | ---------------------------------	          | Class constructor																			                                    |
+| [Cell*](#cell)		                                          | int maxSpeed	                              | Class constructor																		                                    	|
+| ~[Cell*](#cell)                                             | ---------------------------------           | Class destructor
+| void setVehicle					                                    | [Vehicle*](#vehicle) vehicle		            | Function sets in current [Cell](#cell) new pointer to [Vehicle](#vehicle)					        |
+| void setRightCell					                                  | [Cell*](#cell) newRightCell		              | Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the right	|
+| void setLeftCell					                                  | [Cell*](#cell) newLeftCell		              | Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to the left	|
+| void setPreviousCell			      	                          | [Cell*](#cell) newPreviousCell	            | Function sets in current [Cell](#cell) new pointer to  [Cell](#cell) adjacent to bottom	  |
+| virtual void setNextCell					                          | [Cell*](#cell) newNextCell		              | Function sets in current [Cell](#cell) new pointer to [Cell](#cell) adjacent to top		    |
+| [Vehicle*](#vehicle)  getVehicle	                          | ---------------------------------	          | Function returns pointer to [Vehicle](#vehicle) in current cell							              |
+| void setCarHolder                                           | [CarHolder*](#carholder) carHolder          | Function sets in current [Cell](#cell) new pointer to [CarHolder](#carholder)             |
+| [Cell*](#cell)  getRightCell		                            | ---------------------------------	          | Function returns pointer to [Cell](#cell) adjacent to right							                	|
+| [Cell*](#cell)  getLeftCell		                              | ---------------------------------	          | Function returns pointer to [Cell](#cell) adjacent to left								                |
+| [Cell*](#cell)  getPreviousCell	                            | ---------------------------------	          | Function returns pointer to [Cell](#cell) adjacent to bottom								              |
+| virtual [Cell*](#cell)  getNextCell		                      | ---------------------------------	          | Function returns pointer to [Cell](#cell) adjacent to top									                |
+| void setMaxSpeed	                                          | int maxSpeed	                              | Function sets max speed in [Cell](#cell)							                                    |
+| void getMaxSpeed	                                          | ---------------------------------	          | Function returns max speed in [Cell](#cell)			                                          |
+| void createJSON	                                            | ---------------------------------	          | Function creates JSON data tree of current [Cell](#cell)                                  |
+| [TrafficLights](#traffic-lights)* getTrafficLight	          | ---------------------------------	          | Function return pointer to  [TrafficLights](#traffic-lights) if present in [Cell](#cell)  |
+| void setTrafficLight	                                      | [TrafficLights](#traffic-lights)* newLight	| Function sets pointer to [TrafficLights](#traffic-lights)                                 |
+| bool getObstacleAhead                                       | ---------------------------------           | Function returns flag which informs about an obstacle ahead of current [Cell](#cell)      |
+| void setObstacleAhead                                       | bool isObstacleAhead                        | Function sets flag which informs about an obstacle ahead of current [Cell](#cell)         |
+
+
 ## Road
 Filename with class: **Road.h**  
 Class name: **Road**  
 
-| Variable name | Variable type			        | Description																|
-| ------------- | ----------------------------- | ------------------------------------------------------------------------- |
-| ID		| int					        | variable that holds a [Road](#road) ID									|
-| maxSpeed		| int					        | variable that holds max vehicle speed										|
-| length        | int                           | variable that holds road length                                           |
-| height        | int                           | variable that holds road height                                           |
-| name			| string				        | variable that holds a [Road](#road) name									|
-| road			| vector<vector<[Cell](#cell)>>	| variable that holds vector of [Cells](#cell) creating up the road			|
-| head			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the head of road |
-| tail			| vector<[Cell](#cell)>	        | variable that holds vector of [Cells](#cell) creating up the tail of road |
-| lights			| vector<[TrafficLights]*(#traffic-lights)>	        | variable that holds vector of [Traffic Lights](#traffic-lights) set up on the road |
+| Variable name       | Variable type			                                      | Description                               																         |
+| -------------       | -----------------------------                           | -------------------------------------------------------------------------          |
+| ID		              | int					                                            | variable that holds a [Road](#road) ID		                  							         |
+| maxSpeed		        | int					                                            | variable that holds max vehicle speed										                           |
+| length              | int                                                     | variable that holds road length                                                    |
+| height              | int                                                     | variable that holds road height                                                    |
+| name			          | string				                                          | variable that holds a [Road](#road) name									                         |
+| lanes			          | vector<vector<[Cell](#cell)>>	                          | variable that holds vector of [Cells](#cell) creating up the road		    	         |
+| trafficLights			  | vector<[TrafficLights]*(#traffic-lights)>	              | variable that holds vector of [Traffic Lights](#traffic-lights) set up on the road |
+                    
+| Function type and name	                                    | Arguments					                                                          | Description												                                                          |
+| -------------------------                                   | --------------------------------------------------                          | ----------------------------------------------------------------------                      | 
+| [Road](#Road)				                                        | string name, int length, int height, int maxSpeed                           | Class constructor									 	                                                        |
+| [Road](#Road)				                                        | int length, int height, int maxSpeed                                        | Class constructor									 	                                                        |
+| ~[Road](#Road)                                              | ---                                                                         | Class destructor									 	                                                        |
+| [Cell*](#cell) getLaneHead                                  | int lane                                                                    | Function returns pointer to lane head                                                       |
+| [Cell*](#cell) getLaneTail                                  | int lane                                                                    | Function returns pointer to lane tail                                                       |
+| void setMaxSpeed		                                        | int maxSpeed				                                                        | Function sets new max speed in current [Road](#Road)		                                    |
+| void setName				                                        | string name				                                                          | Function sets name in current [Road](#Road)				                                          |
+| int getMaxSpeed			                                        | --------------------------------------------------                          | Function returns max speed of current [Road](#Road)		                                      | 
+| int getID			                                              | --------------------------------------------------                          | Function returns ID of current [Road](#Road)	                                              |
+| string getName			                                        | --------------------------------------------------                          | Function returns name of current [Road](#Road)			                                        |
+| vector<[Cell*](#cell)> getCellsWithVehs                     | ---                                                                         | Function returns vector of pointers to [Cells*](#cell) which contains a [Vehicle](#vehicle) |
+| int getLength			                                          | --------------------------------------------------                          | Function returns length of current [Road](#Road)			                                      |
+| int getHeight		                                            | --------------------------------------------------                          | Function returns height of current [Road](#Road)			                                      |
+| vector<vector<[Cell*](#cell)>> getLanes                     | --------------------------------------------------                          | Function returns lanes of current [Road](#road)                                             |
+| int getPassableCellsCnt()                                   | --------------------------------------------------                          | Function return number of passable [Cells](#cell) of current [Road](#road)                  |
+| void createJSON			                                        | --------------------------------------------------                          | Function creates JSON data tree of current [Road](#Road)	                                  |
+| string tempToString			                                    | -------------------------                                                   | Function return [Road](#Road) as string                                                     |
+| void addTrafficLightsToOneLane                              | [TrafficLights*](#traffic-lights) newLight, int distanceFromHead, int lane  | Function adds new [TrafficLights] to one selected [Road](#Road)                             |
+| void addTrafficLightsToAllLanes                             | [TrafficLights*](#traffic-lights) newLight, int distanceFromHead            | Function adds new [TrafficLights] to all [Roads](#Road)                                     |
+| void addObstacle                                            | int distanceFromHead, int lane, int spotDistance = 0                        | Function adds new obstacle in selected [Road](#Road)                                        |
+| void fillWithVehs                                           | double fillingDegree                                                        | Function fills [Road](#Road) with given filling degree between 0 and 1                      |
+| vector<[TrafficLights*](#traffic-lights)> getTraficLights		| ---                                                                         | Function returns vector of lights on the [Road](#Road)                                      |
+| string toString                                             | --------------------------------------------------                          | Function returns string which represents current [Road](#Road)                                      |
 
-| Function type and name	| Arguments					                         | Description												              |
-| ------------------------- | -------------------------------------------------- | ---------------------------------------------------------------------- | 
-| [Road](#Road)				| int maxSpeed, string name, int length, int height  | Class constructor									 	              |
-| void CreateRoad           | -------------------------------------------------- | Function creates empty [Road](#Road) from length and height parametrs  |
-| void setMaxSpeed			| int maxSpeed				                         | Function sets new max speed in current [Road](#Road)		              |
-| void setName				| string name				                         | Function sets name in current [Road](#Road)				              |
-| int getMaxSpeed			| -------------------------------------------------- | Function returns max speed of current [Road](#Road)		              | 
-| int getID			| -------------------------------------------------- | Function returns ID of current [Road](#Road)	
-| string getName			| -------------------------------------------------- | Function returns name of current [Road](#Road)			              |
-| int getLength			| -------------------------------------------------- | Function returns length of current [Road](#Road)			              |
-| int getHeight		| -------------------------------------------------- | Function returns height of current [Road](#Road)			              |
-| void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Road](#Road)	              |
-| string tempToString			| ------------------------- | Function return road as string|
-| void addLights		| [TrafficLights](#traffic-lights)* newLight | Adds light to the road|
-| std::vector<[TrafficLights](#traffic-lights)*> getLights		| [TrafficLights](#traffic-lights)* newLight | Returns vector of lights on the road|
+
 Example code
 ```
 #include "Basic Classes/Road.h"
@@ -297,27 +311,33 @@ int main() {
 Filename with class: **Map.h**  
 Class name: **Map**  
 
-| Variable name | Variable type							| Description																|
-| ------------- | ------------------------------------- | ------------------------------------------------------------------------- |
-| name			| string								| variable that holds a [Map](#map) name									|
-| roads			| map<[Road](#road), int>				| variable that holds a map of [Roads](#road)								|
-| generators	| map<[Generator](#generator), int>		| variable that holds a map of [Generators](#generator)						|
-| destructors	| map<[Destructor](#destructor), int>	| variable that holds a map of [Destructors](#destructor)					|
-| teleporters	| map<[Teleporter](#teleporter), int>	| variable that holds a map of [Teleporters](#teleporter)					|
-| cellsWithCars	| list<[Cell](#cell)>					| variable that holds a list of [Cells](#cell) with [Vehicles](#vehicle)	|
+| Variable name  | Variable type						                	| Description																                                |
+| -------------  | -------------------------------------      | ------------------------------------------------------------------------- |
+| name			     | string								                      | variable that holds a [Map](#map) name									                  |
+| roads			     | map<[Road](#road), int>				            | variable that holds a map of [Roads](#road)								                |
+| generators	   | map<[Generator](#generator), int>		      | variable that holds a map of [Generators](#generator)					          	|
+| crossings      | vector<[Crossing*](#crossing)>             | vector that holds [Crossings](#crossings)                                 |
+| laneEndsMerges | vector<[LaneEndsMerge*](#lane-ends-merge)> | vector that holds [LaneEndsMerge](#lane-ends-merge)                       |
 
 | Function type and name	| Arguments		| Description												|
 | ------------------------- | ------------- | --------------------------------------------------------- |
-| void Map					| string name	| Class constructor	|
-| void addRoad					| Road* road	| Function add road to [Map](#map)	|
-| void addGenerator					| Generator* generator	| Function add generator to [Map](#map)	|
-| void setcellsWithVehs					| vector<Cell*> cellsWithVehs	| Function set cell with vechicles 	|
-| vector<Road*> getRoads				|  -------------------------------------------------- 	| Function returns vector roads	|
-| vector<Generator*> getGenerators				|  -------------------------------------------------- 	| Function returns vector generators	|
-| vector<Cell*> getcellsWithVehs			|  -------------------------------------------------- 	| Function returns cell with vechicles	|
-| vector<Cell*> setCellsWithVehs			|  -------------------------------------------------- 	| Function set new cell with vechicles	|
+| [Map](#map)					| string name	| Class constructor	|
+| ~[Map](#map)    | --- | Class destructor
+| void addRoad					| [Road*](#road) road	| Function adds road to [Map](#map)	|
+| void addGenerator					| Generator* generator	| Function adds generator to [Map](#map)	|
+| void addCrossing | [Crossing*](#crossing) | Function adds [Crossing](#crossing) to [Map](#map) |
+| void addLaneEndsMerge | [LaneEndsMerge*](#lane-ends-merge) laneEndsMerge | Function adds [LaneEndsMerge] to [Map](#map)
+| void updateMap | vector<[Cell*](#cell)>* cellsWithVehs | Function updates [Map](#map) vector of [Cells](#cell)
+| vector<[Crossing*](#crossing) getCrossings | --- | Function returns vector of [Crossings](#crossing)
+| vector<[LaneEndsMerge*](#lane-ends-merge)> | --- | Function returns vector of [LaneEndsMerge](#lane-ends-merge) |
+| vector<Road*> getRoads				|  -------------------------------------------------- 	| Function returns vector [Roads](#road)	|
+| int getMapPassableCellsCnt | --- | Function returns number of passable [Cells](#cell) of current [Map](#map)
+| void fillWithVehs                                           | double fillingDegree                                                        | Function fills [Road](#Road) with given filling degree between 0 and 1                      |
+| vector<Generator*> getGenerators				|  -------------------------------------------------- 	| Function returns vector [Generators](#generator)	|
+| vector<Cell*> getCellsWithVehs			|  -------------------------------------------------- 	| Function returns [Cells](#cell) with [Vechicles](#vehicle)	|
 | string getName			|  -------------------------------------------------- 	| Function returns name of [Map](#map)	|
 | void createJSON			| -------------------------------------------------- | Function creates JSON data tree of current [Map](#map)		|
+| string toString                                             | --------------------------------------------------                          | Function returns string which represents current [Map](#map) 
 
 ## Vehicle
 Filename with class: **Vehicle.h**  
@@ -350,11 +370,19 @@ Inherits from: [Cell](#cell)
 | Variable name | Variable type	| Description											|
 | ------------- | ------------- | ----------------------------------------------------- |
 | name			| string		| variable that holds a [Generator](#generator) name	|
+| ID  | int | variable that holds ID of [Generator](#generator) |
+| IDcnt			| int static			| variable that holds a [Generator](#generator) ID for a new create vehicle	|
+| createVehProb | double | variable that holds a probability of creating [Vehicle](#vehicle) every iteration | 
 
 | Function type and name	| Arguments	| Description																		|
-| ------------------------- | --------- | --------------------------------------------------------------------------------- |
-| void Generator			| --------- | Class constructor																	|
-| void create				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|
+| ------------- | ------------- | ----------------------------------------------------- |
+| Generator			| string name, int maxSpeed, double createVehProb | Class constructor																	|
+| Generator			| int maxSpeed, double createVehProb | Class constructor	|
+| ~Generator | --- | Class destructor																|
+| int getID | --- | Function returns ID of current [Generator](#generator) |
+| string getName			| ------------------------- | Function returns name of current [Generator](#generator)		|
+| void createVeh				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|
+| string toString | --- | Function returns string which represents current [Generator](#generator) |
 
 ## Simulation
 Filename with class: **Simulation.h**  
@@ -362,31 +390,27 @@ Class name: **Simulation**
 
 | Variable name | Variable type	| Description														|
 | ------------- | ------------- | ----------------------------------------------------------------- |
-| distToSearch	| int			| array that holds a distance to search								|
-| ariSeqSum		| int    		| array that holds a distance needed to stop [vehicle](#vehicle) 	|
+| cellsWithVehs | vector<[Cell*](#cell)> | vector that holds [Cells](#cell) with [Vehicles](#vehicle) |
 | randEventProb	| double		| variable that holds random event									|
 | simMap		| [Map*](#map)	| object that holds simulation of [map](#map)								|
+|	simStats | [Statistics*](#statistics) | object that holds [Statistics](#statistics) of [Simulation](#simulation) |
+|	observers | vector<[Observer*](#observer)> | vector that holds [Observers](#observer) | 
+|	seed | int | variable that holds seed for randomEngine if given |
+|	randomEngine | default_random_engine | variable that holds random engine for shuffling vector of [Vehicles](#vehicle) | 
+|	minSafeSpace | int | variable that holds minimal distance between two [Vehicles](#vehicles) while changing lane of [Road](#road) |
+|	shuffleIfCompetition | bool | variable that holds a flag for shuffling vector of [Vehicles](#vehicle) |
 
 | Function type and name			| Arguments							| Description												|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| void Simulation					| [Map*](#map) simMap, double randEventProb | Class constructor											|
-| void transitionFunc				| --------------------------------- | Function return new position to [vehicle](#vehicle) in next tick|
-| string tempToString				| --------------------------------- | Function return simulation move [vehicle](#vehicle) as string|
-| int evalNewVehSpeed				| [Cell*](#cell) vehCell 										 | Function return new speed for [vehicle](#vehicle) in next tick| 
-| Vector<[Cell*](#cell)> moveVehs	| vector<[Cell*](#cell)> cellsWithVehs, vector<int> newVehsSpeeds | Function move [vehicle](#vehicle) in [cells](#cell)		|
-
-## DataSaving
-Filename with class: **DataSaving.h**  
-Class name: **DataSaving**
-
-| Variable name | Variable type	| Description														|
-| ------------- | ------------- | ------------- |
-| mapa	| [Map*](#map) | Map to generate JSON |
-
-| Function type and name			| Arguments							| Description												|
-| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| void DataSaving				| [Map*](#map) mapa | Object constructor |
-| void saveData();      | ----------------- | Function generates file with JSON containing map informations
+| [Simulation](#simulation)					| [Map*](#map) simMap, double randEventProb, int minSafeSpace, int seed = NULL, bool shuffleIfCompetition = true | Class constructor											|
+| [Map](#map) getSimulationMap | --- | Function returns [Simulation](#simulation) [Map](#map) |
+| [Statistics*](#statistics) getSimulationStatistics | --- | Function returns [Statistics](#statistics) of [Simulation](#simulation) |
+| [Observer*](#observer) getSimulationObserver | --- | Function returns [Observer](#observer) of [Simulation](#simulation) |
+| void addObserver | [Observer*](#observer) observer | Function sets [Simulation](#simulation) [Observer](#observer) |
+| void transitionFunc				| --------------------------------- | Function returns new position to [Vehicle](#vehicle) in next tick|
+| void saveStatisticsToFile | string outFolder = "StatisticsHistory/" | Function saves [Statistics*](#statistics) to file in selected folder |
+| void initiateSimulation | --- | Function starts [Simulation](#simulation) |
+| string toString				| --------------------------------- | Function returns string which represents current [Simulation](#simulation)|
 
 # Models
 ## Traffic Lights
@@ -448,7 +472,7 @@ int main() {
 	return 0;
 }
 ```
-## SimulationWindow
+# SimulationWindow
 Filename with class: **SimulationWindow.h**  
 Class name: **SimulationWindow**
 

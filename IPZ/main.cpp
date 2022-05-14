@@ -1,89 +1,178 @@
+#include "Basic Classes/Simulation.h"
+#include "Basic Classes/RGTrafficLights.h"
+#include "Basic Classes/SmartCrossing.h"
+#include "Basic Classes/BasicCrossing.h"
+#include "Basic Classes/LaneEndsMergeL.h"
+#include "Basic Classes/LaneEndsMergeLR.h"
+#include "Basic Classes/LaneEndsMergeR.h"
+#include "Basic Classes/BasicCrossing.h"
+#include "Basic Classes/SmartCrossing.h"
+#include "Basic Classes/RGTrafficLights.h"
+#include "Basic Classes/RGYTrafficLights.h"
 
-#pragma once
-
-#include "Gui/SimulationWindow.h"
-#include "Functionality/StatisticsGenerator.h"
-
+#define V 0
+#if V == 0
 int main() {
-	Road* road1 = new Road(76, 1, 5, 'S');
-	Road* road2 = new Road(76, 1, 5, 'E');
-	Road* road3 = new Road(76, 1, 5, 'N');
-	Road* road4 = new Road(76, 1, 5, 'W');
-	// Road* road2 = new Road(75, 3, 5, 'E');
-	TrafficLights* light1 = new TrafficLights(LightColor(LightColor::red), 20, 7, 7);
-	road1->addLights(light1);
-	Generator* generator1 = new Generator(0.7);
-	//Generator* generator2 = new Generator(0.8);
-	//Generator* generator3 = new Generator(0.8);
-	//Generator* generator4 = new Generator(0.8);
+	std::srand(time(NULL));
+
 	Map* map = new Map("test");
+	Map* map = new Map("test map");
+
+	Road* road1 = new Road(1, 1, 1);
+	Road* road2 = new Road(1, 1, 1);
+	Road* road = new Road(150, 3, 3);
+	road->fillWithVehs(0.2);
+	road->addObstacle(50, 1);
+	road->addObstacle(100, 0);
+	road->addObstacle(100, 2);
+
+	//road2->addObstacle(9, 0, 0);
+	Generator* generator0 = new Generator(3, 0.2);
+	Generator* generator1 = new Generator(3, 0.2);
+	Generator* generator2 = new Generator(3, 0.2);
+
+	map->addRoad(road1);
+	map->addRoad(road2);
+	linkCells(generator0, road->getLaneHead(0));
+	linkCells(generator1, road->getLaneHead(1));
+	linkCells(generator2, road->getLaneHead(2));
+
+	map->addRoad(road);
+	map->addGenerator(generator0);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+
+	Simulation simulation = Simulation(map, 0.2, 0);
+	simulation.initiateSimulation();
+
+	for (int i = 0; i < 100; i++) {
+		std::cout << "Iteration: " << i << std::endl;
+		std::cout << simulation.toString() << std::endl;
+		simulation.transitionFunc();
+	}
+
+	delete map;
+}
+#elif V == 1
+int main() {
+	std::srand(time(NULL));
+
+	Map* map = new Map("test map");
+
+	Road* road = new Road(50, 1, 5);
+
+	Generator* generator0 = new Generator(5, 0.2);
+	Generator* generator1 = new Generator(5, 0.2);
+	Generator* generator2 = new Generator(5, 0.2);
+
+	LaneEndsMergeLR* laneEndsMerge = new LaneEndsMergeLR(20, 1, 5);
+
+	linkCells(generator0, laneEndsMerge->getEndingLaneLHead());
+	linkCells(generator1, laneEndsMerge->getLaneHead(0));
+	linkCells(generator2, laneEndsMerge->getEndingLaneRHead());
+
+	Generator* generator1 = new Generator(1, 1.0);
+	Generator* generator2 = new Generator(1, 1.0);
+	linkCells(laneEndsMerge->getLaneTail(0), road->getLaneHead(0));
+
+	RGTrafficLights* trafficLights = new RGTrafficLights(LightColor::green, 10, 10);
+
+	road->addTrafficLightsToAllLanes(trafficLights, 25);
+
+	map->addRoad(road);
+	map->addGenerator(generator0);
+	map->addGenerator(generator1);
+	map->addGenerator(generator2);
+	map->addLaneEndsMerge(laneEndsMerge);
+
+	Simulation simulation = Simulation(map, 0.2, 0);
+	simulation.initiateSimulation();
+
+	for (int i = 0; i < 100; i++) {
+		std::cout << "Iteration: " << i << std::endl;
+		std::cout << simulation.toString() << std::endl;
+		simulation.transitionFunc();
+	}
+
+	delete map;
+}
+#elif V == 2
+int main() {
+	std::srand(time(NULL));
+
+	Map* map = new Map("test map");
+
+	Road* road0 = new Road(10, 1, 4);
+	Road* road1 = new Road(10, 1, 4);
+	Road* road2 = new Road(10, 1, 4);
+	Road* road3 = new Road(10, 1, 4);
+
+	Generator* generator0 = new Generator(4, 0.5);
+	Generator* generator1 = new Generator(4, 0.5);
+	Generator* generator2 = new Generator(4, 0.5);
+	Generator* generator3 = new Generator(4, 0.5);
+
+	linkCells(generator0, road0->getLaneHead(0));
+	linkCells(generator1, road1->getLaneHead(0));
+	linkCells(generator2, road2->getLaneHead(0));
+	linkCells(generator3, road3->getLaneHead(0));
+
+	BasicCrossing* crossing = new BasicCrossing(8, 8, 4);
+
+	BasicCrossing* crossing1 = new BasicCrossing(11, 11, 1);
+	crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
+	crossing1->addNewCrossingLane('N', 5, 'W', 5, 1);
+	crossing->addNewCrossingLane('N', 2, 'S', 2, 1);
+	crossing->addNewCrossingLane('N', 2, 'W', 3, 2);
+	crossing->addNewCrossingLane('N', 3, 'S', 3, 2);
+	crossing->addNewCrossingLane('N', 3, 'E', 4, 1);
+
+	crossing1->linkRoadLaneToCrossing(road1->getLaneTail(0), 'S', 5);
+	crossing1->linkRoadLaneToCrossing(road2->getLaneTail(0), 'N', 5);
+	crossing->addNewCrossingLane('S', 4, 'N', 4, 2);
+	crossing->addNewCrossingLane('S', 4, 'W', 3, 1);
+	crossing->addNewCrossingLane('S', 5, 'N', 5, 1);
+	crossing->addNewCrossingLane('S', 5, 'E', 4, 2);
+
+	//RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
+	//crossing1->addTrafficLights(lights, 'S', 5);
+	crossing->linkCellToCrossingInput(road0->getLaneTail(0), 'N', 2);
+	crossing->linkCellToCrossingInput(road1->getLaneTail(0), 'N', 3);
+	crossing->linkCellToCrossingInput(road2->getLaneTail(0), 'S', 4);
+	crossing->linkCellToCrossingInput(road3->getLaneTail(0), 'S', 5);
+
+	map->addCrossing(crossing1);
+	RGTrafficLights* trafficLights0 = new RGTrafficLights(LightColor::green, 16, 10);
+	RGTrafficLights* trafficLights1 = new RGTrafficLights(LightColor::green, 16, 10);
+	RGTrafficLights* trafficLights2 = new RGTrafficLights(LightColor::red, 16, 10, 3);
+	RGTrafficLights* trafficLights3 = new RGTrafficLights(LightColor::red, 16, 10, 3);
+
+	crossing->addTrafficLights(trafficLights0, 'N', 2);
+	crossing->addTrafficLights(trafficLights1, 'N', 3);
+	crossing->addTrafficLights(trafficLights2, 'S', 4);
+	crossing->addTrafficLights(trafficLights3, 'S', 5);
+
+	map->addRoad(road0);
 	map->addRoad(road1);
 	map->addRoad(road2);
 	map->addRoad(road3);
-	map->addRoad(road4);
-	// map->addRoad(road2);
+	map->addGenerator(generator0);
 	map->addGenerator(generator1);
-	//map->addGenerator(generator2);
-	//map->addGenerator(generator3);
-	//map->addGenerator(generator4);
-	linkCells(generator1, road1->head[0]);
-	//linkCells(generator2, road2->head[0]);
-	//linkCells(generator3, road2->head[1]);
-	//linkCells(generator4, road2->head[2]);
+	map->addGenerator(generator2);
+	map->addGenerator(generator3);
+	map->addCrossing(crossing);
 
-	SimulationWindow test;
-	test.createSimulationWindow(map, 0.1);
-	/*GenerateDensityPlot();*/
-	return 0;
+	Simulation simulation(map, 0, 1, 0);
+	Simulation simulation = Simulation(map, 0.2, 0);
+	simulation.initiateSimulation();
+
+	for (int i = 0; i < 100; i++) {
+		simulation.transitionFunc();
+		std::cout << "Iteration: " << i << std::endl;
+		std::cout << simulation.toString() << std::endl;
+		simulation.transitionFunc();
+	}
+
+	delete map;
 }
-
-
-#pragma once
-
-///*
-//#include "Functionality/DensityPlotGenerator.h"
-//#include "Functionality/StatisticsGenerator.h"
-//
-//int main() {
-//	GenerateDensityPlot();
-//	return 0;
-//}
-//*/
-
-
-//
-//#include <iostream>
-//
-//#include "Basic Classes/Simulation.h"
-//#include "Basic Classes/Map.h"
-//#include "Basic Classes/Road.h"
-//#include "Basic Classes/Vehicle.h"
-//#include "Basic Classes/Generator.h"
-//#include "Basic Classes/Observer.h"
-//
-//int main() {
-//	Road* road1 = new Road(100, 1, 5);
-//
-//	//road2->tail[0]->setVehicle(new Vehicle(0, true));
-//	TrafficLights* light = new TrafficLights(true, 30, 4);
-//	road1->addLights(light);
-//	Generator* generator = new Generator(0.1);
-//	//linkCells(generator, road->head[0]);
-//
-//	Map* map = new Map("test");
-//	map->addRoad(road1);
-//	map->addGenerator(generator);
-//
-//	//map->fillWithVehs(0.1);
-//
-//	Simulation simulation(map, 0.2);
-//	//Observer* observer = new Observer(road2->tail[0]);
-//	//simulation.addObserver(observer);
-//
-//	simulation.initiateSimulation();
-//	for (int i = 0; i < 100; i++) {
-//		simulation.transitionFunc();
-//		std::cout << simulation.toString() << std::endl;
-//	}
-//	map->~Map();
-//}
+#endif

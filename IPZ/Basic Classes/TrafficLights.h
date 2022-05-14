@@ -1,27 +1,31 @@
 #pragma once
+
+#include <string>
+
 enum class LightColor { red = 1, redyellow = 2, green = 3, yellow = 4 };
 
-class TrafficLights
-{
-	// bool isRed; // enum RED:YELLOW:GREEN
+class TrafficLights {
+public:
+	int static IDcnt;
+
 protected:
+	int ID;
 	LightColor color;
-	int position;
-	int redLightDuration;
-	int greenLightDuration;
+	int redDuration;
+	int greenDuration;
 	int timer;
+	std::string name;
+
+	void create(int timerOffset);
 
 public:
-	TrafficLights(LightColor startState, int position, int redDuration, int greenDuration);
+	TrafficLights(std::string name, LightColor startColor, int redDuration, int greenDuration, int timerOffset = 0);
+	TrafficLights(LightColor startColor, int redDuration, int greenDuration, int timerOffset = 0);
+	int getID();
+	std::string getName();
 	int getGreenDuration();
 	int getRedDuration();
 	LightColor getColor();
-	int getPosition();
 	int getTimer();
-	void setTimer(int newTimer);
-	void setColor(LightColor newColor);
-	void setPosition(int newPosition);
-	void setRedLightDuration(double duration);
-	void setGreenLightDuration(double duration);
-	void changeState();
+	virtual void updateTrafficLights() = 0;
 };

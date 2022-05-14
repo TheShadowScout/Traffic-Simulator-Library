@@ -2,68 +2,75 @@
 
 #include "Cell.h"
 
-Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(0), obstacleAhead(false), light(nullptr) {}
+Cell::Cell() : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(0), isObstacleAhead(false), trafficLight(nullptr) {}
 
-Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), nextCell(nullptr), vehicle(nullptr), maxSpeed(maxSpeed), obstacleAhead(false), light(nullptr) {}
+Cell::Cell(int maxSpeed) : rightCell(nullptr), leftCell(nullptr), previousCell(nullptr), carHolder(nullptr), maxSpeed(maxSpeed), isObstacleAhead(false), trafficLight(nullptr) {
+    if(maxSpeed > 6 || maxSpeed < 1)
+        throw std::invalid_argument("Max speed must be in range between 1 and 6");
+}
 
 Cell::~Cell() {
-    delete vehicle;
-}
-
-Vehicle* Cell::getVehicle() {
-    return vehicle;
-}
-
-Cell* Cell::getRightCell() {
-    return rightCell;
-}
-
-Cell* Cell::getLeftCell() {
-    return leftCell;
-}
-
-Cell* Cell::getPreviousCell() {
-    return previousCell;
-}
-
-Cell* Cell::getNextCell() {
-    return nextCell;
+    delete carHolder;
 }
 
 int Cell::getMaxSpeed() {
     return maxSpeed;
 }
 
-void Cell::setVehicle(Vehicle* Vehicle) {
-    this->vehicle = Vehicle;
-}
-
-void Cell::setRightCell(Cell* RightCell) {
-    this->rightCell = RightCell;
-}
-
-void Cell::setLeftCell(Cell* LeftCell) {
-    this->leftCell = LeftCell;
-}
-
-void Cell::setPreviousCell(Cell* PreviousCell) {
-    this->previousCell = PreviousCell;
-}
-
-void Cell::setNextCell(Cell* NextCell) {
-    this->nextCell = NextCell;
-}
-
 void Cell::setMaxSpeed(int maxSpeed) {
     this->maxSpeed = maxSpeed;
 }
 
-void Cell::updateObstacleAhead() {
-    obstacleAhead = true;
+void Cell::setCarHolder(CarHolder* carHolder) {
+    this->carHolder = carHolder;
 }
 
-bool Cell::checkObstacleAhead() {
-    return obstacleAhead;
+Vehicle* Cell::getVehicle() {
+    return carHolder->getVehicle();
+}
+
+void Cell::setVehicle(Vehicle* vehicle) {
+    this->carHolder->setVehicle(vehicle);
+}
+
+Cell* Cell::getRightCell() {
+    return rightCell;
+}
+
+void Cell::setRightCell(Cell* rightCell) {
+    this->rightCell = rightCell;
+}
+
+Cell* Cell::getLeftCell() {
+    return leftCell;
+}
+
+void Cell::setLeftCell(Cell* leftCell) {
+    this->leftCell = leftCell;
+}
+
+Cell* Cell::getPreviousCell() {
+    return previousCell;
+}
+
+void Cell::setPreviousCell(Cell* previousCell) {
+    this->previousCell = previousCell;
+}
+
+TrafficLights* Cell::getTrafficLight() {
+    return trafficLight;
+}
+
+void Cell::setTrafficLight(TrafficLights* newLight) {
+    trafficLight = newLight;
+}
+
+bool Cell::getObstacleAhead() {
+    return isObstacleAhead;
+}
+
+void Cell::setObstacleAhead(bool isObstacleAhead) {
+    this->isObstacleAhead = isObstacleAhead;
 }
 
 // Czy w statystykach pojedynczej komórki jest koniecznoœæ zapisanie informacji o najbli¿szych do niej komórek, czy te¿ nie?
@@ -78,12 +85,4 @@ void Cell::createJSON() {
     std::cout << oss.str();
 }
 
-void Cell::setLight(TrafficLights* newLight)
-{
-    light = newLight;
-}
 
-TrafficLights* Cell::getLight()
-{
-    return light;
-}

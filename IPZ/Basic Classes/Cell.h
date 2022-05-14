@@ -1,45 +1,41 @@
 #pragma once
 
-#include <iostream>
-#include <sstream>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
-
 #include "Vehicle.h"
+#include "CarHolder.h"
 #include "TrafficLights.h"
 
 using boost::property_tree::ptree;
 
 class Cell {
 protected:
+    int maxSpeed;
+    CarHolder* carHolder;
     Cell* rightCell;
     Cell* leftCell;
     Cell* previousCell;
-    Cell* nextCell;
-    Vehicle* vehicle;
-    int maxSpeed;
-    bool obstacleAhead;
-    TrafficLights* light;
+    TrafficLights* trafficLight;
+    bool isObstacleAhead;
 
 public:
     Cell();
     Cell(int maxSpeed);
     ~Cell();
-    Vehicle* getVehicle();
-    Cell* getRightCell();
-    Cell* getLeftCell();
-    Cell* getPreviousCell();
-    Cell* getNextCell();
     int getMaxSpeed();
-    void setVehicle(Vehicle* Vehicle);
-    void setRightCell(Cell* RightCell);
-    void setLeftCell(Cell* LeftCell);
-    void setPreviousCell(Cell* PreviousCell);
-    void setNextCell(Cell* NextCell);
     void setMaxSpeed(int maxSpeed);
-    void updateObstacleAhead();
-    bool checkObstacleAhead();
+    void setCarHolder(CarHolder* carHolder);
+    Vehicle* getVehicle();
+    void setVehicle(Vehicle* vehicle);
+    Cell* getRightCell();
+    void setRightCell(Cell* rightCell);
+    Cell* getLeftCell();
+    void setLeftCell(Cell* leftCell);
+    Cell* getPreviousCell();
+    void setPreviousCell(Cell* previousCell);
+    virtual Cell* getNextCell() = 0;
+    virtual void setNextCell(Cell* nextCell) = 0;
+    TrafficLights* getTrafficLight();
+    void setTrafficLight(TrafficLights* newLight);
+    bool getObstacleAhead();
+    void setObstacleAhead(bool isObstacleAhead);
 	void createJSON();
-    void setLight(TrafficLights* newLight);
-    TrafficLights* getLight();
 };
