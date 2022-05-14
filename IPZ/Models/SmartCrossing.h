@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Crossing.h"
-#include "SmartCrossingInput.h"
+#include "../Basic Classes/Crossing.h"
+#include "../Basic Classes/SmartCrossingInput.h"
 
 class SmartCrossing : public Crossing {
 protected:
@@ -19,7 +19,6 @@ public:
 	void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight);
 	void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex);
 	void linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex);
-	void linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell);
 	void updateCrossing();
 
 protected:

@@ -1,21 +1,20 @@
-#include "Basic Classes/Simulation.h"
-#include "Basic Classes/RGTrafficLights.h"
-#include "Basic Classes/SmartCrossing.h"
-#include "Basic Classes/BasicCrossing.h"
-#include "Basic Classes/LaneEndsMergeL.h"
-#include "Basic Classes/LaneEndsMergeLR.h"
-#include "Basic Classes/LaneEndsMergeR.h"
-#include "Basic Classes/BasicCrossing.h"
-#include "Basic Classes/SmartCrossing.h"
-#include "Basic Classes/RGTrafficLights.h"
-#include "Basic Classes/RGYTrafficLights.h"
+#include "../Basic Classes/Simulation.h"
+#include "../Models/RGTrafficLights.h"
+#include "../Models/SmartCrossing.h"
+#include "../Models/BasicCrossing.h"
+#include "../Models/LaneEndsMergeL.h"
+#include "../Models/LaneEndsMergeLR.h"
+#include "../Models/LaneEndsMergeR.h"
+#include "../Models/BasicCrossing.h"
+#include "../Models/SmartCrossing.h"
+#include "../Models/RGTrafficLights.h"
+#include "../Models/RGYTrafficLights.h"
 
 #define V 0
 #if V == 0
 int main() {
 	std::srand(time(NULL));
 
-	Map* map = new Map("test");
 	Map* map = new Map("test map");
 
 	Road* road1 = new Road(1, 1, 1);
@@ -71,8 +70,6 @@ int main() {
 	linkCells(generator1, laneEndsMerge->getLaneHead(0));
 	linkCells(generator2, laneEndsMerge->getEndingLaneRHead());
 
-	Generator* generator1 = new Generator(1, 1.0);
-	Generator* generator2 = new Generator(1, 1.0);
 	linkCells(laneEndsMerge->getLaneTail(0), road->getLaneHead(0));
 
 	RGTrafficLights* trafficLights = new RGTrafficLights(LightColor::green, 10, 10);
@@ -118,17 +115,11 @@ int main() {
 	linkCells(generator3, road3->getLaneHead(0));
 
 	BasicCrossing* crossing = new BasicCrossing(8, 8, 4);
-
-	BasicCrossing* crossing1 = new BasicCrossing(11, 11, 1);
-	crossing1->addNewCrossingLane('S', 5, 'E', 5, 1);
-	crossing1->addNewCrossingLane('N', 5, 'W', 5, 1);
 	crossing->addNewCrossingLane('N', 2, 'S', 2, 1);
 	crossing->addNewCrossingLane('N', 2, 'W', 3, 2);
 	crossing->addNewCrossingLane('N', 3, 'S', 3, 2);
 	crossing->addNewCrossingLane('N', 3, 'E', 4, 1);
 
-	crossing1->linkRoadLaneToCrossing(road1->getLaneTail(0), 'S', 5);
-	crossing1->linkRoadLaneToCrossing(road2->getLaneTail(0), 'N', 5);
 	crossing->addNewCrossingLane('S', 4, 'N', 4, 2);
 	crossing->addNewCrossingLane('S', 4, 'W', 3, 1);
 	crossing->addNewCrossingLane('S', 5, 'N', 5, 1);
@@ -136,12 +127,11 @@ int main() {
 
 	//RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
 	//crossing1->addTrafficLights(lights, 'S', 5);
-	crossing->linkCellToCrossingInput(road0->getLaneTail(0), 'N', 2);
-	crossing->linkCellToCrossingInput(road1->getLaneTail(0), 'N', 3);
-	crossing->linkCellToCrossingInput(road2->getLaneTail(0), 'S', 4);
-	crossing->linkCellToCrossingInput(road3->getLaneTail(0), 'S', 5);
+	crossing->linkRoadLaneToCrossing(road0->getLaneTail(0), 'N', 2);
+	crossing->linkRoadLaneToCrossing(road1->getLaneTail(0), 'N', 3);
+	crossing->linkRoadLaneToCrossing(road2->getLaneTail(0), 'S', 4);
+	crossing->linkRoadLaneToCrossing(road3->getLaneTail(0), 'S', 5);
 
-	map->addCrossing(crossing1);
 	RGTrafficLights* trafficLights0 = new RGTrafficLights(LightColor::green, 16, 10);
 	RGTrafficLights* trafficLights1 = new RGTrafficLights(LightColor::green, 16, 10);
 	RGTrafficLights* trafficLights2 = new RGTrafficLights(LightColor::red, 16, 10, 3);
@@ -162,8 +152,7 @@ int main() {
 	map->addGenerator(generator3);
 	map->addCrossing(crossing);
 
-	Simulation simulation(map, 0, 1, 0);
-	Simulation simulation = Simulation(map, 0.2, 0);
+	Simulation simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
 	for (int i = 0; i < 100; i++) {

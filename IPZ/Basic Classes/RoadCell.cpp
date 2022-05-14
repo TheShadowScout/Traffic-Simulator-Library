@@ -9,8 +9,6 @@ RoadCell::RoadCell(int maxSpeed) : Cell(maxSpeed), nextCell(nullptr) {
         throw std::invalid_argument("Max speed must be in range between 1 and 6");
 }
 
-RoadCell::~RoadCell() {}
-
 void RoadCell::setNextCell(Cell* nextCell) {
     this->nextCell = nextCell;
 }

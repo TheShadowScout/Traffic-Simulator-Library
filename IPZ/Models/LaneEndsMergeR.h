@@ -1,7 +1,7 @@
 #pragma once
 
-#include "LaneEndsMerge.h"
-#include "Obstacle.h"
+#include "../Basic Classes/LaneEndsMerge.h"
+#include "../Basic Classes/Obstacle.h"
 
 class LaneEndsMergeR : public LaneEndsMerge {
 protected:

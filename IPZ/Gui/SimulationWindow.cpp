@@ -1,8 +1,4 @@
 #include "SimulationWindow.h"
-#include "../Functionality/DensityPlotGenerator.h"
-#include "../Basic Classes/DataSaving.h"
-#include <map>
-#include <sstream>
 
 int width = sf::VideoMode::getDesktopMode().width;
 int height = sf::VideoMode::getDesktopMode().height;
@@ -85,11 +81,9 @@ SimulationWindow::FrequencyButton::FrequencyButton(std::string txt, std::string 
 }
 
 
-void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
+void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations)
 {
     double refreshRate = 0.5;
-    Map mapCopy = *map;
-    Simulation s(map, 0.1);
     sf::RenderWindow window(sf::VideoMode(width, height), "Simulation", sf::Style::Titlebar | sf::Style::Close);
 
     sf::Text menuText;
@@ -130,6 +124,125 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
     menuRect.setFillColor(sf::Color(159, 193, 211));
     menuRect.setPosition(width - 250, 0);
 
+
+
+    double cellSizeConst = 0.005;
+
+    double cellWidth = 1.0 * width * cellSizeConst;
+    double cellHeight = 1.0 * height * cellSizeConst;
+
+    bool simulationStarted = false;
+    sf::Clock clock;
+
+    while (window.isOpen())
+    {
+        float time = clock.getElapsedTime().asSeconds();
+        if (simulationStarted && time >= refreshRate) {
+            simulation->transitionFunc();
+            for (Localization* localization : localizations) {
+                localization->draw(cellWidth, cellHeight);
+            }
+        }
+        clock.restart();
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                window.close();
+                break;
+            case sf::Event::MouseButtonPressed:
+                // rozpoczêcie symulacji
+                if (start.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulationStarted = true;
+                }
+                // zatrzymanie symulacji
+                if (stop.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulationStarted = false;
+                }
+                // generowanie statystyk
+                if (stats.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    simulation->saveStatisticsToFile();
+                    GenerateDensityPlot();
+                }
+                // zapisywanie mapy
+                if (saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    //DataSaving JSON(simulation->getSimulationMap());
+                    //JSON.saveData();
+                }
+                // wczytywanie mapy
+                if (loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    std::cout << "Wcisnieto wczytywanie mapy\n";
+                }
+                // czyszczenie symulacji
+                if (clearSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    std::cout << "Czyszczenie symulacji" << std::endl;
+                }
+                // wy³¹czanie programu
+                if (exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    window.close();
+                }
+                // zmniejszanie czêstotliwoœci odœwie¿ania symulacji
+                if (lowerFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    // Max
+                    if (refreshRate > 0.2)
+                        refreshRate -= 0.1;
+                    ss.str("");
+                    ss << std::setprecision(2) << 1.1 - refreshRate;
+                    refreshRateText.setString(ss.str());
+                }
+                // zwiêkszanie czêstotliwoœci odœwie¿ania symulacji
+                if (higherFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                {
+                    // Min
+                    if (refreshRate < 0.9)
+                        refreshRate += 0.1;
+                    ss.str("");
+                    ss << std::setprecision(2) << 1.1 - refreshRate;
+                    refreshRateText.setString(ss.str());
+                }
+            }
+        }
+
+        window.clear(sf::Color(255, 255, 255));
+
+        window.draw(menuRect);
+        window.draw(menuText);
+        window.draw(refreshRateText);
+
+        window.draw(start.background);
+        window.draw(stop.background);
+        window.draw(stats.background);
+        window.draw(saveMap.background);
+        window.draw(loadMap.background);
+        window.draw(clearSimulation.background);
+        window.draw(lowerFrequency.background);
+        window.draw(higherFrequency.background);
+        window.draw(exitSimulation.background);
+
+        window.draw(start.buttonText);
+        window.draw(stop.buttonText);
+        window.draw(stats.buttonText);
+        window.draw(saveMap.buttonText);
+        window.draw(loadMap.buttonText);
+        window.draw(clearSimulation.buttonText);
+        window.draw(lowerFrequency.buttonText);
+        window.draw(higherFrequency.buttonText);
+        window.draw(exitSimulation.buttonText);
+
+        window.display();
+    }
+}
+    /*
     auto r = dynamic_cast<Map*>(s.getSimulationMap())->getRoads();
     std::vector<sf::RectangleShape> roadRects;
     int offset = height / (2 * r.size());
@@ -138,8 +251,6 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
     int roadHeight = height * 0.020;
     int roadGap = height / (r.size() + 1);
     int prevRoadHeight = 0;
-
-
 
     // drogi
     for (int i = 0; i < r.size(); i++)
@@ -158,7 +269,7 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
             shape.setFillColor(sf::Color(211, 211, 211));
             roadRects.push_back(shape);
         }
-        
+
         prevRoadHeight += roadHeight * r[i]->getHeight();
     }
 
@@ -168,14 +279,14 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
     std::vector<sf::RectangleShape> vehs;
     int carHeight = int(height * 0.004);
     int carLength = int(width * 0.004);
-    
+
     std::vector<sf::RectangleShape> lights;
-    
+
     int lightHeight = height * 0.005;
     int lightLength = width * 0.005;
 
     s.initiateSimulation();
-    
+
     while (window.isOpen())
     {
         float time = clock.getElapsedTime().asSeconds();
@@ -210,8 +321,8 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
                                 case 'W':
                                     break;
                             }
-                           
-                            vehs.push_back(shape);            
+
+                            vehs.push_back(shape);
                         }
 
                         if (r[whichRoad]->getRoad()[whichLane][whichCell]->getLight() != NULL)
@@ -239,102 +350,6 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
             }
             clock.restart();
         }
-
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            switch(event.type)
-            {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
-                case sf::Event::MouseButtonPressed:
-                    // rozpoczêcie symulacji
-                    if(start.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        simulationStarted = true;
-                    }
-                    // zatrzymanie symulacji
-                    if(stop.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        simulationStarted = false;
-                    }
-                    // generowanie statystyk
-                    if(stats.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        s.saveStatisticsToFile();
-                        GenerateDensityPlot();
-                    }
-                    // zapisywanie mapy
-                    if(saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        DataSaving JSON(s.getSimulationMap());
-                        JSON.saveData();
-                    }
-                    // wczytywanie mapy
-                    if(loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        std::cout << "Wcisnieto wczytywanie mapy\n";
-                    }
-                    // czyszczenie symulacji
-                    if(clearSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        std::cout << "Czyszczenie symulacji" << std::endl;
-                    }
-                    // wy³¹czanie programu
-                    if(exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        window.close();
-                    }
-                    // zmniejszanie czêstotliwoœci odœwie¿ania symulacji
-                    if(lowerFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        // Max
-                        if(refreshRate > 0.2)
-                            refreshRate -= 0.1;
-                        ss.str("");
-                        ss << std::setprecision(2) << 1.1-refreshRate;
-                        refreshRateText.setString(ss.str());
-                    }
-                    // zwiêkszanie czêstotliwoœci odœwie¿ania symulacji
-                    if(higherFrequency.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                    {
-                        // Min
-                        if(refreshRate < 0.9)
-                            refreshRate += 0.1;
-                        ss.str("");
-                        ss << std::setprecision(2) << 1.1-refreshRate;
-                        refreshRateText.setString(ss.str());
-                    }
-            }   
-        }
-
-        window.clear(sf::Color(255, 255, 255));
-
-        window.draw(menuRect);
-        window.draw(menuText);
-        window.draw(refreshRateText);
-
-        window.draw(start.background);
-        window.draw(stop.background);
-        window.draw(stats.background);
-        window.draw(saveMap.background);
-        window.draw(loadMap.background);
-        window.draw(clearSimulation.background);
-        window.draw(lowerFrequency.background);
-        window.draw(higherFrequency.background);
-        window.draw(exitSimulation.background);
-
-        window.draw(start.buttonText);
-        window.draw(stop.buttonText);
-        window.draw(stats.buttonText);
-        window.draw(saveMap.buttonText);
-        window.draw(loadMap.buttonText);
-        window.draw(clearSimulation.buttonText);
-        window.draw(lowerFrequency.buttonText);
-        window.draw(higherFrequency.buttonText);
-        window.draw(exitSimulation.buttonText);
-
         for (int i = 0; i < r.size(); i++)
         {
             window.draw(roadRects[i]);
@@ -345,7 +360,9 @@ void SimulationWindow::createSimulationWindow(Map* map, double randEventProb)
         }
         for (int i = 0; i < vehs.size(); i++)
             window.draw(vehs[i]);
+        
 
         window.display();
     }
 }
+*/

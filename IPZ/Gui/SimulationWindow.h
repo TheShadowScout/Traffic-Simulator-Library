@@ -1,7 +1,11 @@
 // Include
+#include <map>
+#include <sstream>
+
 #include <SFML/Graphics.hpp>
 #include "../Basic Classes/Simulation.h"
-
+#include "Localization.h"
+#include "../Functionality/DensityPlotGenerator.h"
 
 class SimulationWindow
 {
@@ -28,7 +32,7 @@ class SimulationWindow
     void setLights(sf::RectangleShape& shape, LightColor lightColor);
 
 public:
-    void createSimulationWindow(Map* map, double randEventProb);
+    void createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations);
 };
 
 

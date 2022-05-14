@@ -38,14 +38,15 @@ void Crossing::create() {
 }
 
 Crossing::~Crossing() {
-    for (std::vector<RoadCell*> crossingLane : crossingLanes) {
-        for (RoadCell* crossingCell : crossingLane) {
-            delete crossingCell;
-        }
-    }
     for(int i = 0; i < crossingHeight; i++) {
         for(int j = 0; j < crossingLength; j++) {
             delete carHolderMatrix[i][j];
+        }
+    }
+    for (std::vector<RoadCell*> crossingLane : crossingLanes) {
+        for (RoadCell* crossingCell : crossingLane) {
+            crossingCell->setCarHolder(nullptr);
+            delete crossingCell;
         }
     }
     for(int i = 0; i < crossingLength; i++) {

@@ -17,7 +17,6 @@ protected:
 public:
 	Generator(std::string name, int maxSpeed, double createVehProb);
 	Generator(int maxSpeed, double createVehProb);
-	~Generator();
 	int getID();
 	std::string getName();
 	bool createVeh();
