@@ -4,12 +4,10 @@
 
 TrafficLights::TrafficLights(std::string name, LightColor startColor, int redDuration, int greenDuration, int timerOffset) : name(name), color(startColor), redDuration(redDuration), greenDuration(greenDuration) {
 	create(timerOffset);
-	ID = IDcnt++;
 }
 
 TrafficLights::TrafficLights(LightColor startColor, int redDuration, int greenDuration, int timerOffset) : color(startColor), redDuration(redDuration), greenDuration(greenDuration) {
 	create(timerOffset);
-	ID = IDcnt++;
 	name = std::to_string(ID);
 }
 
@@ -22,6 +20,7 @@ std::string TrafficLights::getName() {
 }
 
 void TrafficLights::create(int timerOffset) {
+	ID = IDcnt++;
 	switch (color) {
 	case LightColor::red:
 		timer = redDuration - timerOffset;

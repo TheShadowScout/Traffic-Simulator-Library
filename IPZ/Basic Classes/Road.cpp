@@ -4,12 +4,10 @@
 
 Road::Road(std::string name, int length, int height, int maxSpeed) : name(name), length(length), height(height), maxSpeed(maxSpeed) {
     create();
-    ID = IDcnt++;
 }
 
 Road::Road(int length, int height, int maxSpeed) : length(length), height(height), maxSpeed(maxSpeed) {
     create();
-    ID = IDcnt++;
     name = std::to_string(ID);
 }
 

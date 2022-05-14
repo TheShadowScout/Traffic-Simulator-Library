@@ -5,21 +5,22 @@
 
 class SmartCrossing : public Crossing {
 protected:
-	std::vector<SmartCrossingInput*> inputN;
-	std::vector<SmartCrossingInput*> inputE;
-	std::vector<SmartCrossingInput*> inputS;
-	std::vector<SmartCrossingInput*> inputW;
+	std::vector<SmartCrossingInput*> inputsN;
+	std::vector<SmartCrossingInput*> inputsE;
+	std::vector<SmartCrossingInput*> inputsS;
+	std::vector<SmartCrossingInput*> inputsW;
 
 	void create();
 
 public:
-	SmartCrossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed);
-	SmartCrossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
+	SmartCrossing(std::string name, int height, int length, int maxSpeed);
+	SmartCrossing(int height, int length, int maxSpeed);
 	~SmartCrossing();
 	void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight);
 	void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex);
-	void linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex);
+	void linkCellToCrossingInput(Cell* previousCell, char inputSide, int inputIndex);
 	void updateCrossing();
+	std::string toString();
 
 protected:
 	void checkParametersAreCorrect(char inputSide, int inputIndex, char outputSide, int outputIndex);

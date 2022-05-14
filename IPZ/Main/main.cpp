@@ -10,7 +10,7 @@
 #include "../Models/RGTrafficLights.h"
 #include "../Models/RGYTrafficLights.h"
 
-#define V 0
+#define V 2
 #if V == 0
 int main() {
 	std::srand(time(NULL));
@@ -25,7 +25,6 @@ int main() {
 	road->addObstacle(100, 0);
 	road->addObstacle(100, 2);
 
-	//road2->addObstacle(9, 0, 0);
 	Generator* generator0 = new Generator(3, 0.2);
 	Generator* generator1 = new Generator(3, 0.2);
 	Generator* generator2 = new Generator(3, 0.2);
@@ -125,12 +124,10 @@ int main() {
 	crossing->addNewCrossingLane('S', 5, 'N', 5, 1);
 	crossing->addNewCrossingLane('S', 5, 'E', 4, 2);
 
-	//RGTrafficLights* lights = new RGTrafficLights(LightColor::green, 10, 10);
-	//crossing1->addTrafficLights(lights, 'S', 5);
-	crossing->linkRoadLaneToCrossing(road0->getLaneTail(0), 'N', 2);
-	crossing->linkRoadLaneToCrossing(road1->getLaneTail(0), 'N', 3);
-	crossing->linkRoadLaneToCrossing(road2->getLaneTail(0), 'S', 4);
-	crossing->linkRoadLaneToCrossing(road3->getLaneTail(0), 'S', 5);
+	crossing->linkCellToCrossingInput(road0->getLaneTail(0), 'N', 2);
+	crossing->linkCellToCrossingInput(road1->getLaneTail(0), 'N', 3);
+	crossing->linkCellToCrossingInput(road2->getLaneTail(0), 'S', 4);
+	crossing->linkCellToCrossingInput(road3->getLaneTail(0), 'S', 5);
 
 	RGTrafficLights* trafficLights0 = new RGTrafficLights(LightColor::green, 16, 10);
 	RGTrafficLights* trafficLights1 = new RGTrafficLights(LightColor::green, 16, 10);

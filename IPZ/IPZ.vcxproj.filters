@@ -242,9 +242,6 @@
     <ClCompile Include="Models\BasicCrossing.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="Main\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Gui\BasicCrossingLocalization.cpp">
       <Filter>Source Files\Gui</Filter>
     </ClCompile>
@@ -271,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="Basic Classes\LaneEndsMerge.cpp">
       <Filter>Source Files\Basic Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -9,8 +9,9 @@ Simulation::Simulation(Map* simMap, double randEventProb,  int minSafeSpace, int
 	else {
 		randomEngine = std::default_random_engine(std::rand());
 	}
-	if(randEventProb < 0.0 || randEventProb > 1.0)
+	if (randEventProb < 0.0 || randEventProb > 1.0) {
 		throw std::invalid_argument("Random event probability must be in range between 0 and 1");
+	}
 }
 
 Map* Simulation::getSimulationMap() {

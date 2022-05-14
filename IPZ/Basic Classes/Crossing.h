@@ -12,30 +12,30 @@ public:
 protected:
 	int ID;
 	std::string name;
-	int crossingHeight;
-	int crossingLength;
-	int crossingMaxSpeed;
+	int height;
+	int length;
+	int maxSpeed;
 	std::vector<std::vector<CarHolder*>> carHolderMatrix;
-	std::vector<RoadCell*> outputN;
-	std::vector<RoadCell*> outputE;
-	std::vector<RoadCell*> outputS;
-	std::vector<RoadCell*> outputW;
-	std::vector<std::vector<RoadCell*>> crossingLanes;
+	std::vector<RoadCell*> outputsN;
+	std::vector<RoadCell*> outputsE;
+	std::vector<RoadCell*> outputsS;
+	std::vector<RoadCell*> outputsW;
+	std::vector<std::vector<RoadCell*>> lanes;
 	std::vector<TrafficLights*> trafficLights;
 
 	void create();
 
 public:
-	Crossing(std::string name, int crossingHeight, int crossingLength, int crossingMaxSpeed);
-	Crossing(int crossingHeight, int crossingLength, int crossingMaxSpeed);
-	~Crossing();
+	Crossing(std::string name, int height, int length, int maxSpeed);
+	Crossing(int height, int length, int maxSpeed);
+	virtual ~Crossing();
 	int getID();
 	std::string getName();
 	std::vector<TrafficLights*> getTrafficLights();
 	virtual void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) = 0;
-	virtual void linkRoadLaneToCrossing(Cell* previousCell, char inputSide, int inputIndex) = 0;
-	void linkRoadLaneToCrossing(char outputSide, int outputIndex, Cell* nextCell);
+	virtual void linkCellToCrossingInput(Cell* previousCell, char inputSide, int inputIndex) = 0;
+	void linkCellToCrossingOutput(char outputSide, int outputIndex, Cell* nextCell);
 	virtual void updateCrossing() = 0;
 	virtual void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex) = 0;
-	std::string toString();
+	virtual std::string toString() = 0;
 };
