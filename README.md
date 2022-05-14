@@ -629,49 +629,6 @@ Class name: **RoadCell**
 | Cell* getNextCell				                | -------------------------                     | Function returns s	              |
 | void setNextCell				                | Cell* nextCell					                      | 	                                |
 
-## Vehicle
-Filename with class: **Vehicle.h**  
-Class name: **Vehicle**  
-
-| Variable name | Variable type	| Description										|
-| ------------- | ------------- | ------------------------------------------------- |
-| name			| string		| variable that holds a [Vehicle](#vehicle) name	|
-| ID			| int			| variable that holds a [Vehicle](#vehicle) ID		|
-| speed			| int			| variable that holds a [Vehicle](#vehicle) speed	|
-| IDcnt			| int static			| variable that holds a [Vehicle](#vehicle) ID for a new create vehicle	|
-| isObstacle			| bool			| variable that holds if [Vehicle](#vehicle) is movement vehicle or obstacle	|
-
-| Function type and name	| Arguments					| Description												|
-| ------------------------- | ------------------------- | --------------------------------------------------------- |
-| void Vehicle				| string name, int speed, bool isObstacle	| Class constructor											|
-| void Vehicle				| int speed, bool isObstacle	| Class constructor											|
-| string getName			| ------------------------- | Function returns name of current [Vehicle](#vehicle)		|
-| int getID					| ------------------------- | Function returns ID of current [Vehicle](#vehicle)		|
-| int getSpeed				| ------------------------- | Function returns speed of current [Vehicle](#vehicle)		|
-| void setSpeed				| int speed					| Function sets new speed of current [Vehicle](#vehicle)	|
-| bool checkIsObstacle				| -------------------------	| Function returns if [Vehicle](#vehicle) is obstacle	|
-| void createJSON		| -------------------------	| Function creates JSON data tree of current [Vehicle](#vehicle)	|
-
-## Generator
-Filename with class: **Generator.h**  
-Class name: **Generator**  
-Inherits from: [Cell](#cell)
-
-| Variable name | Variable type	| Description											|
-| ------------- | ------------- | ----------------------------------------------------- |
-| name			| string		| variable that holds a [Generator](#generator) name	|
-| ID  | int | variable that holds ID of [Generator](#generator) |
-| IDcnt			| int static			| variable that holds a [Generator](#generator) ID for a new create vehicle	|
-| createVehProb | double | variable that holds a probability of creating [Vehicle](#vehicle) every iteration | 
-
-| Function type and name	| Arguments	| Description																		|
-| ------------- | ------------- | ----------------------------------------------------- |
-| Generator			| string name, int maxSpeed, double createVehProb | Class constructor																	|
-| Generator			| int maxSpeed, double createVehProb | Class constructor	|															|
-| int getID | --- | Function returns ID of current [Generator](#generator) |
-| string getName			| ------------------------- | Function returns name of current [Generator](#generator)		|
-| void createVeh				| --------- | Function creates new [Vehicle](#vehicle) inside current [Generator](#generator)	|
-| string toString | --- | Function returns string which represents current [Generator](#generator) |
 
 ## Simulation
 Filename with class: **Simulation.h**  
