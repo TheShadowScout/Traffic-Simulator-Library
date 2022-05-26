@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 
 class Localization {
     protected:
@@ -8,7 +9,7 @@ class Localization {
         
     public:
         Localization(int xPosition, int yPosition);
-        virtual void draw(double cellWidth, double cellHeight) = 0;
+        virtual void draw(float cellSize, sf::RenderWindow* window) = 0;
     
 };
 

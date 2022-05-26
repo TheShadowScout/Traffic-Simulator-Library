@@ -9,16 +9,18 @@
 #include "../Models/SmartCrossing.h"
 #include "../Models/RGTrafficLights.h"
 #include "../Models/RGYTrafficLights.h"
+#include "../Gui/SimulationWindow.h"
+#include "../Gui/RoadLocalization.h"
+#include "../Gui/GeneratorLocalization.h"
+#include "../Gui/BasicCrossingLocalization.h"
 
-#define V 2
+#define V 0
 #if V == 0
 int main() {
 	std::srand(time(NULL));
 
 	Map* map = new Map("test map");
 
-	Road* road1 = new Road(1, 1, 1);
-	Road* road2 = new Road(1, 1, 1);
 	Road* road = new Road(150, 3, 3);
 	road->fillWithVehs(0.2);
 	road->addObstacle(50, 1);
@@ -29,8 +31,6 @@ int main() {
 	Generator* generator1 = new Generator(3, 0.2);
 	Generator* generator2 = new Generator(3, 0.2);
 
-	map->addRoad(road1);
-	map->addRoad(road2);
 	linkCells(generator0, road->getLaneHead(0));
 	linkCells(generator1, road->getLaneHead(1));
 	linkCells(generator2, road->getLaneHead(2));
@@ -40,14 +40,28 @@ int main() {
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
 
+	BasicCrossing* crossing = new BasicCrossing(4, 8, 4);
+
+	std::vector<Localization*> localizations;
+	localizations.push_back(new RoadLocalization(10, 20, road, 'S'));
+	localizations.push_back(new GeneratorLocalization(9, 19, generator0));
+	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
+	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));
+	//localizations.push_back(new BasicCrossingLocalization(10, 10, crossing));
+
 	Simulation simulation = Simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
+	SimulationWindow simulationWindow;
+	simulationWindow.createSimulationWindow(&simulation, localizations);
+
+	/*
 	for (int i = 0; i < 100; i++) {
 		std::cout << "Iteration: " << i << std::endl;
 		std::cout << simulation.toString() << std::endl;
 		simulation.transitionFunc();
 	}
+	*/
 
 	delete map;
 }

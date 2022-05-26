@@ -53,6 +53,13 @@ void Crossing::create() {
 int Crossing::getID() {
     return ID;
 }
+int Crossing::getHeight() {
+    return height;
+}
+
+int Crossing::getLength() {
+    return length;
+}
 
 std::string Crossing::getName() {
     return name;

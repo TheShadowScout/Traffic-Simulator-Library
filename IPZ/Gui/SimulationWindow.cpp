@@ -128,8 +128,7 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
 
     double cellSizeConst = 0.005;
 
-    double cellWidth = 1.0 * width * cellSizeConst;
-    double cellHeight = 1.0 * height * cellSizeConst;
+    float cellSize = cellSizeConst * height;
 
     bool simulationStarted = false;
     sf::Clock clock;
@@ -137,13 +136,11 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
     while (window.isOpen())
     {
         float time = clock.getElapsedTime().asSeconds();
+        //std::cout << time << std::endl;
         if (simulationStarted && time >= refreshRate) {
             simulation->transitionFunc();
-            for (Localization* localization : localizations) {
-                localization->draw(cellWidth, cellHeight);
-            }
+            clock.restart();
         }
-        clock.restart();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -213,7 +210,9 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
             }
         }
 
-        window.clear(sf::Color(255, 255, 255));
+        for (Localization* localization : localizations) {
+            localization->draw(cellSize, &window);
+        }
 
         window.draw(menuRect);
         window.draw(menuText);
@@ -240,6 +239,8 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
         window.draw(exitSimulation.buttonText);
 
         window.display();
+
+        window.clear(sf::Color(255, 255, 255));
     }
 }
     /*

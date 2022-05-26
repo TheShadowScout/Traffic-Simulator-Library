@@ -10,5 +10,5 @@ protected:
 
 public:
     LaneEndsMergeLocalizationLR(int xPosition, int yPosition, LaneEndsMergeLR* laneEndsMergeLR, char moveDirection = 'E');
-    void draw(double cellWidth, double cellHeight);
+    void draw(float cellSize, sf::RenderWindow* window);
 };

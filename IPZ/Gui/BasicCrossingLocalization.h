@@ -9,5 +9,5 @@ protected:
 
 public:
     BasicCrossingLocalization(int xPosition, int yPosition, BasicCrossing* basicCrossing);
-    void draw(double cellWidth, double cellHeight);
+    void draw(float cellSize, sf::RenderWindow * window);
 };

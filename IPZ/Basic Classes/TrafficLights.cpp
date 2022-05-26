@@ -30,6 +30,7 @@ void TrafficLights::create(int timerOffset) {
 		break;
 	default:
 		timer = 0;
+		break;
 	}
 }
 

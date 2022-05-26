@@ -4,6 +4,6 @@
 
 SmartCrossingLocalization::SmartCrossingLocalization(int xPosition, int yPosition, SmartCrossing* smartCrossing) : Localization(xPosition, yPosition), smartCrossing(smartCrossing) { ; }
 
-void SmartCrossingLocalization::draw(double cellWidth, double cellHeight) {
+void SmartCrossingLocalization::draw(float cellWidth, double cellHeight) {
     ;
 }

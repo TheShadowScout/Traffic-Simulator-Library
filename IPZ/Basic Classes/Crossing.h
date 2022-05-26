@@ -30,6 +30,8 @@ public:
 	Crossing(int height, int length, int maxSpeed);
 	virtual ~Crossing();
 	int getID();
+	int getHeight();
+	int getLength();
 	std::string getName();
 	std::vector<TrafficLights*> getTrafficLights();
 	virtual void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) = 0;

@@ -11,6 +11,6 @@ LaneEndsMergeLocalizationR::LaneEndsMergeLocalizationR(int xPosition, int yPosit
     }
 }
 
-void LaneEndsMergeLocalizationR::draw(double cellWidth, double cellHeight) {
+void LaneEndsMergeLocalizationR::draw(float cellSize, sf::RenderWindow* window) {
     ;
 }
