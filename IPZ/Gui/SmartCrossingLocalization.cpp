@@ -4,6 +4,6 @@
 
 SmartCrossingLocalization::SmartCrossingLocalization(int xPosition, int yPosition, SmartCrossing* smartCrossing) : Localization(xPosition, yPosition), smartCrossing(smartCrossing) { ; }
 
-void SmartCrossingLocalization::draw(float cellWidth, double cellHeight) {
+void SmartCrossingLocalization::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
     ;
 }

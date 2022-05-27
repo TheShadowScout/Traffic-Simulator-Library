@@ -9,5 +9,5 @@ class SmartCrossingLocalization : public Localization {
 
     public:
         SmartCrossingLocalization(int xPosition, int yPosition, SmartCrossing* smartCrossing);
-        void draw(float cellWidth, double cellHeight);
+        void prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes);
 };

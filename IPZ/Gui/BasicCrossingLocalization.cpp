@@ -4,7 +4,7 @@
 
 BasicCrossingLocalization::BasicCrossingLocalization(int xPosition, int yPosition, BasicCrossing* basicCrossing) : Localization(xPosition, yPosition), basicCrossing(basicCrossing) { ; }
 
-void BasicCrossingLocalization::draw(float cellSize, sf::RenderWindow * window) {
+void BasicCrossingLocalization::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
 
 
     //std::vector<sf::RectangleShape> shapesToDraw;
@@ -19,7 +19,7 @@ void BasicCrossingLocalization::draw(float cellSize, sf::RenderWindow * window) 
     sf::RectangleShape crossingRectangle(sf::Vector2f((basicCrossing->getLength()+2)*cellSize, (basicCrossing->getHeight()+2)*cellSize));
     crossingRectangle.setPosition((xPosition)*cellSize, (yPosition)*cellSize);
     crossingRectangle.setFillColor(sf::Color(211, 211, 211));
-    window->draw(crossingRectangle);
+    shapes->push_back(crossingRectangle);
 
     //inputy
 

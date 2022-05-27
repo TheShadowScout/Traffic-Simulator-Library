@@ -28,8 +28,6 @@ class SimulationWindow
         FrequencyButton(std::string txt, std::string fontFile, int size, float whichButton, bool isLeft);
     };
 
-    void setLights(sf::RectangleShape& shape, LightColor lightColor);
-
 public:
     void createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations);
 };

@@ -10,5 +10,5 @@ protected:
 
 public:
     LaneEndsMergeLocalizationR(int xPosition, int yPosition, LaneEndsMergeR* laneEndsMergeR, char moveDirection = 'E');
-    void draw(float cellSize, sf::RenderWindow* window);
+    void prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes);
 };

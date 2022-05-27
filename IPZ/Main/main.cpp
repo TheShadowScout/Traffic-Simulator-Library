@@ -22,7 +22,7 @@ int main() {
 	Map* map = new Map("test map");
 
 	Road* road = new Road(150, 3, 3);
-	road->fillWithVehs(0.2);
+	road->fillWithVehs(0.1);
 	road->addObstacle(50, 1);
 	road->addObstacle(100, 0);
 	road->addObstacle(100, 2);
@@ -35,6 +35,10 @@ int main() {
 	linkCells(generator1, road->getLaneHead(1));
 	linkCells(generator2, road->getLaneHead(2));
 
+	RGTrafficLights* trafficLights = new RGTrafficLights(LightColor::green, 10, 10);
+
+	road->addTrafficLightsToAllLanes(trafficLights, 25);
+
 	map->addRoad(road);
 	map->addGenerator(generator0);
 	map->addGenerator(generator1);
@@ -43,7 +47,7 @@ int main() {
 	BasicCrossing* crossing = new BasicCrossing(4, 8, 4);
 
 	std::vector<Localization*> localizations;
-	localizations.push_back(new RoadLocalization(10, 20, road, 'S'));
+	localizations.push_back(new RoadLocalization(10, 20, road, 'W'));
 	localizations.push_back(new GeneratorLocalization(9, 19, generator0));
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));

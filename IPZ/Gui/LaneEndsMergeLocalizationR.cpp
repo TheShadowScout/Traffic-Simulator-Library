@@ -11,6 +11,6 @@ LaneEndsMergeLocalizationR::LaneEndsMergeLocalizationR(int xPosition, int yPosit
     }
 }
 
-void LaneEndsMergeLocalizationR::draw(float cellSize, sf::RenderWindow* window) {
+void LaneEndsMergeLocalizationR::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
     ;
 }

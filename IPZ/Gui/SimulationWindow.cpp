@@ -25,32 +25,6 @@ SimulationWindow::Button::Button(std::string txt, std::string fontFile, int size
     buttonText.setPosition((bounds.left + bounds.width / 12), (bounds.top + bounds.height / 50));
 }
 
-void  SimulationWindow::setLights(sf::RectangleShape& shape, LightColor lightColor)
-{
-    switch (lightColor)
-    {
-    case LightColor::red:
-        shape.setFillColor(sf::Color(255, 0, 0));
-        shape.setOutlineColor(sf::Color(0, 0, 0));
-        shape.setOutlineThickness(1);
-
-        break;
-    case LightColor::green:
-        shape.setFillColor(sf::Color(0, 255, 0));
-        shape.setOutlineColor(sf::Color(0, 0, 0));
-        shape.setOutlineThickness(1);
-        break;
-    case LightColor::yellow:
-    case LightColor::redyellow:
-        shape.setFillColor(sf::Color(255, 255, 0));
-        shape.setOutlineColor(sf::Color(0, 0, 0));
-        shape.setOutlineThickness(1);
-        break;
-    default:
-        break;
-    }
-}
-
 SimulationWindow::FrequencyButton::FrequencyButton(std::string txt, std::string fontFile, int size, float whichButton, bool isLeft)
 {
     font.loadFromFile(fontFile);
@@ -130,6 +104,8 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
 
     float cellSize = cellSizeConst * height;
 
+    std::vector<sf::RectangleShape> shapes;
+
     bool simulationStarted = false;
     sf::Clock clock;
 
@@ -139,6 +115,9 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
         //std::cout << time << std::endl;
         if (simulationStarted && time >= refreshRate) {
             simulation->transitionFunc();
+            for (Localization* localization : localizations) {
+                localization->prepShapes(cellSize, &shapes);
+            }
             clock.restart();
         }
         sf::Event event;
@@ -210,8 +189,8 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
             }
         }
 
-        for (Localization* localization : localizations) {
-            localization->draw(cellSize, &window);
+        for (sf::RectangleShape shape : shapes) {
+            window.draw(shape);
         }
 
         window.draw(menuRect);
