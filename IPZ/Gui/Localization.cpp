@@ -34,7 +34,7 @@ void Localization::colorVehShape(sf::RectangleShape& shape, Vehicle* veh) {
     }
 }
 
-void Localization::rotateShape(float cellSize, sf::RectangleShape* shape, int length, int height, char moveDirection, int xOffset, int yOffset) {
+void Localization::rotateShape(float cellSize, sf::RectangleShape* shape, int length, int height, int xOffset, int yOffset, char moveDirection) {
     switch (moveDirection) {
     case 'N':
         shape->setOrigin(-cellSize * (yPosition + xOffset), -cellSize * (xPosition + yOffset));
@@ -57,18 +57,18 @@ void Localization::rotateShape(float cellSize, sf::RectangleShape* shape, int le
     }
 }
 
-void Localization::createCellShapes(float cellSize, std::vector<sf::RectangleShape>* shapes, Cell* cell, int length, int height, char moveDirection, int xOffset, int yOffset) {
+void Localization::createCellShapes(float cellSize, std::vector<sf::RectangleShape>* shapes, Cell* cell, int length, int height, int xOffset, int yOffset, char moveDirection) {
     TrafficLights* tempTrafficLights = cell->getTrafficLight();
     if (tempTrafficLights != nullptr) {
         sf::RectangleShape trafficLightsRectangle(sf::Vector2f(cellSize, cellSize));
-        rotateShape(cellSize, &trafficLightsRectangle, length, height, moveDirection, xOffset, yOffset);
+        rotateShape(cellSize, &trafficLightsRectangle, length, height, xOffset, yOffset, moveDirection);
         colorTrafficLightsShape(trafficLightsRectangle, tempTrafficLights->getColor());
         shapes->push_back(trafficLightsRectangle);
     }
     Vehicle* tempVeh = cell->getVehicle();
     if (tempVeh != nullptr) {
         sf::RectangleShape vehRectangle(sf::Vector2f(cellSize * 0.8, cellSize * 0.8));
-        rotateShape(cellSize, &vehRectangle, length, height, moveDirection, xOffset, yOffset);
+        rotateShape(cellSize, &vehRectangle, length, height, xOffset, yOffset, moveDirection);
         colorVehShape(vehRectangle, tempVeh);
         shapes->push_back(vehRectangle);
     }

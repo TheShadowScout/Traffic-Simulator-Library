@@ -9,5 +9,5 @@ void GeneratorLocalization::prepShapes(float cellSize, std::vector<sf::Rectangle
     generatorRectangle.setPosition(cellSize * xPosition, cellSize * yPosition);
     generatorRectangle.setFillColor(sf::Color(211, 211, 211));
     shapes->push_back(generatorRectangle);
-    createCellShapes(cellSize, shapes, generator);
+    createCellShapes(cellSize, shapes, generator, 1, 1, 0, 0);
 }

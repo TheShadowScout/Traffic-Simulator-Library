@@ -13,12 +13,12 @@ RoadLocalization::RoadLocalization(int xPosition, int yPosition, Road* road, cha
 
 void RoadLocalization::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
     sf::RectangleShape roadRectangle(sf::Vector2f(cellSize * road->getLength() , cellSize * road->getHeight()));
-    rotateShape(cellSize, &roadRectangle, road->getLength(), road->getHeight(), moveDirection);
+    rotateShape(cellSize, &roadRectangle, road->getLength(), road->getHeight(), 0, 0, moveDirection);
     roadRectangle.setFillColor(sf::Color(211, 211, 211));
     shapes->push_back(roadRectangle);
     for (int i = 0; i < road->getHeight(); i++) {
         for (int j = 0; j < road->getLength(); j++) {
-            createCellShapes(cellSize, shapes, road->getLanes()[i][j], road->getLength(), road->getHeight(), moveDirection, j, i);
+            createCellShapes(cellSize, shapes, road->getLanes()[i][j], road->getLength(), road->getHeight(), j, i, moveDirection);
         }
     }
 }
