@@ -15,6 +15,6 @@ public:
     void colorTrafficLightsShape(sf::RectangleShape& shape, LightColor lightColor);
     void colorVehShape(sf::RectangleShape& shape, Vehicle* veh);
     void rotateShape(float cellSize, sf::RectangleShape* shape, int length, int height, int xOffset, int yOffset, char moveDirection = 'E');
-    void createCellShapes(float cellSize, std::vector<sf::RectangleShape>* shapes, Cell* cell, int length, int height, int xOffset, int yOffset, char moveDirection = 'E');
+    void createCellShapes(float cellSize, std::vector<sf::RectangleShape>* shapes, Cell* cell, int parentShapeLength, int parentShapeHeight, int xOffset, int yOffset, char moveDirection = 'E');
 };
 

@@ -12,5 +12,18 @@ LaneEndsMergeLocalizationL::LaneEndsMergeLocalizationL(int xPosition, int yPosit
 }
 
 void LaneEndsMergeLocalizationL::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
-    ;
+    int laneEndsMergeLength = laneEndsMergeL->getLength();
+    int laneEndsMergeHeight = laneEndsMergeL->getHeight();
+    sf::RectangleShape roadRectangle(sf::Vector2f(cellSize * laneEndsMergeLength, cellSize * (laneEndsMergeHeight + 1)));
+    rotateShape(cellSize, &roadRectangle, laneEndsMergeLength, laneEndsMergeHeight + 1, 0, 0, moveDirection);
+    roadRectangle.setFillColor(sf::Color(211, 211, 211));
+    shapes->push_back(roadRectangle);
+    for (int i = 0; i < laneEndsMergeHeight; i++) {
+        for (int j = 0; j < laneEndsMergeLength; j++) {
+            createCellShapes(cellSize, shapes, laneEndsMergeL->getLanes()[i][j], laneEndsMergeLength, laneEndsMergeHeight + 1, j, i + 1, moveDirection);
+        }
+    }
+    for (int i = 0; i < laneEndsMergeLength; i++) {
+        createCellShapes(cellSize, shapes, laneEndsMergeL->getEndingLanes()[0][i], laneEndsMergeLength, laneEndsMergeHeight + 1, i, 0, moveDirection);
+    }
 }
