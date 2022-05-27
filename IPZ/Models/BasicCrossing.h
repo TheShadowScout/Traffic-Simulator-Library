@@ -12,6 +12,10 @@ protected:
 	void create();
 
 public:
+	std::vector<BasicCrossingInput*> getInputsN();
+	std::vector<BasicCrossingInput*> getInputsE();
+	std::vector<BasicCrossingInput*> getInputsW();
+	std::vector<BasicCrossingInput*> getInputsS();
 	BasicCrossing(std::string name, int height, int length, int maxSpeed);
 	BasicCrossing(int height, int length, int maxSpeed);
 	~BasicCrossing();

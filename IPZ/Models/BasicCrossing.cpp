@@ -28,6 +28,26 @@ void BasicCrossing::create() {
     inputsW = std::vector<BasicCrossingInput*>(height);
 }
 
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsN()
+{
+    return inputsN;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsE()
+{
+    return inputsE;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsW()
+{
+    return inputsW;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsS()
+{
+    return inputsS;
+}
+
 
 void BasicCrossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
     try {

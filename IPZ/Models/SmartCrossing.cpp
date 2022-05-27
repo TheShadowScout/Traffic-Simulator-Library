@@ -220,6 +220,18 @@ void SmartCrossing::addNewCrossingLane(char inputSide, int inputIndex, char outp
         break;
     }
 }
+std::vector<SmartCrossingInput*> SmartCrossing::getInputsN(){
+    return inputsN;
+}
+std::vector<SmartCrossingInput*> SmartCrossing::getInputsW(){
+    return inputsW;
+}
+std::vector<SmartCrossingInput*> SmartCrossing::getInputsS(){
+    return inputsS;
+}
+std::vector<SmartCrossingInput*> SmartCrossing::getInputsE(){
+    return inputsE;
+}
 
 void SmartCrossing::addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex) {
     switch (inputSide) {

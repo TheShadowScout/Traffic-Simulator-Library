@@ -21,7 +21,7 @@ int main() {
 
 	Map* map = new Map("test map");
 
-	Road* road = new Road(150, 3, 3);
+	Road* road = new Road(150, 3, 5);
 	road->fillWithVehs(0.1);
 	road->addObstacle(50, 1);
 	road->addObstacle(100, 0);
@@ -47,7 +47,7 @@ int main() {
 	BasicCrossing* crossing = new BasicCrossing(4, 8, 4);
 
 	std::vector<Localization*> localizations;
-	localizations.push_back(new RoadLocalization(10, 20, road, 'W'));
+	localizations.push_back(new RoadLocalization(15, 25, road, 'N'));
 	localizations.push_back(new GeneratorLocalization(9, 19, generator0));
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));
@@ -131,7 +131,7 @@ int main() {
 	linkCells(generator2, road2->getLaneHead(0));
 	linkCells(generator3, road3->getLaneHead(0));
 
-	BasicCrossing* crossing = new BasicCrossing(8, 8, 4);
+	BasicCrossing* crossing = new BasicCrossing(8, 8, 1);
 	crossing->addNewCrossingLane('N', 2, 'S', 2, 1);
 	crossing->addNewCrossingLane('N', 2, 'W', 3, 2);
 	crossing->addNewCrossingLane('N', 3, 'S', 3, 2);
@@ -167,15 +167,27 @@ int main() {
 	map->addGenerator(generator3);
 	map->addCrossing(crossing);
 
-	Simulation simulation(map, 0.2, 0);
-	simulation.initiateSimulation();
+	//Simulation simulation(map, 0.2, 0);
+	//simulation.initiateSimulation();
 
-	for (int i = 0; i < 100; i++) {
+	/*for (int i = 0; i < 100; i++) {
 		simulation.transitionFunc();
 		std::cout << "Iteration: " << i << std::endl;
 		std::cout << simulation.toString() << std::endl;
 		simulation.transitionFunc();
-	}
+	}*/
+
+	std::vector<Localization*> localizations;
+	localizations.push_back(new BasicCrossingLocalization(15, 25, crossing));
+	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
+	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));
+	//localizations.push_back(new BasicCrossingLocalization(10, 10, crossing));
+
+	Simulation simulation = Simulation(map, 0.2, 0);
+	simulation.initiateSimulation();
+
+	SimulationWindow simulationWindow;
+	simulationWindow.createSimulationWindow(&simulation, localizations);
 
 	delete map;
 }

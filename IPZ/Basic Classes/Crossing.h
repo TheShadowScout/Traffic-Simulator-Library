@@ -32,8 +32,13 @@ public:
 	int getID();
 	int getHeight();
 	int getLength();
+	std::vector<RoadCell*> getOutputsN();
+	std::vector<RoadCell*> getOutputsW();
+	std::vector<RoadCell*> getOutputsS();
+	std::vector<RoadCell*> getOutputsE();
 	std::string getName();
 	std::vector<TrafficLights*> getTrafficLights();
+	std::vector<std::vector<CarHolder*>> getCarHolderMatrix();
 	virtual void addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) = 0;
 	virtual void linkCellToCrossingInput(Cell* previousCell, char inputSide, int inputIndex) = 0;
 	void linkCellToCrossingOutput(char outputSide, int outputIndex, Cell* nextCell);

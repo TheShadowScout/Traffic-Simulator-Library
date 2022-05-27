@@ -60,6 +60,22 @@ int Crossing::getHeight() {
 int Crossing::getLength() {
     return length;
 }
+std::vector<RoadCell*> Crossing::getOutputsN(){
+    return outputsN;
+}
+
+std::vector<RoadCell*> Crossing::getOutputsW(){
+    return outputsW;
+}
+
+std::vector<RoadCell*> Crossing::getOutputsE(){
+    return outputsE;
+}
+
+std::vector<RoadCell*> Crossing::getOutputsS(){
+    return outputsS;
+}
+
 
 std::string Crossing::getName() {
     return name;
@@ -67,6 +83,11 @@ std::string Crossing::getName() {
 
 std::vector<TrafficLights*> Crossing::getTrafficLights() {
     return trafficLights;
+}
+
+std::vector<std::vector<CarHolder*>> Crossing::getCarHolderMatrix()
+{
+    return carHolderMatrix;
 }
 
 void Crossing::linkCellToCrossingOutput(char outputSide, int outputIndex, Cell* nextCell) {
