@@ -13,8 +13,11 @@
 #include "../Gui/RoadLocalization.h"
 #include "../Gui/GeneratorLocalization.h"
 #include "../Gui/BasicCrossingLocalization.h"
+#include "../Gui/LaneEndsMergeLocalizationLR.h"
+#include "../Gui/LaneEndsMergeLocalizationL.h"
+#include "../Gui/LaneEndsMergeLocalizationR.h"
 
-#define V 0
+#define V 1
 #if V == 0
 int main() {
 	std::srand(time(NULL));
@@ -77,13 +80,13 @@ int main() {
 
 	Road* road = new Road(50, 1, 5);
 
-	Generator* generator0 = new Generator(5, 0.2);
+	//Generator* generator0 = new Generator(5, 0.2);
 	Generator* generator1 = new Generator(5, 0.2);
 	Generator* generator2 = new Generator(5, 0.2);
 
-	LaneEndsMergeLR* laneEndsMerge = new LaneEndsMergeLR(20, 1, 5);
+	LaneEndsMergeR* laneEndsMerge = new LaneEndsMergeR(20, 1, 5);
 
-	linkCells(generator0, laneEndsMerge->getEndingLaneLHead());
+	//linkCells(generator0, laneEndsMerge->getEndingLaneLHead());
 	linkCells(generator1, laneEndsMerge->getLaneHead(0));
 	linkCells(generator2, laneEndsMerge->getEndingLaneRHead());
 
@@ -94,19 +97,22 @@ int main() {
 	road->addTrafficLightsToAllLanes(trafficLights, 25);
 
 	map->addRoad(road);
-	map->addGenerator(generator0);
+	//map->addGenerator(generator0);
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
 	map->addLaneEndsMerge(laneEndsMerge);
 
+	std::vector<Localization*> localizations;
+	localizations.push_back(new LaneEndsMergeLocalizationR(11, 10, laneEndsMerge, 'N'));
+	//localizations.push_back(new GeneratorLocalization(9, 10, generator0));
+	localizations.push_back(new GeneratorLocalization(9, 11, generator1));
+	localizations.push_back(new GeneratorLocalization(9, 12, generator2));
+
 	Simulation simulation = Simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
-	for (int i = 0; i < 100; i++) {
-		std::cout << "Iteration: " << i << std::endl;
-		std::cout << simulation.toString() << std::endl;
-		simulation.transitionFunc();
-	}
+	SimulationWindow simulationWindow;
+	simulationWindow.createSimulationWindow(&simulation, localizations);
 
 	delete map;
 }

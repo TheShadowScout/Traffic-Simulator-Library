@@ -63,6 +63,14 @@ int LaneEndsMerge::getMaxSpeed() {
     return maxSpeed;
 }
 
+int LaneEndsMerge::getLength() {
+    return length;
+}
+
+int LaneEndsMerge::getHeight() {
+    return height;
+}
+
 Cell* LaneEndsMerge::getLaneHead(int lane) {
     return lanes[lane].front();
 }
