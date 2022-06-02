@@ -311,6 +311,34 @@ void SmartCrossing::updateCrossing()
     }
 }
 
+int SmartCrossing::getPassableCellsCnt() {
+    int passableCellsCnt = 0;
+    for (std::vector<CarHolder*> carHolderRow : carHolderMatrix) {
+        for (CarHolder* carHolder : carHolderRow) {
+            if (carHolder != nullptr) {
+                passableCellsCnt++;
+            }
+        }
+    }
+    for (int i = 0; i < length; i++) {
+        if (inputsN[i] != nullptr || outputsN[i] != nullptr) {
+            passableCellsCnt++;
+        }
+        if (inputsS[i] != nullptr || outputsS[i] != nullptr) {
+            passableCellsCnt++;
+        }
+    }
+    for (int i = 0; i < height; i++) {
+        if (inputsE[i] != nullptr || outputsE[i] != nullptr) {
+            passableCellsCnt++;
+        }
+        if (inputsW[i] != nullptr || outputsW[i] != nullptr) {
+            passableCellsCnt++;
+        }
+    }
+    return passableCellsCnt;
+}
+
 void SmartCrossing::checkParametersAreCorrect(char inputSide, int inputIndex, char outputSide, int outputIndex) {
     if (!(inputSide == 'N' ||
         inputSide == 'E' ||

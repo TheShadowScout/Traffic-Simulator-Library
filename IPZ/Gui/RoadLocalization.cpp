@@ -15,7 +15,7 @@ void RoadLocalization::prepShapes(float cellSize, std::vector<sf::RectangleShape
     int roadLength = road->getLength();
     int roadHeight = road->getHeight();
     sf::RectangleShape roadRectangle(sf::Vector2f(cellSize * roadLength, cellSize * roadHeight));
-    rotateShape(cellSize, &roadRectangle, roadLength, roadHeight, 0, 0, moveDirection);
+    rotateShape(cellSize, &roadRectangle, roadLength, roadHeight, 0, 0, false, moveDirection);
     roadRectangle.setFillColor(sf::Color(211, 211, 211));
     shapes->push_back(roadRectangle);
     for (int i = 0; i < road->getHeight(); i++) {

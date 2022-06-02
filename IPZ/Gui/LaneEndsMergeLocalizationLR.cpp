@@ -15,7 +15,7 @@ void LaneEndsMergeLocalizationLR::prepShapes(float cellSize, std::vector<sf::Rec
     int laneEndsMergeLength = laneEndsMergeLR->getLength();
     int laneEndsMergeHeight = laneEndsMergeLR->getHeight();
     sf::RectangleShape roadRectangle(sf::Vector2f(cellSize * laneEndsMergeLength, cellSize * (laneEndsMergeHeight + 2)));
-    rotateShape(cellSize, &roadRectangle, laneEndsMergeLength, laneEndsMergeHeight + 2, 0, 0, moveDirection);
+    rotateShape(cellSize, &roadRectangle, laneEndsMergeLength, laneEndsMergeHeight + 2, 0, 0, false, moveDirection);
     roadRectangle.setFillColor(sf::Color(211, 211, 211));
     shapes->push_back(roadRectangle);
     for (int i = 0; i < laneEndsMergeHeight; i++) {

@@ -55,7 +55,7 @@ SimulationWindow::FrequencyButton::FrequencyButton(std::string txt, std::string 
 }
 
 
-void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations)
+void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations, double cellSizeConst)
 {
     double refreshRate = 0.5;
     sf::RenderWindow window(sf::VideoMode(width, height), "Simulation", sf::Style::Titlebar | sf::Style::Close);
@@ -97,10 +97,6 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
     sf::RectangleShape menuRect(sf::Vector2f(250, height));
     menuRect.setFillColor(sf::Color(159, 193, 211));
     menuRect.setPosition(width - 250, 0);
-
-
-
-    double cellSizeConst = 0.005;
 
     float cellSize = cellSizeConst * height;
 

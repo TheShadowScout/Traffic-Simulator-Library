@@ -23,6 +23,7 @@ public:
 	void linkCellToCrossingInput(Cell* previousCell, char inputSide, int inputIndex);
 	void updateCrossing();
 	void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex);
+	int getPassableCellsCnt();
 	std::string toString();
 
 protected:

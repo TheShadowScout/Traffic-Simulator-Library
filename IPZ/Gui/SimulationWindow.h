@@ -29,7 +29,7 @@ class SimulationWindow
     };
 
 public:
-    void createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations);
+    void createSimulationWindow(Simulation* simulation, std::vector<Localization*> localizations, double cellSizeConst = 0.005);
 };
 
 

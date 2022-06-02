@@ -17,58 +17,54 @@
 #include "../Gui/LaneEndsMergeLocalizationL.h"
 #include "../Gui/LaneEndsMergeLocalizationR.h"
 
-#define V 1
+#define V 0
 #if V == 0
 int main() {
 	std::srand(time(NULL));
 
 	Map* map = new Map("test map");
 
-	Road* road = new Road(150, 3, 5);
-	road->fillWithVehs(0.1);
-	road->addObstacle(50, 1);
-	road->addObstacle(100, 0);
-	road->addObstacle(100, 2);
+	//Road* road = new Road(150, 3, 6);
+	//road->fillWithVehs(0.1);
+	//road->addObstacle(50, 1);
+	//road->addObstacle(100, 0);
+	//road->addObstacle(100, 2);
 
-	Generator* generator0 = new Generator(3, 0.2);
-	Generator* generator1 = new Generator(3, 0.2);
-	Generator* generator2 = new Generator(3, 0.2);
+	Road* road = new Road(50, 3, 6);
+	road->fillWithVehs(0.1);
+	road->addObstacle(20, 1);
+	road->addObstacle(40, 0);
+	road->addObstacle(40, 2);
+
+	Generator* generator0 = new Generator(6, 0.2);
+	Generator* generator1 = new Generator(6, 0.2);
+	Generator* generator2 = new Generator(6, 0.2);
 
 	linkCells(generator0, road->getLaneHead(0));
 	linkCells(generator1, road->getLaneHead(1));
 	linkCells(generator2, road->getLaneHead(2));
-
-	RGTrafficLights* trafficLights = new RGTrafficLights(LightColor::green, 10, 10);
-
-	road->addTrafficLightsToAllLanes(trafficLights, 25);
 
 	map->addRoad(road);
 	map->addGenerator(generator0);
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
 
-	BasicCrossing* crossing = new BasicCrossing(4, 8, 4);
-
 	std::vector<Localization*> localizations;
-	localizations.push_back(new RoadLocalization(15, 25, road, 'N'));
-	localizations.push_back(new GeneratorLocalization(9, 19, generator0));
-	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
-	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));
-	//localizations.push_back(new BasicCrossingLocalization(10, 10, crossing));
+	//localizations.push_back(new RoadLocalization(76, 75, road, 'N'));
+	//localizations.push_back(new GeneratorLocalization(75, 75, generator0));
+	//localizations.push_back(new GeneratorLocalization(75, 76, generator1));
+	//localizations.push_back(new GeneratorLocalization(75, 77, generator2));
+
+	localizations.push_back(new RoadLocalization(10, 10, road, 'N'));
+	localizations.push_back(new GeneratorLocalization(10, 60, generator0));
+	localizations.push_back(new GeneratorLocalization(11, 60, generator1));
+	localizations.push_back(new GeneratorLocalization(12, 60, generator2));
 
 	Simulation simulation = Simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
 
 	SimulationWindow simulationWindow;
-	simulationWindow.createSimulationWindow(&simulation, localizations);
-
-	/*
-	for (int i = 0; i < 100; i++) {
-		std::cout << "Iteration: " << i << std::endl;
-		std::cout << simulation.toString() << std::endl;
-		simulation.transitionFunc();
-	}
-	*/
+	simulationWindow.createSimulationWindow(&simulation, localizations, 0.01);
 
 	delete map;
 }
@@ -78,35 +74,38 @@ int main() {
 
 	Map* map = new Map("test map");
 
-	Road* road = new Road(50, 1, 5);
+	Road* road = new Road(130, 1, 3);
 
-	//Generator* generator0 = new Generator(5, 0.2);
-	Generator* generator1 = new Generator(5, 0.2);
-	Generator* generator2 = new Generator(5, 0.2);
+	Generator* generator0 = new Generator(1, 0.2);
+	Generator* generator1 = new Generator(1, 0.2);
+	Generator* generator2 = new Generator(1, 0.2);
 
-	LaneEndsMergeR* laneEndsMerge = new LaneEndsMergeR(20, 1, 5);
+	LaneEndsMergeLR* laneEndsMerge = new LaneEndsMergeLR(20, 1, 3);
 
-	//linkCells(generator0, laneEndsMerge->getEndingLaneLHead());
+	linkCells(generator0, laneEndsMerge->getEndingLaneLHead());
 	linkCells(generator1, laneEndsMerge->getLaneHead(0));
 	linkCells(generator2, laneEndsMerge->getEndingLaneRHead());
 
 	linkCells(laneEndsMerge->getLaneTail(0), road->getLaneHead(0));
 
-	RGTrafficLights* trafficLights = new RGTrafficLights(LightColor::green, 10, 10);
+	RGTrafficLights* trafficLights1 = new RGTrafficLights(LightColor::green, 10, 10);
+	RGTrafficLights* trafficLights2 = new RGTrafficLights(LightColor::green, 10, 10, 5);
 
-	road->addTrafficLightsToAllLanes(trafficLights, 25);
+	road->addTrafficLightsToAllLanes(trafficLights1, 50);
+	road->addTrafficLightsToAllLanes(trafficLights2, 100);
 
 	map->addRoad(road);
-	//map->addGenerator(generator0);
+	map->addGenerator(generator0);
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
 	map->addLaneEndsMerge(laneEndsMerge);
 
 	std::vector<Localization*> localizations;
-	localizations.push_back(new LaneEndsMergeLocalizationR(11, 10, laneEndsMerge, 'N'));
-	//localizations.push_back(new GeneratorLocalization(9, 10, generator0));
-	localizations.push_back(new GeneratorLocalization(9, 11, generator1));
-	localizations.push_back(new GeneratorLocalization(9, 12, generator2));
+	localizations.push_back(new RoadLocalization(151, 20, road, 'N'));
+	localizations.push_back(new LaneEndsMergeLocalizationLR(150, 150, laneEndsMerge, 'N'));
+	localizations.push_back(new GeneratorLocalization(150, 170, generator0));
+	localizations.push_back(new GeneratorLocalization(151, 170, generator1));
+	localizations.push_back(new GeneratorLocalization(152, 170, generator2));
 
 	Simulation simulation = Simulation(map, 0.2, 0);
 	simulation.initiateSimulation();
@@ -193,7 +192,7 @@ int main() {
 	simulation.initiateSimulation();
 
 	SimulationWindow simulationWindow;
-	simulationWindow.createSimulationWindow(&simulation, localizations);
+	simulationWindow.createSimulationWindow(&simulation, localizations, 0.01);
 
 	delete map;
 }

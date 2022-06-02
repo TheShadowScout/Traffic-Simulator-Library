@@ -24,6 +24,7 @@ public:
 	void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex);
 	void linkCellToCrossingInput(Cell* previousCell, char inputSide, int inputIndex);
 	void updateCrossing();
+	int getPassableCellsCnt();
 	std::string toString();
 
 protected:

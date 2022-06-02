@@ -5,16 +5,15 @@
 SmartCrossingLocalization::SmartCrossingLocalization(int xPosition, int yPosition, SmartCrossing* smartCrossing) : Localization(xPosition, yPosition), smartCrossing(smartCrossing) { ; }
 
 void SmartCrossingLocalization::prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes) {
-    // 2 petle dla car holderów
-    // 4 dla inputów/outputów
-    // mo¿liwa potrzebna tmp komórka
+    int crossingLength = smartCrossing->getLength();
+    int crossingHeigth = smartCrossing->getHeight();
 
-    sf::RectangleShape crossingRectangle(sf::Vector2f((smartCrossing->getLength() + 2) * cellSize, (smartCrossing->getHeight() + 2) * cellSize));
-    crossingRectangle.setPosition((xPosition)*cellSize, (yPosition)*cellSize);
+    sf::RectangleShape crossingRectangle(sf::Vector2f(cellSize * (crossingLength + 2), cellSize * (crossingHeigth + 2)));
+    crossingRectangle.setPosition(cellSize * xPosition, cellSize * yPosition);
     crossingRectangle.setFillColor(sf::Color(211, 211, 211));
     shapes->push_back(crossingRectangle);
-    std::vector<std::vector<CarHolder*>> carHolder = smartCrossing->getCarHolderMatrix();
 
+    std::vector<std::vector<CarHolder*>> carHolder = smartCrossing->getCarHolderMatrix();
     std::vector<SmartCrossingInput*> inputN = smartCrossing->getInputsN();
     std::vector<RoadCell*> outputN = smartCrossing->getOutputsN();
 
@@ -27,42 +26,42 @@ void SmartCrossingLocalization::prepShapes(float cellSize, std::vector<sf::Recta
     std::vector<SmartCrossingInput*> inputE = smartCrossing->getInputsE();
     std::vector<RoadCell*> outputE = smartCrossing->getOutputsE();
 
-
-    for (int i = 0; i < inputN.size(); i++)
-    {
+    for (int i = 0; i < crossingLength; i++) {
         if (inputN[i] != NULL)
-            createCellShapes(cellSize, shapes, inputN[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, i + 1, 0);
+            createCellShapes(cellSize, shapes, inputN[i], crossingLength + 2, crossingHeigth + 2, i + 1, 0);
 
         if (outputN[i] != NULL)
-            createCellShapes(cellSize, shapes, outputN[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, i + 1, 0);
-
-        if (inputW[i] != NULL)
-            createCellShapes(cellSize, shapes, inputW[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, 0, i + 1);
-
-        if (outputW[i] != NULL)
-            createCellShapes(cellSize, shapes, outputW[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, 0, i + 1);
-
-        if (inputE[i] != NULL)
-            createCellShapes(cellSize, shapes, inputE[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, smartCrossing->getLength() + 1, i + 1);
-
-        if (outputE[i] != NULL)
-            createCellShapes(cellSize, shapes, outputE[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, smartCrossing->getLength() + 1, i + 1);
+            createCellShapes(cellSize, shapes, outputN[i], crossingLength + 2, crossingHeigth + 2, i + 1, 0);
 
         if (inputS[i] != NULL)
-            createCellShapes(cellSize, shapes, inputS[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, i + 1, smartCrossing->getHeight() + 1);
+            createCellShapes(cellSize, shapes, inputS[i], crossingLength + 2, crossingHeigth + 2, i + 1, crossingHeigth + 1);
 
         if (outputS[i] != NULL)
-            createCellShapes(cellSize, shapes, outputS[i], smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, i + 1, smartCrossing->getHeight() + 1);
+            createCellShapes(cellSize, shapes, outputS[i], crossingLength + 2, crossingHeigth + 2, i + 1, crossingHeigth + 1);
     }
 
-    for (int i = 0; i < smartCrossing->getHeight(); i++) {
-        for (int j = 0; j < smartCrossing->getLength(); j++) {
-            RoadCell* tmp = new RoadCell();
-            tmp->setCarHolder(carHolder[i][j]);
-            if(carHolder[i][j] != NULL)
-                createCellShapes(cellSize, shapes, tmp, smartCrossing->getLength() + 2, smartCrossing->getHeight() + 2, j + 1, i + 1);
-            tmp->setCarHolder(NULL);
-            delete tmp;
+    for (int i = 0; i < crossingHeigth; i++) {
+        if (inputW[i] != NULL)
+            createCellShapes(cellSize, shapes, inputW[i], crossingLength + 2, crossingHeigth + 2, 0, i + 1);
+
+        if (outputW[i] != NULL)
+            createCellShapes(cellSize, shapes, outputW[i], crossingLength + 2, crossingHeigth + 2, 0, i + 1);
+
+        if (inputE[i] != NULL)
+            createCellShapes(cellSize, shapes, inputE[i], crossingLength + 2, crossingHeigth + 2, crossingLength + 1, i + 1);
+
+        if (outputE[i] != NULL)
+            createCellShapes(cellSize, shapes, outputE[i], crossingLength + 2, crossingHeigth + 2, crossingLength + 1, i + 1);
+    }
+
+    for (int i = 0; i < crossingHeigth; i++) {
+        for (int j = 0; j < crossingLength; j++) {
+            RoadCell* tempCell = new RoadCell();
+            tempCell->setCarHolder(carHolder[i][j]);
+            if (carHolder[i][j] != NULL)
+                createCellShapes(cellSize, shapes, tempCell, crossingLength + 2, crossingHeigth + 2, j + 1, i + 1);
+            tempCell->setCarHolder(NULL);
+            delete tempCell;
         }
     }
 }

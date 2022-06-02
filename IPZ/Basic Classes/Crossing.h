@@ -44,5 +44,6 @@ public:
 	void linkCellToCrossingOutput(char outputSide, int outputIndex, Cell* nextCell);
 	virtual void updateCrossing() = 0;
 	virtual void addTrafficLights(TrafficLights* newLight, char inputSide, int inputIndex) = 0;
+	virtual int getPassableCellsCnt() = 0;
 	virtual std::string toString() = 0;
 };
