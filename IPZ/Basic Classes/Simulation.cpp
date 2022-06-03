@@ -2,13 +2,7 @@
 
 #include "Simulation.h"
 
-Simulation::Simulation(Map* simMap, double randEventProb,  int minSafeSpace, int seed, bool shuffleIfCompetition) : simMap(simMap), randEventProb(randEventProb), minSafeSpace(minSafeSpace), seed(seed), shuffleIfCompetition(shuffleIfCompetition), simStats(nullptr) {
-	if (seed != NULL) {
-		randomEngine = std::default_random_engine(seed);
-	}
-	else {
-		randomEngine = std::default_random_engine(std::rand());
-	}
+Simulation::Simulation(Map* simMap, double randEventProb,  int minSafeSpace, bool shuffleIfCompetition) : simMap(simMap), randEventProb(randEventProb), minSafeSpace(minSafeSpace), shuffleIfCompetition(shuffleIfCompetition), simStats(nullptr), randomEngine(std::default_random_engine(0)) {
 	if (randEventProb < 0.0 || randEventProb > 1.0) {
 		throw std::invalid_argument("Random event probability must be in range between 0 and 1");
 	}
@@ -22,8 +16,8 @@ Statistics* Simulation::getSimulationStatistics() {
 	return simStats;
 }
 
-Observer* Simulation::getSimulationObserver() {
-	return observers[0];
+std::vector<Observer*> Simulation::getSimulationObservers() {
+	return observers;
 }
 
 void Simulation::addObserver(Observer* observer) {
@@ -51,7 +45,7 @@ void Simulation::saveStatisticsToFile(std::string outFolder) {
 }
 
 void Simulation::initiateSimulation() {
-	simStats = new Statistics(randEventProb, simMap->getMapPassableCellsCnt());
+	simStats = new Statistics(randEventProb, minSafeSpace, simMap->getMapPassableCellsCnt());
 	cellsWithVehs = simMap->getCellsWithVehs();
 	simMap->updateMap(&cellsWithVehs);
 	simStats->updateStatistics(cellsWithVehs);

@@ -35,10 +35,10 @@ protected:
 	bool shuffleIfCompetition;
 
 public:
-	Simulation(Map* simMap, double randEventProb, int minSafeSpace, int seed = NULL, bool shuffleIfCompetition = true);
+	Simulation(Map* simMap, double randEventProb, int minSafeSpace, bool shuffleIfCompetition = true);
 	Map* getSimulationMap();
 	Statistics* getSimulationStatistics();
-	Observer* getSimulationObserver();
+	std::vector<Observer*> getSimulationObservers();
 	void addObserver(Observer* observer);
 	void saveStatisticsToFile(std::string outFolder = "StatisticsHistory/");
 	void initiateSimulation();
