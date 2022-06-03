@@ -1,21 +1,4 @@
-#include "../Basic Classes/Simulation.h"
-#include "../Models/RGTrafficLights.h"
-#include "../Models/SmartCrossing.h"
-#include "../Models/BasicCrossing.h"
-#include "../Models/LaneEndsMergeL.h"
-#include "../Models/LaneEndsMergeLR.h"
-#include "../Models/LaneEndsMergeR.h"
-#include "../Models/BasicCrossing.h"
-#include "../Models/SmartCrossing.h"
-#include "../Models/RGTrafficLights.h"
-#include "../Models/RGYTrafficLights.h"
-#include "../Gui/SimulationWindow.h"
-#include "../Gui/RoadLocalization.h"
-#include "../Gui/GeneratorLocalization.h"
-#include "../Gui/BasicCrossingLocalization.h"
-#include "../Gui/LaneEndsMergeLocalizationLR.h"
-#include "../Gui/LaneEndsMergeLocalizationL.h"
-#include "../Gui/LaneEndsMergeLocalizationR.h"
+#include "../TrafficSimulationLib.h"
 
 #define V 0
 #if V == 0
@@ -55,16 +38,27 @@ int main() {
 	//localizations.push_back(new GeneratorLocalization(75, 76, generator1));
 	//localizations.push_back(new GeneratorLocalization(75, 77, generator2));
 
+	Observer* observer0 = new Observer(road->getLanes()[0][49]);
+	Observer* observer1 = new Observer(road->getLanes()[1][49]);
+	Observer* observer2 = new Observer(road->getLanes()[2][49]);
+
 	localizations.push_back(new RoadLocalization(10, 10, road, 'N'));
 	localizations.push_back(new GeneratorLocalization(10, 60, generator0));
 	localizations.push_back(new GeneratorLocalization(11, 60, generator1));
 	localizations.push_back(new GeneratorLocalization(12, 60, generator2));
 
 	Simulation simulation = Simulation(map, 0.2, 0);
+
+	simulation.addObserver(observer0);
+	simulation.addObserver(observer1);
+	simulation.addObserver(observer2);
+
 	simulation.initiateSimulation();
 
 	SimulationWindow simulationWindow;
 	simulationWindow.createSimulationWindow(&simulation, localizations, 0.01);
+
+	simulation.saveStatisticsToFile();
 
 	delete map;
 }

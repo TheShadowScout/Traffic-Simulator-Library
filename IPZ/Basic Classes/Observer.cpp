@@ -47,7 +47,7 @@ void Observer::checkVehPassing() {
 }
 
 std::string Observer::toString() {
-	std::string tempStr = "";
+	std::string tempStr = "ObserverName;PassingVehicalsCount\n";
 	tempStr += name;
 	tempStr += ";";
 	tempStr += std::to_string(observedPassingVehsCnt);

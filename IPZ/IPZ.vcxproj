@@ -56,6 +56,7 @@
     <ClInclude Include="Models\RGTrafficLights.h" />
     <ClInclude Include="Models\RGYTrafficLights.h" />
     <ClInclude Include="Models\SmartCrossing.h" />
+    <ClInclude Include="TrafficSimulationLib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Basic Classes\BasicCrossingInput.cpp" />

@@ -165,6 +165,9 @@
     <ClInclude Include="Basic Classes\LaneEndsMerge.h">
       <Filter>Header Files\Basic Classes</Filter>
     </ClInclude>
+    <ClInclude Include="TrafficSimulationLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Functionality\StatisticsGenerator.cpp">
