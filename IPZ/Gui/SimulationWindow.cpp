@@ -79,7 +79,7 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
     refreshRateText.setString(ss.str());
     refreshRateText.setCharacterSize(30);
     sf::FloatRect rfBounds = refreshRateText.getLocalBounds();
-    refreshRateText.setPosition(width - 225 + 85, 70 * 7.65);
+    refreshRateText.setPosition(width - 225 + 85, 70 * 4.15);
     refreshRateText.setFillColor(sf::Color::Black);
 
     std::string fontName = "gui/calibri.ttf";
@@ -87,12 +87,12 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
     Button start("Start", fontName, 30, 1);
     Button stop("Stop", fontName, 30, 2);
     Button stats("Statistics", fontName, 30, 3);
-    Button saveMap("Save map", fontName, 30, 4);
-    Button loadMap("Load map", fontName, 30, 5);
-    Button clearSimulation("Clear\nsimulation", fontName, 30, 6);
-    FrequencyButton lowerFrequency("  +", fontName, 30, 7.5, false);
-    FrequencyButton higherFrequency("  -", fontName, 30, 7.5, true);
-    Button exitSimulation("Quit", fontName, 30, 8.5);
+    // Button saveMap("Save map", fontName, 30, 4);
+    // Button loadMap("Load map", fontName, 30, 5);
+    // Button clearSimulation("Clear\nsimulation", fontName, 30, 6);
+    FrequencyButton lowerFrequency("  +", fontName, 30, 4, false);
+    FrequencyButton higherFrequency("  -", fontName, 30, 4, true);
+    Button exitSimulation("Quit", fontName, 30, 5);
 
     sf::RectangleShape menuRect(sf::Vector2f(250, height));
     menuRect.setFillColor(sf::Color(159, 193, 211));
@@ -142,21 +142,21 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
                     GenerateDensityPlot();
                 }
                 // zapisywanie mapy
-                if (saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                {
-                    //DataSaving JSON(simulation->getSimulationMap());
-                    //JSON.saveData();
-                }
-                // wczytywanie mapy
-                if (loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                {
-                    std::cout << "Wcisnieto wczytywanie mapy\n";
-                }
-                // czyszczenie symulacji
-                if (clearSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
-                {
-                    std::cout << "Czyszczenie symulacji" << std::endl;
-                }
+                //if (saveMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                //{
+                //    //DataSaving JSON(simulation->getSimulationMap());
+                //    //JSON.saveData();
+                //}
+                //// wczytywanie mapy
+                //if (loadMap.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                //{
+                //    std::cout << "Wcisnieto wczytywanie mapy\n";
+                //}
+                //// czyszczenie symulacji
+                //if (clearSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
+                //{
+                //    std::cout << "Czyszczenie symulacji" << std::endl;
+                //}
                 // wy³¹czanie programu
                 if (exitSimulation.bounds.contains(static_cast<sf::Vector2f>(sf::Mouse::getPosition(window))))
                 {
@@ -196,9 +196,9 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
         window.draw(start.background);
         window.draw(stop.background);
         window.draw(stats.background);
-        window.draw(saveMap.background);
+       /* window.draw(saveMap.background);
         window.draw(loadMap.background);
-        window.draw(clearSimulation.background);
+        window.draw(clearSimulation.background);*/
         window.draw(lowerFrequency.background);
         window.draw(higherFrequency.background);
         window.draw(exitSimulation.background);
@@ -206,9 +206,9 @@ void SimulationWindow::createSimulationWindow(Simulation* simulation, std::vecto
         window.draw(start.buttonText);
         window.draw(stop.buttonText);
         window.draw(stats.buttonText);
-        window.draw(saveMap.buttonText);
+       /* window.draw(saveMap.buttonText);
         window.draw(loadMap.buttonText);
-        window.draw(clearSimulation.buttonText);
+        window.draw(clearSimulation.buttonText);*/
         window.draw(lowerFrequency.buttonText);
         window.draw(higherFrequency.buttonText);
         window.draw(exitSimulation.buttonText);

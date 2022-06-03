@@ -17,7 +17,7 @@
 #include "../Gui/LaneEndsMergeLocalizationL.h"
 #include "../Gui/LaneEndsMergeLocalizationR.h"
 
-#define V 0
+#define V 2
 #if V == 0
 int main() {
 	std::srand(time(NULL));
@@ -125,11 +125,19 @@ int main() {
 	Road* road1 = new Road(10, 1, 4);
 	Road* road2 = new Road(10, 1, 4);
 	Road* road3 = new Road(10, 1, 4);
+	Road* road4 = new Road(10, 1, 4);
+	Road* road5 = new Road(10, 1, 4);
+	Road* road6 = new Road(10, 1, 4);
+	Road* road7 = new Road(10, 1, 4);
+	Road* road8 = new Road(10, 1, 4);
+	Road* road9 = new Road(10, 1, 4);
+	Road* road10 = new Road(10, 1, 4);
+	Road* road11 = new Road(10, 1, 4);
 
-	Generator* generator0 = new Generator(4, 0.5);
-	Generator* generator1 = new Generator(4, 0.5);
-	Generator* generator2 = new Generator(4, 0.5);
-	Generator* generator3 = new Generator(4, 0.5);
+	Generator* generator0 = new Generator(4, 0.1);
+	Generator* generator1 = new Generator(4, 0.1);
+	Generator* generator2 = new Generator(4, 0.2);
+	Generator* generator3 = new Generator(4, 0.2);
 
 	linkCells(generator0, road0->getLaneHead(0));
 	linkCells(generator1, road1->getLaneHead(0));
@@ -143,14 +151,24 @@ int main() {
 	crossing->addNewCrossingLane('N', 3, 'E', 4, 1);
 
 	crossing->addNewCrossingLane('S', 4, 'N', 4, 2);
-	crossing->addNewCrossingLane('S', 4, 'W', 3, 1);
+	crossing->addNewCrossingLane('S', 4, 'W', 2, 1);
 	crossing->addNewCrossingLane('S', 5, 'N', 5, 1);
-	crossing->addNewCrossingLane('S', 5, 'E', 4, 2);
+	crossing->addNewCrossingLane('S', 5, 'E', 5, 2);
 
 	crossing->linkCellToCrossingInput(road0->getLaneTail(0), 'N', 2);
 	crossing->linkCellToCrossingInput(road1->getLaneTail(0), 'N', 3);
 	crossing->linkCellToCrossingInput(road2->getLaneTail(0), 'S', 4);
 	crossing->linkCellToCrossingInput(road3->getLaneTail(0), 'S', 5);
+
+	crossing->linkCellToCrossingOutput('S', 2, road4->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('S', 3, road5->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('W', 3, road6->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('E', 4, road7->getLaneHead(0));
+
+	crossing->linkCellToCrossingOutput('N', 4, road8->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('N', 5, road9->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('W', 2, road10->getLaneHead(0));
+	crossing->linkCellToCrossingOutput('E', 5, road11->getLaneHead(0));
 
 	RGTrafficLights* trafficLights0 = new RGTrafficLights(LightColor::green, 16, 10);
 	RGTrafficLights* trafficLights1 = new RGTrafficLights(LightColor::green, 16, 10);
@@ -166,6 +184,14 @@ int main() {
 	map->addRoad(road1);
 	map->addRoad(road2);
 	map->addRoad(road3);
+	map->addRoad(road4);
+	map->addRoad(road5);
+	map->addRoad(road6);
+	map->addRoad(road7);
+	map->addRoad(road8);
+	map->addRoad(road9);
+	map->addRoad(road10);
+	map->addRoad(road11);
 	map->addGenerator(generator0);
 	map->addGenerator(generator1);
 	map->addGenerator(generator2);
@@ -184,6 +210,20 @@ int main() {
 
 	std::vector<Localization*> localizations;
 	localizations.push_back(new BasicCrossingLocalization(15, 25, crossing));
+	localizations.push_back(new RoadLocalization(18, 15, road0, 'S'));
+	localizations.push_back(new RoadLocalization(19, 15, road1, 'S'));
+	localizations.push_back(new RoadLocalization(20, 35, road2, 'N'));
+	localizations.push_back(new RoadLocalization(21, 35, road3, 'N'));
+	localizations.push_back(new RoadLocalization(18, 35, road4, 'S'));
+	localizations.push_back(new RoadLocalization(19, 35, road5, 'S'));
+	localizations.push_back(new RoadLocalization(5, 29, road6, 'W'));
+	localizations.push_back(new RoadLocalization(25, 30, road7, 'E'));
+
+	localizations.push_back(new RoadLocalization(20, 15, road8, 'N'));
+	localizations.push_back(new RoadLocalization(21, 15, road9, 'N'));
+	localizations.push_back(new RoadLocalization(5, 28, road10, 'W'));
+	localizations.push_back(new RoadLocalization(25, 31, road11, 'E'));
+
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator1));
 	//localizations.push_back(new GeneratorLocalization(101, 99, generator2));
 	//localizations.push_back(new BasicCrossingLocalization(10, 10, crossing));
@@ -192,7 +232,7 @@ int main() {
 	simulation.initiateSimulation();
 
 	SimulationWindow simulationWindow;
-	simulationWindow.createSimulationWindow(&simulation, localizations, 0.01);
+	simulationWindow.createSimulationWindow(&simulation, localizations, 0.02);
 
 	delete map;
 }
