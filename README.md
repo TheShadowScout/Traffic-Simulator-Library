@@ -940,7 +940,7 @@ Class name: **SimulationWindow**
 
 # Demo pictures
 Demo #1
-![Demo](https://git.wi.zut.edu.pl/ck46488/Projekt_Biblioteki_Do_Utworzenia_Ruchu_Drogowego/src/branch/master/Readme_pictures/Demo1.png)  
+![Demo](./Readme_pictures/Demo1.png)  
 
 Demo #2
 ![Demo](./Readme_pictures/Demo2.png)  
