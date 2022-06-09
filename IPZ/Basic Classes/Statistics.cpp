@@ -2,7 +2,7 @@
 
 #include "Statistics.h"
 
-Statistics::Statistics(double simRandEventProb, int simMapPassableCellsCnt) : simRandEventProb(simRandEventProb), simMapPassableCellsCnt(simMapPassableCellsCnt), vehsCntSum(0), vehsSpeedsSum(0), iterationCnt(0) {
+Statistics::Statistics(double simRandEventProb, int minSafeSpace, int simMapPassableCellsCnt) : simRandEventProb(simRandEventProb), minSafeSpace(minSafeSpace), simMapPassableCellsCnt(simMapPassableCellsCnt), vehsCntSum(0), vehsSpeedsSum(0), iterationCnt(0) {
 	if(simRandEventProb < 0 || simRandEventProb > 1)
 		throw std::invalid_argument("Simulation random event probability must be in range between 0 and 1");
 	time_t now;
@@ -33,10 +33,12 @@ void Statistics::updateStatistics(std::vector<Cell*> cellsWithVehs) {
 
 std::string Statistics::toString() {
 	std::string tempStr = "";
-	tempStr += "time;date;randomEventProbability;meanMapFillingDegree;meanVehiclesSpeed\n";
+	tempStr += "StartTime;StartDate;RandomEventProbability;MinSafeSpace;MeanMapFillingDegree;MeanVehiclesSpeed\n";
 	tempStr += simInitiationTime;
 	tempStr += ";";
 	tempStr += std::to_string(simRandEventProb);
+	tempStr += ";";
+	tempStr += std::to_string(minSafeSpace);
 	tempStr += ";";
 	tempStr += std::to_string(1.0 * vehsCntSum / iterationCnt);
 	tempStr += ";";

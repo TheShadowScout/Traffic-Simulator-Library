@@ -9,5 +9,5 @@ protected:
 
 public:
     GeneratorLocalization(int xPosition, int yPosition, Generator* generator);
-    void draw(double cellWidth, double cellHeight);
+    void prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes);
 };

@@ -58,6 +58,9 @@ int Map::getMapPassableCellsCnt() {
 	for (LaneEndsMerge* laneEndsMerge : laneEndsMerges) {
 		passableCellsCnt += laneEndsMerge->getPassableCellsCnt();
 	}
+	for (Crossing* crossing : crossings) {
+		passableCellsCnt += crossing->getPassableCellsCnt();
+	}
 	return passableCellsCnt;
 }
 

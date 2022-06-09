@@ -10,5 +10,5 @@ protected:
 
 public:
     RoadLocalization(int xPosition, int yPosition, Road* road, char moveDirection = 'E');
-    void draw(double cellWidth, double cellHeight);
+    void prepShapes(float cellSize, std::vector<sf::RectangleShape>* shapes);
 };

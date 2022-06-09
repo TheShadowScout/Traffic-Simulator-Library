@@ -28,6 +28,26 @@ void BasicCrossing::create() {
     inputsW = std::vector<BasicCrossingInput*>(height);
 }
 
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsN()
+{
+    return inputsN;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsE()
+{
+    return inputsE;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsW()
+{
+    return inputsW;
+}
+
+std::vector<BasicCrossingInput*> BasicCrossing::getInputsS()
+{
+    return inputsS;
+}
+
 
 void BasicCrossing::addNewCrossingLane(char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight) {
     try {
@@ -360,6 +380,34 @@ void BasicCrossing::addTrafficLights(TrafficLights* newLight, char inputSide, in
         }
         break;
     }
+}
+
+int BasicCrossing::getPassableCellsCnt() {
+    int passableCellsCnt = 0;
+    for (std::vector<CarHolder*> carHolderRow : carHolderMatrix) {
+        for (CarHolder* carHolder : carHolderRow) {
+            if (carHolder != nullptr) {
+                passableCellsCnt++;
+            }
+        }
+    }
+    for (int i = 0; i < length; i++) {
+        if (inputsN[i] != nullptr || outputsN[i] != nullptr) {
+            passableCellsCnt++;
+        }
+        if (inputsS[i] != nullptr || outputsS[i] != nullptr) {
+            passableCellsCnt++;
+        }
+    }
+    for (int i = 0; i < height; i++) {
+        if (inputsE[i] != nullptr || outputsE[i] != nullptr) {
+            passableCellsCnt++;
+        }
+        if (inputsW[i] != nullptr || outputsW[i] != nullptr) {
+            passableCellsCnt++;
+        }
+    }
+    return passableCellsCnt;
 }
 
 std::string BasicCrossing::toString() {

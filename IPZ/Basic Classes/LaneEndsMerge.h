@@ -25,6 +25,8 @@ public:
     int getID();
     std::string getName();
     int getMaxSpeed();
+    int getLength();
+    int getHeight();
     Cell* getLaneHead(int lane);
     Cell* getLaneTail(int lane);
     std::vector<std::vector<Cell*>> getLanes();

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "DensityPlotGenerator.h"
 
 int Road::IDcnt = 0;
@@ -40,8 +41,9 @@ int GenerateDensityPlot() {
 				for (int i = 0; i < 1000; i++) {
 					simulation.transitionFunc();
 				}
-				Observer* tempObs = simulation.getSimulationObserver();
-				data += tempObs->getObservedPassingVehsCnt();
+				for (Observer* tempObserver : simulation.getSimulationObservers()) {
+					data += tempObserver->getObservedPassingVehsCnt();
+				}				
 				map->~Map();
 
 			}
