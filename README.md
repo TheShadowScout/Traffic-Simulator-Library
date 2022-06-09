@@ -940,22 +940,22 @@ Class name: **SimulationWindow**
 
 # Demo pictures
 Demo #1
-![Demo](/Readme_pictures/Demo1.png)  
+![Demo](./Readme_pictures/Demo1.png)  
 
 Demo #2
-![Demo](/Readme_pictures/Demo2.png)  
+![Demo](./Readme_pictures/Demo2.png)  
 
 Demo #3
-![Demo](/Readme_pictures/Demo3.png)  
+![Demo](./Readme_pictures/Demo3.png)  
 
 Demo #4
-![Demo](/Readme_pictures/Demo4.png)  
+![Demo](./Readme_pictures/Demo4.png)  
 
 Demo #5
-![Demo](/Readme_pictures/Demo5.png)  
+![Demo](./Readme_pictures/Demo5.png)  
 
 Demo #6
-![Demo](/Readme_pictures/Demo6.png)  
+![Demo](./Readme_pictures/Demo6.png)  
 
 # Percentage of participation in tasks 
 
