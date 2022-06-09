@@ -23,27 +23,6 @@ void Localization::colorVehShape(sf::RectangleShape& shape, Vehicle* veh) {
     if (veh->getIsObstacle() != true) {
         switch (veh->getSpeed())
         {
-            /*case 0:
-                shape.setFillColor(sf::Color(0,0,102));
-                break;
-            case 1:
-                shape.setFillColor(sf::Color(0,0,153));
-                break;
-            case 2:
-                shape.setFillColor(sf::Color(0,0,255));
-                break;
-            case 3:
-                shape.setFillColor(sf::Color(51,51,255));
-                break;
-            case 4:
-                shape.setFillColor(sf::Color(204,0,102));
-                break;
-            case 5:
-                shape.setFillColor(sf::Color(255,0,127));
-                break;
-            case 6:
-                shape.setFillColor(sf::Color(0, 255, 255));
-                break;*/
         case 0:
             shape.setFillColor(sf::Color(0, 0, 255));
             break;

@@ -34,13 +34,16 @@ Student project of a library in C++ used to create a road traffic simulator.
 6. [Models](#models)  
 6.1 [BasicCrossing](#basiccrossing)  
 6.2 [LaneEndsMergeL](#laneendsmergel)  
-6.3 [LaneEndsMergeLR](#laneendsmergelr)
+6.3 [LaneEndsMergeLR](#laneendsmergelr)  
 6.4 [LaneEndsMergeR](#laneendsmerger)  
 6.5 [SmartCrossing](#smartcrossing)    
 6.6 [RGTrafficLights](#rgtrafficlights)  
 6.7 [RGYTrafficLights](#rgytrafficlights)  
-7. [SimulationWindow](#simulationwindow)    
-8. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
+7. [GUI](#gui)  
+7.1 [Localization](#localization)  
+7.2 [SimulationWindow](#simulationwindow)   
+8. [Demo pictures](#demo-pictures)
+9. [Percentage of participation in tasks](#percentage-of-participation-in-tasks)  
 
 # Introduction
 
@@ -757,99 +760,202 @@ Class name: **Vehicle**
 # Models
 ## BasicCrossing
 Filename with class: **BasicCrossing.h**  
-Class names: **BasicCrossing**
+Class names: **BasicCrossing**  
+Inherits from: [Crossing](#crossing)  
 
 | Variable name			| Variable type							| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| inputN | vector<[BasicCrossingInput](#basiccrossinginput) | Vector that holds north inputs of [BasicCrossingInputs](#basiccrossinginput) |
-| inputE | vector<[BasicCrossingInput](#basiccrossinginput) | Vector that holds east inputs of [BasicCrossingInputs](#basiccrossinginput) |
-| inputS | vector<[BasicCrossingInput](#basiccrossinginput) | Vector that holds south inputs of [BasicCrossingInputs](#basiccrossinginput)
-| inputW | vector<[BasicCrossingInput](#basiccrossinginput) | Vector that holds west inputs of [BasicCrossingInputs](#basiccrossinginput)
+| inputN | vector<[BasicCrossingInput](#basiccrossinginput)> | Vector that holds north inputs of [BasicCrossingInputs](#basiccrossinginput) |
+| inputE | vector<[BasicCrossingInput](#basiccrossinginput)> | Vector that holds east inputs of [BasicCrossingInputs](#basiccrossinginput) |
+| inputS | vector<[BasicCrossingInput](#basiccrossinginput)> | Vector that holds south inputs of [BasicCrossingInputs](#basiccrossinginput)
+| inputW | vector<[BasicCrossingInput](#basiccrossinginput)> | Vector that holds west inputs of [BasicCrossingInputs](#basiccrossinginput)
 
 | Function type and name			| Arguments						| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| BasicCrossing | int crossingHeight, int crossingLength, int crossingMaxSpeed |
-| ~BasicCrossing |-| Returns green light duration time in seconds |
-| void addNewCrossingLane |char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight| Returns red light duration time in seconds |
+| BasicCrossing | int crossingHeight, int crossingLength, int crossingMaxSpeed | Class constructor
+| ~BasicCrossing |- | Class destructor
+| void addNewCrossingLane |char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight| Function adds new lane to [BasicCrossing](#basiccrossing)|
+| void linkRoadLaneToCrossing |Cell* previousCell, char inputSide, int inputIndex| Function links [Road](#road) to [BasicCrossing](#basiccrossing) by last [Road](#road) cell |
+| void updateCrossing |-| Function updates [BasicCrossing](#basiccrossing) state |
+| void addTrafficLights |TrafficLights* newLight, char inputSide, int inputIndex| Function adds [TrafficLights*](#trafficlights) to [BasicCrossing](#basiccrossing) |
+| void checkParametersAreCorrect | char inputSide, int inputIndex, char outputSide, int outputIndex| Function validates parameters |
 
-|void linkRoadLaneToCrossin |Cell* previousCell, char inputSide, int inputIndex| Returns current state of lights |
-| void updateCrossing |-| Returns lights position on the road |
-| void addTrafficLights |TrafficLights* newLight, char inputSide, int inputIndex| Returns time in seconds left to light state change |
-| void checkParametersAreCorrect |char inputSide, int inputIndex, char outputSide, int outputIndex| Returns time in seconds left to light state change |
 
+## LaneEndsMergeL
+Filename with class: **LaneEndsMergeL.h**  
+Class names: **LaneEndsMergeL**  
 
-## TEST
-## Traffic Lights
-Filename with class: **TrafficLights.h**  
-Class names: **TrafficLights**, **YellowTrafficLights**, **LightColor**
-
-**LightColor**
-| Object type			| Possible values							| Description|
-| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| enum class LightColor | red, redyellow, green, yellow | Defines state of traffic lights |
-
-**TrafficLights**
 | Variable name			| Variable type							| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| color | LightColor | Stores current state of traffic lights |
-| yellowOn | bool | Switch turning on using yellow light |
-| redLightDuration | int | Red light duration in seconds |
-| greenLightDuration | int | Green light duration in seconds |
-| yellowLightDuration | int | Yellow light duration in seconds |
-| redYellowLightDuration | int | Red-yellow light duration in seconds |
-| timer | int | Seconds left to light state change |
+| endingLaneL | vector<[Cell*](#cell) | Vector that holds [Cells](#cell)
 
 | Function type and name			| Arguments						| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| TrafficLights | LightColor startState, int position, int redDuration, int greenDuration| Traffic Lights constructor |
-| int getGreenDuration |-| Returns green light duration time in seconds |
-| int getRedDuration |-| Returns red light duration time in seconds |
-| LightColor getColor |-| Returns current state of lights |
-| int getPosition |-| Returns lights position on the road |
-| int getTimer |-| Returns time in seconds left to light state change |
-| void setTimer |int newTimer| Sets timer to newTimer |
-| void setColor |LightColor newColor| Sets lights state to newColor |
-| void setPosition | int newPosition | Sets lights position to newPosition in specified road |
-| void setRedLightDuration | int duration | Sets red light duration to duration in seconds |
-| void setGreenLightDuration | int duration | Sets green light duration to duration in seconds |
+| LaneEndsMergeL | string name, int length, int height, int maxSpeed | Class constructor
+| LaneEndsMergeL | int length, int height, int maxSpeed | Class constructor
+| ~LaneEndsMergeL |-| Class destructor
+| [Cell*](#cell) getEndingLaneLHead | - | Function returns pointer to last [Cell](#cell) of model
+| vector<vector<[Cell](#cell)>> getEndingLanes | - | Funciton returns matrix of [Cells](#cell)
+| int getPassableCellsCnt | - | Function returns amount of [Cells](#cell) which are passable in model
+| vector<[Cell*](#cell)> getCellsWithVehs | - | Function returns vector of [Cells](#cell) containing [Vehicles](#vehicle)
+| void fillWithVehs | double fillingDegree | Function fills given percent of model with [Vehicles](#vehicle)
+| string toString | - | Function returns string which represents current [LaneEndsMergeL](#LaneEndsMergeL)|
 
-**YellowTrafficLights : public TrafficLights**
+## LaneEndsMergeLR
+Filename with class: **LaneEndsMergeLR.h**  
+Class names: **LaneEndsMergeLR**  
+
 | Variable name			| Variable type							| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| yellowLightDuration | int | Yellow light duration in seconds |
-| redYellowLightDuration | int | Red-yellow light duration in seconds |
+| endingLaneL | vector<[Cell*](#cell) | Vector that holds [Cells](#cell) for left lane
+| endingLaneR | vector<[Cell*](#cell) | Vector that holds [Cells](#cell) for right lane
 
 | Function type and name			| Arguments						| Description|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| YellowTrafficLights | LightColor startState, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration| Yellow Traffic Lights constructor |
-| int getRedYellowDuration |-| Returns red-yellow light duration time in seconds |
-| int getYellowDuration |-| Returns yellow light duration time in seconds |
-| void setRedYellowLightDuration | int duration | Sets red-yellow light duration to duration in seconds |
-| void setYellowLightDuration | int duration | Sets yellow light duration to duration in seconds |
-Example code
-```
-#include "Basic Classes/Road.h"
-#include "Basic Classes/TrafficLights.h"
+| LaneEndsMergeLR | string name, int length, int height, int maxSpeed | Class constructor
+| LaneEndsMergeLR | int length, int height, int maxSpeed | Class constructor
+| ~LaneEndsMergeLR |-| Class destructor
+| [Cell*](#cell) getEndingLaneLHead | - | Function returns pointer to last [Cell](#cell) of model for left lane
+| [Cell*](#cell) getEndingLaneRHead | - | Function returns pointer to last [Cell](#cell) of model for right lane
+| vector<vector<[Cell](#cell)>> getEndingLanes | - | Funciton returns matrix of [Cells](#cell)
+| int getPassableCellsCnt | - | Function returns amount of [Cells](#cell) which are passable in model
+| vector<[Cell*](#cell)> getCellsWithVehs | - | Function returns vector of [Cells](#cell) containing [Vehicles](#vehicle)
+| void fillWithVehs | double fillingDegree | Function fills given percent of model with [Vehicles](#vehicle)
+| string toString | - | Function returns string which represents current [LaneEndsMergeLR](#LaneEndsMergeLR)|
 
-int main() {
-	Road* road = new Road(100, 1, 5);
-	TrafficLights* light = new TrafficLights(LightColor(LightColor::red), 50, 7, 7);
-	road->addLights(light);
-	return 0;
-}
-```
-# SimulationWindow
+## LaneEndsMergeR
+Filename with class: **LaneEndsMergeR.h**  
+Class names: **LaneEndsMergeR**  
+
+| Variable name			| Variable type							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| endingLaneR | vector<[Cell*](#cell) | Vector that holds [Cells](#cell)
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| LaneEndsMergeR | string name, int length, int height, int maxSpeed | Class constructor
+| LaneEndsMergeR | int length, int height, int maxSpeed | Class constructor
+| ~LaneEndsMergeR |-| Class destructor
+| [Cell*](#cell) getEndingLaneLHead | - | Function returns pointer to last [Cell](#cell) of model
+| vector<vector<[Cell](#cell)>> getEndingLanes | - | Funciton returns matrix of [Cells](#cell)
+| int getPassableCellsCnt | - | Function returns amount of [Cells](#cell) which are passable in model
+| vector<[Cell*](#cell)> getCellsWithVehs | - | Function returns vector of [Cells](#cell) containing [Vehicles](#vehicle)
+| void fillWithVehs | double fillingDegree | Function fills given percent of model with [Vehicles](#vehicle)
+| string toString | - | Function returns string which represents current [LaneEndsMergeR](#LaneEndsMergeR)|
+
+## RGTrafficLights
+Filename with class: **RGTrafficLights.h**  
+Class names: **RGTrafficLights**  
+Inherits from: [TrafficLights](#trafficlights)  
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| RGTrafficLights | string name, LightColor startState, int redDuration, int greenDuration, int timerOffset | Class constructor
+| RGTrafficLights | LightColor startState, int redDuration, int greenDuration, int timerOffset | Class constructor
+| void changeState | - | Function changes light color of model
+| void updateTrafficLights() | - | Function updates model
+
+## RGYTrafficLights
+Filename with class: **RGYTrafficLights.h**  
+Class names: **RGYTrafficLights**  
+Inherits from: [TrafficLights](#trafficlights)  
+
+| Variable name			| Variable type							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| redYellowDuration | int | duration of red-yellow state
+| yellowDuration | int | duration of yellow state
+
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| RGYTrafficLights | string name, LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset | Class constructor
+| RGYTrafficLights | LightColor startColor, int position, int redDuration, int greenDuration, int redYellowDuration, int yellowDuration, int timerOffset | Class constructor
+| int getRedYellowDuration | - | Function returns duration of red-yellow state
+| int getYellowDuration | - | Function returns duration of yellow state
+| void changeState | - | Function changes light color of model
+| void updateTrafficLights() | - | Function updates model
+
+## SmartCrossing
+Filename with class: **SmartCrossing.h**  
+Class names: **SmartCrossing**  
+Inherits from: [Crossing](#crossing)  
+
+| Variable name			| Variable type							| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| inputsN | vector<[SmartCrossingInput](#smartcrossinginput)> | Vector that holds north inputs of [SmartCrossingInput](#smartcrossinginput) |
+| inputsE | vector<[SmartCrossingInput](#smartcrossinginput)> | Vector that holds east inputs of [SmartCrossingInput](#smartcrossinginput) |
+| inputsS | vector<[SmartCrossingInput](#smartcrossinginput)> | Vector that holds south inputs of [SmartCrossingInput](#smartcrossinginput)
+| inputsW | vector<[SmartCrossingInput](#smartcrossinginput)> | Vector that holds west inputs of [SmartCrossingInput](#smartcrossinginput)
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| SmartCrossing | string name, int height, int length, int maxSpeed | Class constructor
+| SmartCrossing |  int height, int length, int maxSpeed | Class constructor
+| vector<[SmartCrossingInput*](#smartcrossinginput)>getInputsN | - | Function returns vector of [SmartCrossingInputs](#smartcrossinginput)
+| vector<[SmartCrossingInput*](#smartcrossinginput)>getInputsE | - | Function returns vector of [SmartCrossingInputs](#smartcrossinginput)
+| vector<[SmartCrossingInput*](#smartcrossinginput)>getInputsS | - | Function returns vector of [SmartCrossingInputs](#smartcrossinginput)
+| vector<[SmartCrossingInput*](#smartcrossinginput)>getInputsW | - | Function returns vector of [SmartCrossingInputs](#smartcrossinginput)
+| ~SmartCrossing |-| Class destructor
+| void addNewCrossingLane |char inputSide, int inputIndex, char outputSide, int outputIndex, int laneWeight| Function adds new lane to [SmartCrossing](#smartcrossing)|
+| void addTrafficLights |TrafficLights* newLight, char inputSide, int inputIndex| Function adds [TrafficLights*](#trafficlights) to [SmartCrossing](#smartcrossing) |
+| void linkCellToCrossingInpujt |Cell* previousCell, char inputSide, int inputIndex| Function links [Cell](#cell) to [SmartCrossingInput](#smartcrossinginput)|
+| void updateCrossing |-| Function updates [SmartCrossing](#smartcrossing) state |
+| int getPassableCellsCnt | - | Function returns amount of passable [Cells](#cell) in [SmartCrossing](#smartcrossing)
+| string toString | - | Function returns string which represents current [SmartCrossing](#smartcrossing) |
+| void checkParametersAreCorrect | char inputSide, int inputIndex, char outputSide, int outputIndex| Function validates parameters |
+
+# GUI
+## Localization
+Filename with class: **Localization.h**  
+Class names: **Localization**  
+
+| Variable name			| Variable type							| Description |
+| --------------------- | ------------------------------------- | ----------- |
+| xPosition | int | Position of x dimension in map |
+| yPosition | int | Position of y dimension in map |
+
+
+| Function type and name			| Arguments						| Description|
+| --------------------------------- | --------------------------------- | --------------------------------------------------------- |
+| Localization | int xPosition, int yPosition | Class constructor
+| virtual void prepShapes | float cellSize, vector<RectangleShape> shapes | Function adds to shapes vector all figures
+| void colorTrafficLightsShape | RectangleShape& shape, LightColor lightColor | Function draws traffic lights
+| void colorVehShape | RectangleShape& shape, [Vehicle*](#vehicle) veh | Function draws [Vehicle*](#vehicle) and colors it
+| void rotateShape | float cellSize, RectangleShape& shape, int length, int height, int xOffset, int yOffset, bool center, char moveDirection | Function rotates selected model
+| void createCellShapes | float cellSize, vector<RectangleShape> shapes, [Cell*] cell, int parentShapeLength, int parentShapeHeight, int xOffset, int yOffset, char moveDirection | Function draws [Cells](#cells) with [Vehicles](#vehicle)
+
+## SimulationWindow
 Filename with class: **SimulationWindow.h**  
 Class name: **SimulationWindow**
 
 | Object type | Description	|
 | ------------- | ------------- |
 | Button	| defines button in GUI |
+| FrequencyButton | defines button for frequency in GUI |
 
 | Function type and name			| Arguments							| Description												|
 | --------------------------------- | --------------------------------- | --------------------------------------------------------- |
-| void createSimulationWindow					| [Simulation*](#simulation) s, double randEventProb | Function creating simulation window											|
+| void createSimulationWindow					| [Simulation*](#simulation) simulation, vector<[Localization*](#localization)> localizations, double cellSizeConst | Function creates simulation window	
 
+
+# Demo pictures
+Demo #1
+![Demo](/Readme_pictures/Demo1.png)  
+
+Demo #2
+![Demo](/Readme_pictures/Demo2.png)  
+
+Demo #3
+![Demo](/Readme_pictures/Demo3.png)  
+
+Demo #4
+![Demo](/Readme_pictures/Demo4.png)  
+
+Demo #5
+![Demo](/Readme_pictures/Demo5.png)  
+
+Demo #6
+![Demo](/Readme_pictures/Demo6.png)  
 
 # Percentage of participation in tasks 
 
@@ -877,13 +983,17 @@ Class name: **SimulationWindow**
           <td>100%</td>
         </tr>
         <tr>
-            <td rowspan=3>GUI and connecting modules</td>
+            <td rowspan=4>GUI and connecting modules</td>
             <td>Weronika Drożdż</td>
-            <td>47.5%</td>
+            <td>42.5%</td>
         </tr>
         <tr>
             <td>Filip Stodolny</td>
-            <td>47.5%</td>
+            <td>42.5%</td>
+        </tr>
+		<tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>10%</td>
         </tr>
         <tr>
           <td>Kacper Chrzanowski</td>
@@ -892,19 +1002,19 @@ Class name: **SimulationWindow**
         <tr>
           <td rowspan=4>Transition function </td>
           <td>Gabor Łukjaniuk</td>
-          <td>95%</td>
+          <td>97%</td>
         </tr>
         <tr>
           <td>Kacper Chrzanowski</td>
-          <td>2%</td>
+          <td>1%</td>
         </tr>
         <tr>
           <td>Weronika Drożdż</td>
-          <td>1.5%</td>
+          <td>1%</td>
         </tr>
         <tr>
           <td>Filip Stodolny</td>
-          <td>1.5%</td>
+          <td>1%</td>
         </tr>
         <tr>
           <td rowspan=6>Basic Classes</td>
@@ -930,6 +1040,31 @@ Class name: **SimulationWindow**
           <td>Filip Stodolny</td>
           <td>16.6%</td>
         </tr>
+		<tr>
+          <td rowspan=6>Models</td>
+          <td>Kacper Chrzanowski</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Weronika Drożdż</td>
+          <td>20%</td>
+        </tr>
+		<tr>
+          <td>Gabor Łukjaniuk</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Filip Stodolny</td>
+          <td>20%</td>
+        </tr>
+		<tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>10%</td>
+        </tr>
         <tr>
           <td rowspan=3>JSON support</td>
           <td>Dominik Dzięgielewski</td>
@@ -946,27 +1081,27 @@ Class name: **SimulationWindow**
         <tr>
           <td rowspan=6>Documentation</td>
           <td>Kacper Chrzanowski</td>
-          <td>25%</td>
+          <td>35%</td>
         </tr>
-        <tr>
-          <td>Dominik Dzięgielewski</td>
-          <td>20%</td>
-        </tr>
-        <tr>
-          <td>Andrey Kmet</td>
-          <td>20%</td>
-        </tr>
-        <tr>
+		<tr>
           <td>Weronika Drożdż</td>
-          <td>11,6%</td>
+          <td>15%</td>
         </tr>
         <tr>
           <td>Gabor Łukjaniuk</td>
-          <td>11,6%</td>
+          <td>15%</td>
         </tr>
         <tr>
           <td>Filip Stodolny</td>
-          <td>11,6%</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>Dominik Dzięgielewski</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Andrey Kmet</td>
+          <td>10%</td>
         </tr>
         <tr>
           <td rowspan=2>Density plot</td>
