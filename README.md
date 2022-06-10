@@ -951,9 +951,6 @@ Demo #3
 Demo #4
 ![Demo](./Readme_pictures/Demo4.png)  
 
-Demo #5
-![Demo](./Readme_pictures/Demo5.png)  
-
 
 # Percentage of participation in tasks 
 
